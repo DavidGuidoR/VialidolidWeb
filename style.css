@@ -6,19 +6,26 @@
     flex-wrap: wrap;
 }
 
+.seccion-text p{
+margin: 20px 10px;
+}
+.seccion-text h1{
+    margin: 20px 10px;
+    }
+
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #794CA7;
-    padding: 20px 5%;
+    padding: 10px 5%;
     min-height: 120px;
     flex-wrap: wrap;
 }
 
 .logo img {
-    height: 100px;
-    width: 200px;
+    height: 110px;
+    
     cursor: pointer;
 }
 
@@ -90,7 +97,7 @@
 .container {
     display: flex;
     justify-content: center;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 140px);
     /*overflow: hidden; Añade esta propiedad para evitar el desplazamiento no deseado */
     min-height: 400px; /* Establece una altura mínima según tus necesidades */
 }
@@ -103,7 +110,7 @@
 .letrero2{
     color: black;
     font-size: 50px;
-    line-height: 1.5;
+
 }
 
 .letrero3{
@@ -115,7 +122,10 @@
     color:black;
     font-size: 20px;
 }
-
+#enbloque{
+display: flex;
+    height: 100px;
+}
 .button {
     background-color: black;
     border: none;
@@ -125,8 +135,10 @@
     position: relative;
     overflow: hidden;
     transition: all 0.3s ease-in-out;
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    height: 60px;
+    
 }
 
 .button:hover {
@@ -135,15 +147,16 @@
 
 .imageninf{
     width: 300px;
-    height: auto;
-    margin-bottom: 20px;
+position: relative;
+
+
 }
 
 .seccion-text {
     flex: 1;
     width: 50%;
     height: 100%;
-
+padding: 20px;
 }
   
 .map {
@@ -168,11 +181,12 @@
 @media(max-width:992px){
     .navbar{
         flex-direction: column;
-        padding: 20px 0;
+        padding: 10px 0;
     }
     
     .letrero1 {
             font-size: 24px;
+        
     }
     
     .letrero2 {
