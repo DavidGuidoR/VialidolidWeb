@@ -27,7 +27,7 @@ app.set('view engine', 'hbs');
 app.use(myconnection(mysql, {
     host: 'localhost',
     user: 'root',
-    password: 'root',
+    password: '',
     port: 3306,
     database: 'vialidolid'
 }, 'single'));
