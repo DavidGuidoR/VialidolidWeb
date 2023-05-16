@@ -27,7 +27,7 @@ app.set('view engine', 'hbs');
 app.use(myconnection(mysql, {
     host: 'localhost',
     user: 'root',
-    password: '',
+    password: 'root',
     port: 3306,
     database: 'vialidolid'
 }, 'single'));
@@ -41,4 +41,4 @@ app.use('/', tasksRoutes)
 app.get('/', (req, res) => {
     res.render('home');
 });
-app.use(express.static('src/public'));
+app.use(express.static(__dirname + '/public'));

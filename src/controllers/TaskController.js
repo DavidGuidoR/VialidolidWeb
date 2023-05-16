@@ -40,9 +40,7 @@ function edit(req, res) {
 
     req.getConnection((err, conn) => {
         conn.query('SELECT * FROM `reporte` WHERE `id_reporte` = ?',[id_reporte], (err, tasks) => {
-            conn.query('SELECT * FROM `reporte` WHERE `id_reporte` = ?',[id_reporte], (err1, tasks1) => {
 
-            })
             console.log('Aqui esta el json', tasks);
             console.log('Aqui acaba el json');
             if (err) {
