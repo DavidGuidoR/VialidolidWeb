@@ -10,6 +10,7 @@
     --negro: #000000;
     --blanco: #FFFFFF;
 
+
     
     /* Establecer configuraciones tipográficas globales al proyecto */
     --font-size: 1.3rem;
@@ -36,6 +37,7 @@ body{
 /* Quitamos el margen que poseen las etiquetas h1 a h3 */
 h1, h2, h3 {
     margin: 0;
+
 }
 
 img{
@@ -44,6 +46,7 @@ img{
 a{
     text-decoration: none;
 }
+
 
 /* Lo que se ah hecho anteriormente es que es recomendable empezar con un formato general a usar
 y posteriormente según necesitemos generar excepciones de ello */
@@ -57,6 +60,7 @@ y posteriormente según necesitemos generar excepciones de ello */
 }
 #navegacion a{
     color: var(--blanco);
+
 }
 
 #navegacion ul{
@@ -142,6 +146,7 @@ y posteriormente según necesitemos generar excepciones de ello */
     font-size: 2.8rem;
     color: var(--negro);
     width: 600px;
+
 }
 
 #hero h4{
@@ -184,6 +189,7 @@ y posteriormente según necesitemos generar excepciones de ello */
     color:var(--blanco);
 }
 
+
 #hero .imagentexto{
     width: 600px;
     display: grid;
@@ -214,7 +220,6 @@ y posteriormente según necesitemos generar excepciones de ello */
     text-align:left;
     color: var(--Gris);
 }
-
 @media(min-width:550px){
     article{
         display: grid;
@@ -222,6 +227,7 @@ y posteriormente según necesitemos generar excepciones de ello */
         grid-template-columns: 600px 1fr;
         gap:2rem;
     }
+
 
 
     #hero .mapa{
