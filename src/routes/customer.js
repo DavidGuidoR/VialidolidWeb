@@ -11,5 +11,7 @@ const customerController = require('../controllers/customerController');
 
 //De esta manera utilizamos las funciones de nuestro customerController
 router.get('/', customerController.list);
+router.post('/inicioSesion', customerController.ver)
+router.post('/registro', customerController.insert);
 
 module.exports=router;
