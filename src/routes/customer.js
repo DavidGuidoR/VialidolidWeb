@@ -1,0 +1,17 @@
+/*Servidor para usar un metodo de express Router el cual nos regresa un modulo
+de javascript en el cual podemos ir agregando rutas  y reutilizarlas*/
+
+const express = require('express');
+const router = express.Router();
+
+//Mandamos llamar nuestro archivo de funciones customerController
+const customerController = require('../controllers/customerController');
+
+//Aqui escribiremos todas nuestras url que el servidor podra manejar
+
+//De esta manera utilizamos las funciones de nuestro customerController
+router.get('/', customerController.list);
+router.post('/inicioSesion', customerController.ver)
+router.post('/registro', customerController.insert);
+
+module.exports=router;

@@ -1,0 +1,56 @@
+<!-- De esta manera incluimos el header desde el documento partials -->
+<%   include('partials/_header') %> 
+
+<dialog open id="iniciarSesion">
+    <h2>Iniciar sesión</h2>
+
+    <form action="/registro" method="post">
+        <label for="usuario">Usuario:</label><br>
+        <input type="number" id="usuario" name="usuario"><br><br>
+
+        <label for="contraseña">Contraseña:</label><br>
+        <input type="password" id="contraseña" name="contrasena"><br><br>
+
+        <button type="submit">Iniciar sesión</button><br><br>
+
+        <a href="#">Olvidaste tu contraseña?</a>
+
+        <button id="btnCerrarVentana" type="submit">Cerrar dialogo</button>
+    </form>
+    </dialog>
+
+<dialog open id="registro">
+    <h2>Registro</h2>
+
+    <form action="/registro" method="post">
+        <label for="usuario">Id-empleado:</label><br>
+        <input type="number" id="id" name="id_empleado"><br><br>
+
+        <label for="usuario">Cargo:</label><br>
+        <select>
+            <option value="moderador" name="cargo">Moderador</option>
+            <option value="administrador" name="cargo">Administrador</option>
+        </select><br><br>
+
+        <label for="contraseña">Nombre:</label><br>
+        <input type="text" id="nombre" name="nombre"><br><br>
+
+        <label for="contraseña">Apellido paterno:</label><br>
+        <input type="text" id="ap_pat" name="apellido_paterno"><br><br>
+
+        <label for="contraseña">Apellido materno:</label><br>
+        <input type="text" id="ap_mat" name="apellido_materno"><br><br>
+
+        <label for="contraseña">Usuario:</label><br>
+        <input type="text" id="user" name="usuario"><br><br>
+
+        <label for="contraseña">Contraseña:</label><br>
+        <input type="password" id="password" name="contrasena"><br><br>
+
+
+        <button type="submit">Registrarse</button><br><br>
+
+        <button id="btnCerrarVentana" type="submit">Cerrar dialogo</button>
+    </form>
+    </dialog>
+    <% include('partials/_footer') %> 
