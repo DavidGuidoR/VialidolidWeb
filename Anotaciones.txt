@@ -1,0 +1,3 @@
+En la seccion de node establecemos el dev en los scripts con la ruta src/app.js ya que este sera nuestro archivo de ejecución
+Mediante esta instrucción con el nodemon nos permite que se actualize cada que realizamos un cambio ademas de correrlo solo con la instrucción npm run dev
+
