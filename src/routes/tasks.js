@@ -9,4 +9,5 @@ router.get('/moderacion', TaskController.moderacion);
 router.get('/vreportes', TaskController.vreportes);
 router.get('/vusuarios', TaskController.vusuarios);
 router.get('/tasks/edit/:id_reporte', TaskController.edit);
+router.get('/home', TaskController.home)
 module.exports = router;

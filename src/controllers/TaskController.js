@@ -1,6 +1,9 @@
 function index(req, res) {
     res.render('tasks/index');
 }
+function home(req,res){
+    res.render('../views/home');
+}
 
 function vusuarios(req, res){
     req.getConnection((err, conn) => {
@@ -58,5 +61,6 @@ module.exports = {
     moderacion: moderacion,
     vreportes: vreportes,
     edit: edit,
-    vusuarios: vusuarios
+    vusuarios: vusuarios,
+    home:home
 }
