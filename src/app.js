@@ -23,14 +23,15 @@ app.set('views', path.join(__dirname, 'views'));    //Aqui establecemos la ruta 
 //middlewares: Funciones se ejecutan entre la recepcion de una solicitud y el envió de una respuesta basicamente es un intermediario entre el cliente y el servidor
 app.use(morgan('dev'))  //mostrar mensajes por consola con dev
 app.use(myConnection(mysql,{
-    host:'localhost',
+    host:'137.117.123.255',
     user: 'root',
-    password: '',
+    password: '12345678A',
     port: 3306,
     database: 'vialidolid'
 }, 'single'));  //Aqui establecemos la conexion a nuestra base de datos y establecemos la configuracion de acceso de la misma.
-app.use(express.urlencoded({extended: false}));
 
+//middleware obtención de datos formulario
+app.use(express.urlencoded({extend: false}));
 
 //routes: rutas que el cliente puede solicitar a los archivos
 app.use('/', customerRoutes);

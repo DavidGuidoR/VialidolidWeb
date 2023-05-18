@@ -6,25 +6,34 @@ const controller = {};
 
 controller.list = (req, res) => {
     req.getConnection((err, conn) =>{
-        conn.query('SELECT * FROM empleado', (err, empleados) =>{
+        conn.query('SELECT * FROM empleado', (err, empleado) =>{
             if(err){
                 res.json(err);
             }
-            console.log(empleados);
+            console.log(empleado);
             res.render('empleados', {
-                data:empleados
+                data:empleado
             });
             });
         }); 
     };
 
-    controller.ver = (req, res) =>{
-        req.getConnection((err, conn) =>{
-            conn.query('SELECT usuario, contrasena FROM empleado where usuario = ?', [data], (err, empleado) )
-            console.log(req.body);
-            res.send('encontrado');
-        })
-    }
+    controller.inicioSesion = (req, res) =>{
+        // De esta manera accedemos a los datos del req de manera individual
+        const usuario = req.body['usuario'];
+        const contrasena = req.body['contrasena'];
+        res.send('funciona');
+            req.getConnection((err, conn) =>{
+                conn.query('SELECT usuario, contrasena FROM empleado WHERE usuario=?', usuario, (err, empleado) => {
+                    if(err){
+                        res.send('Error en la consulta');
+                    } else {
+                    console.log(empleado);
+                    }
+                });
+            });
+
+    };
 
 controller.insert = (req, res) =>{
     
@@ -34,16 +43,16 @@ controller.insert = (req, res) =>{
         
         console.log(req.body);
         conn.query('INSERT INTO empleado set ?', [data], (err, empleado) => {
-
-            res.send('works');
             console.log(empleado);
             if(err){
-                console.log('error del registro');  
+                res.send('Registro fallido')
+            } else{
+                res.render('empleados',{
+                    data:empleado
+                });  
             }
-
         });
-    })
-    
-}
+    });  
+};
 
 module.exports=controller;
