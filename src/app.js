@@ -19,6 +19,7 @@ app.set('port',process.env.PORT || 4000);
 //Utilizamos un motor de plantillas de ejs el cual nos permite renderizar nuestros html en node
 app.set('view engine', 'ejs');  //configuración de uso de las plantillas
 app.set('views', path.join(__dirname, 'views'));    //Aqui establecemos la ruta de nuestra carpeta view mediante el modulo path, concatenando la ruta de app.js(_dirname) con view  
+app.set('layout', 'layout');
 
 //middlewares: Funciones se ejecutan entre la recepcion de una solicitud y el envió de una respuesta basicamente es un intermediario entre el cliente y el servidor
 app.use(morgan('dev'))  //mostrar mensajes por consola con dev

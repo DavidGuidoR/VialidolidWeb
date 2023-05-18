@@ -10,7 +10,7 @@ const customerController = require('../controllers/customerController');
 //Aqui escribiremos todas nuestras url que el servidor podra manejar
 
 //De esta manera utilizamos las funciones de nuestro customerController
-router.get('/', customerController.list);
+router.get('/', customerController.render);
 router.post('/inicioSesion', customerController.inicioSesion)
 router.post('/registro', customerController.insert);
 

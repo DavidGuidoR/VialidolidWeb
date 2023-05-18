@@ -1,0 +1,245 @@
+:root{
+    /* Declaración de nombres a cada color de la paleta de colores a utilizar
+    No resulta recomendable si tu diseño tiende a cambiar pero es funcional */
+    --Morado: #904DB0;
+    --MoradoBajo: #BF53B4;
+    --MoradoLaterales:#7B4CA4;
+    --Gris: #666666;
+    --NegroBotones: #22122A;
+    --azul: #136CF2;
+    --negro: #000000;
+    --blanco: #FFFFFF;
+
+
+    
+    /* Establecer configuraciones tipográficas globales al proyecto */
+    --font-size: 1.3rem;
+    --roboto:'Roboto', sans-serif;
+    --verdana:'Verdana', sans-serif;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after{
+    box-sizing: inherit;
+}
+
+body{
+    padding: 0;
+    margin: 0;
+    background-color: var(--blanco);
+}
+
+/* Quitamos el margen que poseen las etiquetas h1 a h3 */
+h1, h2, h3 {
+    margin: 0;
+
+}
+
+img{
+    width: 100%;
+}
+a{
+    text-decoration: none;
+}
+
+
+/* Lo que se ah hecho anteriormente es que es recomendable empezar con un formato general a usar
+y posteriormente según necesitemos generar excepciones de ello */
+
+/* Estilo barra de navegación  */
+#navegacion{
+    font-family: var(--verdana);
+    font-size: 80%;
+    padding: 2.5rem;
+    background-color: var(--Morado);
+}
+#navegacion a{
+    color: var(--blanco);
+
+}
+
+#navegacion ul{
+    /* Quitarle a la lista de la barra de navegacion los puntos que enumeran cada atributo */
+    list-style-type:none;
+    padding: 0;
+    margin: 0;
+    /* despliegue de los elementos de manera horizontal, justificados mediante un flexbox */
+    display: flex;
+    flex-flow:row wrap;
+    /* alineación  horizontal*/
+    justify-content: center;
+    /* alineación vertical */
+    align-items: center;
+    /* La instrucción gap nos permite seleccionar el espacio entre los componentes */
+    gap: 2rem;
+    font-size: 1rem;
+}
+
+#navegacion ul h1{
+    display: flex;
+    padding: 0;
+    flex-basis: 40%;
+}
+
+#navegacion img{
+    width:70px;
+    height:70px;
+    padding: 0 0.4rem 0 0.4rem;
+    margin: 0 auto;
+    display: flex;
+}
+#navegacion .botones1{
+    background-color: var(--NegroBotones);
+    border: 3px solid var(--negro);
+    display:flex;
+    flex-flow: row wrap;
+    flex-basis: auto;
+    padding: 0.8rem;
+    border-radius: 10px;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+    color: var(--blanco);
+}
+
+#navegacion .botones1:hover{
+    background-color: var(--negro);
+    color:var(--blanco);
+}
+
+/* Separador de secciones */
+.separador{
+    background: linear-gradient(90deg, rgba(227,167,255,1) 0%, rgba(34,18,42,1) 100%);
+    height: 3px;
+
+}
+
+/* Estilo hero */
+
+#hero {
+    padding: 1rem 1rem 1rem 6rem;
+    height: 100%;
+}
+#hero .texto{
+    text-align:left;
+    width: 600px;
+    height: 800px;
+}
+
+#hero h2, h3, h4, p{
+    margin: 1rem;
+}
+
+#hero h3{
+    font-size: 1.8rem;
+    color: var(--Gris);
+    width: 400px;
+    line-height: 1.5;
+}
+
+#hero h2{
+    font-size: 2.8rem;
+    color: var(--negro);
+    width: 600px;
+
+}
+
+#hero h4{
+    font-size: 2.8rem;
+    color:var(--MoradoBajo);
+    padding: 0;
+    width: 400px;
+}
+
+
+#hero p{
+    padding: 0;
+    font-size: 1.2rem;
+    color: var(--negro);
+    margin-bottom: 2rem;
+    width: 500px;
+}
+
+#hero a{
+    text-align: center;
+    color: var(--blanco);
+}
+
+/* Creación de link con formato de boton */
+.boton{
+    font-size: 1.3rem;
+    text-align: center;
+    background-color: var(--NegroBotones);
+    padding: 0.3rem;
+    border: 3px solid var(--negro);
+    border-radius: 0.3rem;
+    color: var(--blanco);
+    width: 200px;
+    margin: 1rem auto;
+    text-decoration: none;
+}
+
+.boton:hover{
+    background-color: var(--negro);
+    color:var(--blanco);
+}
+
+
+#hero .imagentexto{
+    width: 600px;
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    gap:2rem;
+    margin: 2rem auto;
+}
+
+#hero .imagentexto img{
+    grid-column: 1;
+}
+
+#hero .imagentexto .span1{
+    font-size: 2rem;
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    color: var(--azul);
+}
+
+#hero .imagentexto .span2{
+    font-size: 2rem;
+    grid-column: 3;
+    display: flex;
+    align-items: center;
+    text-align:left;
+    color: var(--Gris);
+}
+@media(min-width:550px){
+    article{
+        display: grid;
+        grid-template-rows: 800px;
+        grid-template-columns: 600px 1fr;
+        gap:2rem;
+    }
+
+
+
+    #hero .mapa{
+        grid-column: 2/3;
+        width:100%;
+        height:100%;
+        padding: 2rem;
+    }
+    
+    .texto{
+        grid-column: 1;
+        text-align: center;
+        align-items: center;
+    }
+}
