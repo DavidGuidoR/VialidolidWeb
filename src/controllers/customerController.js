@@ -16,6 +16,10 @@ const controller = {};
         res.render('registro');
         }
 
+    controller.pantallaMenuPrincipal = (req,res) => {
+        res.render('menuPrincipal');
+        }     
+
     controller.pantallaUsuarios = (req, res) => {
         req.getConnection((err, conn) => {
             conn.query('SELECT * FROM ciudadano', (err, usuarios) => {
