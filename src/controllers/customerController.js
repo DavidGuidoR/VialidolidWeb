@@ -22,12 +22,32 @@ const controller = {};
                 if (err) {
                     res.json(err);
                 } else{
-                console.log('aqui me muestra los usuarios')
-                res.render('moderacionusuarios', { usuarios});
+                console.log(usuarios);
+                res.render('moderacionusuarios',{data:usuarios});
                 }
             })
         });
     }
+
+    controller.pantallaReportes = (req, res) => {
+        function formatDate(date) {
+            const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+            const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+            return formattedDate;
+          }
+        req.getConnection((err, conn) => {
+            conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano AS nombre_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia', (err, reportes) => {
+                if (err) {
+                    res.json(err);
+                } else{
+                    console.log('Separacion en console log-------------------------------------------------------------------------');
+                console.log(reportes);
+                res.render('moderacionreportes',{data:reportes, formatDate: formatDate});
+                }  
+            })
+        });
+    }
+
         
 
     controller.inicioSesion = (req, res) =>{

@@ -15,5 +15,6 @@ router.post('/inicioSesion', customerController.inicioSesion)
 router.post('/registro', customerController.insert);
 router.get('/pantallaSesion', customerController.pantallaSesion);
 router.get('/pantallaRegistro', customerController.pantallaRegistro);
-router.get('/pantallaUsuarios', customerController.pantallaUsuarios)
+router.get('/pantallaUsuarios', customerController.pantallaUsuarios);
+router.get('/pantallaReportes', customerController.pantallaReportes);
 module.exports=router;
