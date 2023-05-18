@@ -29,6 +29,19 @@ const controller = {};
         });
     }
 
+    controller.pantallaEmpleados = (req, res) => {
+        req.getConnection((err, conn) => {
+            conn.query('SELECT * FROM empleado', (err, empleados) => {
+                if (err) {
+                    res.json(err);
+                } else{
+                console.log(empleados);
+                res.render('moderacionempleados',{data:empleados});
+                }
+            })
+        });
+    }
+
     controller.pantallaReportes = (req, res) => {
         function formatDate(date) {
             const options = { day: '2-digit', month: '2-digit', year: '2-digit' };

@@ -38,7 +38,7 @@
     <section id="mapa" class="map">
         <main>
             <div class="helpe">
-                REPORTES
+                Empleados
             </div>
             <div class="helper2">
 
@@ -46,36 +46,27 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>fecha</th>
-                            <th>Descripcion</th>
-                            <th>Latitud</th>
-                            <th>Longitud</th>
-                            <th>Apoyos</th>
-                            <th>Estatus</th>
-                            <th>N denuncias</th>
-                            <th>Referencias</th>
-                            <th>ID ciudadano</th>
-                            <th>Tipo reporte</th>
-                            <th>ID dependencia</th>
+                            <th>Cargo</th>
+                            <th>Nombre</th>
+                            <th>Apellido paterno</th>
+                            <th>Apellido materno</th>
+                            <th>Usuario</th>
+                            <th>Contraseña</th>
                         </tr>
                     </thead>
                     <tbody>
                         <%data.forEach(function(data) {%>
                         <tr>
-                            <td><%= data.id_reporte %></td>
-                            <td><%= formatDate(data.fecha)%></td>
-                            <td><%= data.descripcion %></td>
-                            <td><%= data.latitud%></td>
-                            <td><%= data.longitud %></td>
-                            <td><%= data.n_apoyos %></td>
-                            <td><%= data.estatus %></td>
-                            <td><%= data.n_denuncias %></td>
-                            <td><%= data.referencias%></td>
-                            <td><%= data.nombre_ciudadano%></td>
-                            <td><%= data.tipo_reporte%></td>
-                            <td><%= data.nombre_dependencia%></td>
+                            <td><%= data.id_empleado%></td>
+                            <td><%= data.cargo %></td>
+                            <td><%= data.nombre %></td>
+                            <td><%= data.apellido_paterno%></td>
+                            <td><%= data.apellido_materno %></td>
+                            <td><%= data.usuario %></td>
+                            <td><%= data.contrasena %></td>
                             
-                            <td><a href=/revisionreportes>Revisar</a></td>
+                            <td><a href=/editar>Editar</a></td>
+                            <td><a href=/eliminar>Eliminar</a></td>
                         </tr>
                         <% }); %>
                     </tbody>
