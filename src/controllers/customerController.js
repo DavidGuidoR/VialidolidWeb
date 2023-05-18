@@ -18,7 +18,7 @@ const controller = {};
 
     controller.pantallaMenuPrincipal = (req,res) => {
         res.render('menuPrincipal');
-        }
+        }     
 
     controller.pantallaUsuarios = (req, res) => {
         req.getConnection((err, conn) => {
