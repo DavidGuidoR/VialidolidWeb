@@ -243,3 +243,358 @@ y posteriormente según necesitemos generar excepciones de ello */
         align-items: center;
     }
 }
+
+
+/* Seccion del CSS de moderación ---------------------------------------------------------------------------------------------- */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    flex-wrap: wrap;
+}
+
+body {
+    display: inline;
+}
+
+div {
+    display: inline-flex;
+}
+
+#der {
+    width: 18%;
+
+    background-color: var(--color1);
+}
+
+.container2 {
+    height: 100vh;
+    display: flex;
+    align-items: stretch;
+}
+
+:root {
+    --color1: #904db0;
+}
+
+.seccion-text p {
+    margin: 20px 10px;
+}
+
+.seccion-text h1 {
+    margin: 20px 10px;
+}
+
+#hero2 {
+    width: 20%;
+}
+#fixall{
+    width: 100%;
+    height: 100%;
+}
+.barralateral{
+    /* flex: 1; */
+    width: 20%;
+    height: 100%;
+    padding: 20px;
+    background-color: var(--color1);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* height: 200px; */
+    /* border: 3px solid green;*/
+    
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #794CA7;
+    padding: 10px 5%;
+    min-height: 120px;
+    flex-wrap: wrap;
+
+    width: 100%;
+}
+
+.logo img {
+    height: 110px;
+
+    cursor: pointer;
+}
+
+.navbar .nav-links:hover {
+    transform: scale(1.1);
+
+}
+
+.nav-links {
+    list-style: none;
+    display: inline-flex;
+    padding-right: 40px;
+
+}
+
+.nav-links li {
+    margin: 0 15px;
+    transition: all;
+    cursor: pointer;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+
+.nav-links a:hover {
+    color: #333;
+}
+
+.nav-buttons {
+    display: flex;
+}
+
+.btn {
+    background-color: black;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+margin: 10px;
+}
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+#mod{
+    background-color: white;
+width: 180px;
+    color: black;
+}
+#usermod{
+    
+        background-color: white;
+        border: none;
+        color: black;
+        padding: 10px 20px;
+        border-radius: 50px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+        display: inline-flex;
+        align-items: center;
+        /* height: 60px; */
+        margin-bottom: 20px;
+    
+}
+.btn:hover {
+    background-color: #333;
+}
+
+.text-button {
+    font-size: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    flex: 1;
+    margin: 0px 10px;
+}
+
+.logo-button img {
+    max-width: 25px;
+    max-height: 25px;
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    object-fit: contain;
+}
+
+/*container del contenido del cuerpo de la pagina*/
+
+.container {
+    display: flex;
+    justify-content: center;
+    height: calc(100vh - 140px);
+    /*overflow: hidden; Añade esta propiedad para evitar el desplazamiento no deseado */
+    min-height: 400px;
+    /* Establece una altura mínima según tus necesidades */
+}
+.containermenu {
+    display: flex;
+
+    height: calc(100vh - 140px);
+    /*overflow: hidden; Añade esta propiedad para evitar el desplazamiento no deseado */
+    min-height: 400px;
+    /* Establece una altura mínima según tus necesidades */
+}
+
+.letrero1 {
+    color: #666666;
+    font-size: 30px;
+}
+
+.letrero2 {
+    color: black;
+    font-size: 50px;
+
+}
+
+.letrero3 {
+    color: #BF53B4;
+    font-size: 50px;
+}
+
+.letrero4 {
+    color: black;
+    font-size: 20px;
+}
+
+#enbloque {
+    display: flex;
+    height: 100px;
+}
+
+.button {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    height: 60px;
+
+}
+
+.button:hover {
+    background: linear-gradient(to bottom right, #7d3cff, #ff3d7f);
+}
+
+.imageninf {
+    width: 300px;
+    position: relative;
+
+
+}
+
+.seccion-text {
+    flex: 1;
+    width: 50%;
+    height: 100%;
+    padding: 20px;
+}
+
+.map {
+    flex: 1;
+    width: 50%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    position: relative;
+    /* Añade esta propiedad para que el iframe se base en este contenedor */
+}
+
+.map iframe {
+    position: absolute;
+    /* Añade esta propiedad para que el mapa ocupe el 100% del contenedor */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+@media(max-width:992px) {
+    .navbar {
+        flex-direction: column;
+        padding: 10px 0;
+    }
+
+    .letrero1 {
+        font-size: 24px;
+
+    }
+
+    .letrero2 {
+        font-size: 36px;
+        line-height: 1.2;
+    }
+
+    .letrero3 {
+        font-size: 36px;
+    }
+
+    .letrero4 {
+        font-size: 16px;
+    }
+
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .seccion-text {
+
+        width: 100%;
+        padding: 20px;
+    }
+
+    .map {
+        width: 100%;
+        height: auto;
+    }
+
+    .map iframe {
+        width: 100%;
+        height: 300px;
+        /* O cualquier altura que desees para el mapa en pantallas más pequeñas */
+    }
+}
+
+/* BARRA LATERAL
+
+*/
+
+
+
+.helper{
+    background:rgba(0,0,0,0.2);
+    color: black;
+    position:absolute;
+    top:25%;
+    left:50%;
+    transform:translate3d(-50%,-50%,0);
+    padding:1.2em 2em;
+    text-align:center;
+    border-radius:20px;
+    font-size:2em;
+    font-weight:bold;
+    
+
+}
+
+.helper2{
+    background:rgba(0,0,0,0.2);
+    color: black;
+    position:absolute;
+    top:25%;
+    left:50%;
+    transform:translate3d(-50%,-50%,0);
+    padding:1.2em 2em;
+    text-align:center;
+    border-radius:20px;
+    font-size:1em;
+    font-weight:bold;
+    
+
+}

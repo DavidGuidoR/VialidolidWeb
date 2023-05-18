@@ -15,6 +15,19 @@ const controller = {};
     controller.pantallaRegistro = (req,res) => {
         res.render('registro');
         }
+
+    controller.pantallaUsuarios = (req, res) => {
+        req.getConnection((err, conn) => {
+            conn.query('SELECT * FROM ciudadano', (err, usuarios) => {
+                if (err) {
+                    res.json(err);
+                } else{
+                console.log('aqui me muestra los usuarios')
+                res.render('moderacionusuarios', { usuarios});
+                }
+            })
+        });
+    }
         
 
     controller.inicioSesion = (req, res) =>{
@@ -26,13 +39,18 @@ const controller = {};
             req.getConnection((err, conn) =>{
                 //consulta a base de datos y nos envia el parametro de la consulta en empleado
                 conn.query('SELECT usuario, contrasena FROM empleado WHERE usuario=?', usuario, (err, empleado) => {
+                    //extraemos los datos de consulta
+                    const usuarioConsulta = empleado[0].usuario; 
+                    const contrasenaConsulta = empleado[0].contrasena;
+                    console.log(empleado);
+                    
                     if(err){
                         res.send('Error en la consulta');
                     } else {
                         //si usuario y contraseña es igual nos redirige a empleados en este caso seria un inicio de sesion exitoso
-                        if (usuario==empleado[0].usuario && contrasena==empleado[1].contrasena){
+                        if (usuario==usuarioConsulta && contrasena==contrasenaConsulta){
                             //redirige a la pagina empleados
-                            res.render('empleados');
+                            res.render('moderacion');
                         }
                         //si el usuario no es igual marca inicio de sesion fallido
                         else{

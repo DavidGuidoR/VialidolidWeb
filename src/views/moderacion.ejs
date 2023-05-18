@@ -1,3 +1,54 @@
-<%   include('partials/_header') %>
+<%- include('partials/_header')%>
+<nav class="navbar">
+    <div class="logo">
+        <a href="/index">
+            <img src="/images/v.svg" alt="Logotipo">
+        </a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="#">Realizar reporte</a></li>
+        <li><a href="#">Revisar reportes</a></li>
+        <li><a href="#">Perfil</a></li>
+        <li><a href="contact.php">Contacto</a></li>
 
-<% include('partials/_footer') %>
+
+    </ul>
+
+</nav>
+
+
+<div class="containermenu">
+
+    <section id="hero" class="barralateral">
+        <div class="center">
+            <button class="button" id="usermod">
+                <div><img src="images/ubicacion.png" width=18px, height="25px" class="logo-button"
+                        alt="Logo-button"></div>
+                <span class="text-button">Usuario:<br>Rol:</span>
+
+            </button>
+            <button class="btn" id="mod" onclick="location.href='/pantallaUsuarios'">Usuarios</button>
+            <button class="btn" id="mod" onclick="location.href='/vreportes'">Reportes</button>
+            <button class="btn" id="mod" onclick="location.href='/mensajes'">Mensajes</button>
+        </div>
+
+    </section>
+
+
+
+
+
+    <section id="mapa" class="map">
+        <main>
+            <div class="helper">
+                BIENVENIDO A LA GRIETA DEL INVOCADOR
+
+            </div>
+        </main>
+    </section>
+</div>
+
+
+
+
+<%- include('partials/_footer')%>
