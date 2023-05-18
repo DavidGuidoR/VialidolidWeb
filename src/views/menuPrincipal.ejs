@@ -5,7 +5,7 @@
         <h1>
             <li>
                 <a href="index.html">
-                <img src="./images/v.svg" alt="logo">
+                <img src="/images/v.svg" alt="logo">
                 </a>
             </li>
             <li>
@@ -27,11 +27,11 @@
         </div>
         <div class="botones1">
         <li>
-            <a href="#">Registrarse</a>
+            <a href="/pantallaRegistro">Registrarse</a>
         </li>
         </div>
         <div class="botones1">
-        <li><a id="btnSesion" href="#">Iniciar sesión</a></li>
+        <li><a id="btnSesion" href="/pantallaSesion">Iniciar sesión</a></li>
         </div>
 
     </ul>
@@ -70,7 +70,7 @@
         </a>
         </div>
         <div class="imagentexto">
-            <img src="./images/personas.png" alt="personas">
+            <img src="/images/personas.svg" alt="personas">
             <span class="span1"> + de 100</span>
             <span class="span2">Reportes solucionados</span>
         </div>
@@ -80,24 +80,4 @@
         </article>
     </section>
 
-    <!-- Seccion popup inicio de sesion -->
-    <dialog id="iniciarSesion">
-<h2>Iniciar sesión</h2>
-
-<form method="dialog">
-    <label for="usuario">Usuario:</label><br>
-    <input type="text" id="usuario" name="usuario"><br><br>
-
-    <label for="contraseña">Contraseña:</label><br>
-    <input type="password" id="contraseña" name="contraseña"><br><br>
-
-    <button type="submit">Iniciar sesión</button><br><br>
-
-    <a href="#">Olvidaste tu contraseña?</a>
-
-    <button id="btnCerrarVentana" type="submit">Cerrar dialogo</button>
-</form>
-</dialog>
-<script src="iniciosesion.js"></script>
-</body>
-
+<%- include("partials/_footer")%>

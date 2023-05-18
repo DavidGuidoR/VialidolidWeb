@@ -1,0 +1,20 @@
+<!-- De esta manera incluimos el header desde el documento partials -->
+<%- include('partials/_header')%> 
+    <h2>Iniciar sesión</h2>
+
+    <form action="/inicioSesion" method="post">
+        <label for="usuario">Usuario:</label><br>
+        <input type="text" id="usuario" name="usuario"><br><br>
+
+        <label for="contraseña">Contraseña:</label><br>
+        <input type="password" id="contraseña" name="contrasena"><br><br>
+
+        <button type="submit">Iniciar sesión</button><br><br>
+
+        <a href="#">Olvidaste tu contraseña?</a>
+
+        <button id="btnCerrarVentana" type="submit">Cerrar dialogo</button>
+    </form>
+    </dialog>
+
+<%- include("partials/_footer")%>

@@ -13,5 +13,7 @@ const customerController = require('../controllers/customerController');
 router.get('/', customerController.render);
 router.post('/inicioSesion', customerController.inicioSesion)
 router.post('/registro', customerController.insert);
+router.get('/pantallaSesion', customerController.pantallaSesion);
+router.get('/pantallaRegistro', customerController.pantallaRegistro);
 
 module.exports=router;
