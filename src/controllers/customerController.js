@@ -18,7 +18,11 @@ const controller = {};
 
     controller.pantallaMenuPrincipal = (req,res) => {
         res.render('menuPrincipal');
-        }     
+        }
+    
+    controller.plantillaModeracion = (req,res) => {
+        res.render('plantillamoderacion');
+        }   
 
     controller.pantallaUsuarios = (req, res) => {
         req.getConnection((err, conn) => {

@@ -19,4 +19,5 @@ router.get('/pantallaUsuarios', customerController.pantallaUsuarios);
 router.get('/pantallaReportes', customerController.pantallaReportes);
 router.get('/pantallaEmpleados', customerController.pantallaEmpleados);
 router.get('/pantallaMenuPrincipal',customerController.pantallaMenuPrincipal);
+router.get('/plantillaModeracion',customerController.plantillaModeracion);
 module.exports=router;
