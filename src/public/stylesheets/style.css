@@ -672,6 +672,11 @@ width: 180px;
 #contenidogeneral{
     position: fixed;
     height: 100%;
+    width: 100%;
+}
+
+#contenidogeneral .barralateral{
+    width: 40%;
 }
 
 .barralateral{
@@ -737,16 +742,18 @@ background-color: var(--MoradoLaterales);
 
 }
 
-#contenidogeneral .contenido{
-    background-color: var(--Griscontenido);
+#contenidogeneral .contenido {
+    display: flex;
     text-align: center;
     justify-content: center;
-    border-radius: 1rem;
-    color: var(--negro);
-    padding: 0;
-    margin: auto auto;
-    width: 40%;
-    
+    padding: 1rem;
+    margin: 0;
+    width: 100%;
+}
+
+.contenido p{
+    background-color: var(--Griscontenido);
+    width:auto;
 }
 
 @media(min-width:550px){
@@ -756,6 +763,7 @@ background-color: var(--MoradoLaterales);
         grid-template-rows: 100%;
         grid-template-columns: 20% 80%;
         gap:2rem;
+        width: 100%;
     }
 
     #contenidogeneral .barralateral{
