@@ -1,0 +1,773 @@
+:root{
+    /* Declaración de nombres a cada color de la paleta de colores a utilizar
+    No resulta recomendable si tu diseño tiende a cambiar pero es funcional */
+    --Morado: #904DB0;
+    --MoradoBajo: #BF53B4;
+    --MoradoLaterales:#7B4CA4;
+    --Gris: #666666;
+    --Griscontenido: #D9D9D9;
+    --NegroBotones: #22122A;
+    --azul: #136CF2;
+    --negro: #000000;
+    --blanco: #FFFFFF;
+
+
+    
+    /* Establecer configuraciones tipográficas globales al proyecto */
+    --font-size: 1.3rem;
+    --roboto:'Roboto', sans-serif;
+    --verdana:'Verdana', sans-serif;
+}
+
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after{
+    box-sizing: inherit;
+}
+
+body{
+    padding: 0;
+    margin: 0;
+    background-color: var(--blanco);
+}
+
+/* Quitamos el margen que poseen las etiquetas h1 a h3 */
+h1, h2, h3 {
+    margin: 0;
+
+}
+
+img{
+    width: 100%;
+}
+a{
+    text-decoration: none;
+}
+
+
+/* Lo que se ah hecho anteriormente es que es recomendable empezar con un formato general a usar
+y posteriormente según necesitemos generar excepciones de ello */
+
+/* Estilo barra de navegación  */
+#navegacion{
+    font-family: var(--verdana);
+    font-size: 80%;
+    padding: 2.5rem;
+    background-color: var(--Morado);
+}
+#navegacion a{
+    color: var(--blanco);
+
+}
+
+#navegacion ul{
+    /* Quitarle a la lista de la barra de navegacion los puntos que enumeran cada atributo */
+    list-style-type:none;
+    padding: 0;
+    margin: 0;
+    /* despliegue de los elementos de manera horizontal, justificados mediante un flexbox */
+    display: flex;
+    flex-flow:row wrap;
+    /* alineación  horizontal*/
+    justify-content: center;
+    /* alineación vertical */
+    align-items: center;
+    /* La instrucción gap nos permite seleccionar el espacio entre los componentes */
+    gap: 2rem;
+    font-size: 1rem;
+}
+
+#navegacion ul h1{
+    display: flex;
+    padding: 0;
+    flex-basis: 40%;
+}
+
+#navegacion img{
+    width:70px;
+    height:70px;
+    padding: 0 0.4rem 0 0.4rem;
+    margin: 0 auto;
+    display: flex;
+}
+#navegacion .botones1{
+    background-color: var(--NegroBotones);
+    border: 3px solid var(--negro);
+    display:flex;
+    flex-flow: row wrap;
+    flex-basis: auto;
+    padding: 0.8rem;
+    border-radius: 10px;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+    color: var(--blanco);
+}
+
+#navegacion .botones1:hover{
+    background-color: var(--negro);
+    color:var(--blanco);
+}
+
+/* Separador de secciones */
+.separador{
+    background: linear-gradient(90deg, rgba(227,167,255,1) 0%, rgba(34,18,42,1) 100%);
+    height: 3px;
+
+}
+
+/* Estilo hero */
+
+#hero {
+    padding: 1rem 1rem 1rem 6rem;
+    height: 100%;
+}
+#hero .texto{
+    text-align:left;
+    width: 600px;
+    height: 800px;
+}
+
+#hero h2, h3, h4, p{
+    margin: 1rem;
+}
+
+#hero h3{
+    font-size: 1.8rem;
+    color: var(--Gris);
+    width: 400px;
+    line-height: 1.5;
+}
+
+#hero h2{
+    font-size: 2.8rem;
+    color: var(--negro);
+    width: 600px;
+
+}
+
+#hero h4{
+    font-size: 2.8rem;
+    color:var(--MoradoBajo);
+    padding: 0;
+    width: 400px;
+}
+
+
+#hero p{
+    padding: 0;
+    font-size: 1.2rem;
+    color: var(--negro);
+    margin-bottom: 2rem;
+    width: 500px;
+}
+
+#hero a{
+    text-align: center;
+    color: var(--blanco);
+}
+
+/* Creación de link con formato de boton */
+.boton{
+    font-size: 1.3rem;
+    text-align: center;
+    background-color: var(--NegroBotones);
+    padding: 0.3rem;
+    border: 3px solid var(--negro);
+    border-radius: 0.3rem;
+    color: var(--blanco);
+    width: 200px;
+    margin: 1rem auto;
+    text-decoration: none;
+}
+
+.boton:hover{
+    background-color: var(--negro);
+    color:var(--blanco);
+}
+
+
+#hero .imagentexto{
+    width: 600px;
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    gap:2rem;
+    margin: 2rem auto;
+}
+
+#hero .imagentexto img{
+    grid-column: 1;
+}
+
+#hero .imagentexto .span1{
+    font-size: 2rem;
+    grid-column: 2;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 0 auto;
+    color: var(--azul);
+}
+
+#hero .imagentexto .span2{
+    font-size: 2rem;
+    grid-column: 3;
+    display: flex;
+    align-items: center;
+    text-align:left;
+    color: var(--Gris);
+}
+
+@media(min-width:550px){
+    #hero article{
+        display: grid;
+        grid-template-rows: 800px;
+        grid-template-columns: 600px 1fr;
+        gap:2rem;
+    }
+
+
+
+    #hero .mapa{
+        grid-column: 2/3;
+        width:100%;
+        height:100%;
+        padding: 2rem;
+    }
+    
+    .texto{
+        grid-column: 1;
+        text-align: center;
+        align-items: center;
+    }
+}
+
+
+/* Seccion del CSS de moderación ---------------------------------------------------------------------------------------------- */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    flex-wrap: wrap;
+}
+
+body {
+    display: inline;
+}
+
+div {
+    display: inline-flex;
+}
+
+#der {
+    width: 18%;
+
+    background-color: var(--color1);
+}
+
+.container2 {
+    height: 100vh;
+    display: flex;
+    align-items: stretch;
+}
+
+:root {
+    --color1: #904db0;
+}
+
+.seccion-text p {
+    margin: 20px 10px;
+}
+
+.seccion-text h1 {
+    margin: 20px 10px;
+}
+
+#hero2 {
+    width: 20%;
+}
+#fixall{
+    width: 100%;
+    height: 100%;
+}
+.barralateral{
+    /* flex: 1; */
+    width: 20%;
+    height: 100%;
+    padding: 20px;
+    background-color: var(--color1);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* height: 200px; */
+    /* border: 3px solid green;*/
+    
+}
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #794CA7;
+    padding: 10px 5%;
+    min-height: 120px;
+    flex-wrap: wrap;
+
+    width: 100%;
+}
+
+.logo img {
+    height: 110px;
+
+    cursor: pointer;
+}
+
+.navbar .nav-links:hover {
+    transform: scale(1.1);
+
+}
+
+.nav-links {
+    list-style: none;
+    display: inline-flex;
+    padding-right: 40px;
+
+}
+
+.nav-links li {
+    margin: 0 15px;
+    transition: all;
+    cursor: pointer;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+
+.nav-links a:hover {
+    color: #333;
+}
+
+.nav-buttons {
+    display: flex;
+}
+
+.btn {
+    background-color: black;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+margin: 10px;
+}
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+#mod{
+    background-color: white;
+width: 180px;
+    color: black;
+}
+#usermod{
+    
+        background-color: white;
+        border: none;
+        color: black;
+        padding: 10px 20px;
+        border-radius: 50px;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+        display: inline-flex;
+        align-items: center;
+        /* height: 60px; */
+        margin-bottom: 20px;
+    
+}
+.btn:hover {
+    background-color: #333;
+}
+
+.text-button {
+    font-size: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    flex: 1;
+    margin: 0px 10px;
+}
+
+.logo-button img {
+    max-width: 25px;
+    max-height: 25px;
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    object-fit: contain;
+}
+
+/*container del contenido del cuerpo de la pagina*/
+
+.container {
+    display: flex;
+    justify-content: center;
+    height: calc(100vh - 140px);
+    /*overflow: hidden; Añade esta propiedad para evitar el desplazamiento no deseado */
+    min-height: 400px;
+    /* Establece una altura mínima según tus necesidades */
+}
+.containermenu {
+    display: flex;
+
+    height: calc(100vh - 140px);
+    /*overflow: hidden; Añade esta propiedad para evitar el desplazamiento no deseado */
+    min-height: 400px;
+    /* Establece una altura mínima según tus necesidades */
+}
+
+.letrero1 {
+    color: #666666;
+    font-size: 30px;
+}
+
+.letrero2 {
+    color: black;
+    font-size: 50px;
+
+}
+
+.letrero3 {
+    color: #BF53B4;
+    font-size: 50px;
+}
+
+.letrero4 {
+    color: black;
+    font-size: 20px;
+}
+
+#enbloque {
+    display: flex;
+    height: 100px;
+}
+
+.button {
+    background-color: black;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    height: 60px;
+
+}
+
+.button:hover {
+    background: linear-gradient(to bottom right, #7d3cff, #ff3d7f);
+}
+
+.imageninf {
+    width: 300px;
+    position: relative;
+
+
+}
+
+.seccion-text {
+    flex: 1;
+    width: 50%;
+    height: 100%;
+    padding: 20px;
+}
+
+.map {
+    flex: 1;
+    width: 50%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    margin: 0;
+    position: relative;
+    /* Añade esta propiedad para que el iframe se base en este contenedor */
+}
+
+.map iframe {
+    position: absolute;
+    /* Añade esta propiedad para que el mapa ocupe el 100% del contenedor */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+@media(max-width:992px) {
+    .navbar {
+        flex-direction: column;
+        padding: 10px 0;
+    }
+
+    .letrero1 {
+        font-size: 24px;
+
+    }
+
+    .letrero2 {
+        font-size: 36px;
+        line-height: 1.2;
+    }
+
+    .letrero3 {
+        font-size: 36px;
+    }
+
+    .letrero4 {
+        font-size: 16px;
+    }
+
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .seccion-text {
+
+        width: 100%;
+        padding: 20px;
+    }
+
+    .map {
+        width: 100%;
+        height: auto;
+    }
+
+    .map iframe {
+        width: 100%;
+        height: 300px;
+        /* O cualquier altura que desees para el mapa en pantallas más pequeñas */
+    }
+}
+
+/* BARRA LATERAL
+
+*/
+
+
+
+.helper{
+    background:rgba(0,0,0,0.2);
+    color: black;
+    position:absolute;
+    top:25%;
+    left:50%;
+    transform:translate3d(-50%,-50%,0);
+    padding:1.2em 2em;
+    text-align:center;
+    border-radius:20px;
+    font-size:2em;
+    font-weight:bold;
+    
+
+}
+
+.helper2{
+    background:rgba(0,0,0,0.2);
+    color: black;
+    position:absolute;
+    top:25%;
+    left:50%;
+    transform:translate3d(-50%,-50%,0);
+    padding:1.2em 2em;
+    text-align:center;
+    border-radius:20px;
+    font-size:1em;
+    font-weight:bold;
+    
+
+}
+
+/* Estilo CSS de las pantallas de Moderacion ------------------------------------------------------------------------------------------*/
+
+/* Estilo CSS barra de navegacion--------------------------------------------------- */
+#navegacionmod{
+    font-family: var(--verdana);
+    font-size: 80%;
+    padding: 2.5rem;
+    background-color: var(--Morado);
+}
+
+#navegacionmod a{
+    color: var(--blanco);
+}
+
+#navegacionmod ul{
+    /* Quitarle a la lista de la barra de navegacion los puntos que enumeran cada atributo */
+    list-style-type:none;
+    padding: 0;
+    margin: 0;
+    /* despliegue de los elementos de manera horizontal, justificados mediante un flexbox */
+    display: flex;
+    flex-flow:row wrap;
+    /* alineación  horizontal*/
+    justify-content: center;
+    /* alineación vertical */
+    align-items: center;
+    /* La instrucción gap nos permite seleccionar el espacio entre los componentes */
+    gap: 2rem;
+    font-size: 1rem;
+}
+
+#navegacionmod ul h1{
+    display: flex;
+    padding: 0;
+    flex-basis: 50%;
+}
+
+#navegacionmod img{
+    width:70px;
+    height:70px;
+    padding: 0 0.4rem 0 0.4rem;
+    margin: 0 auto;
+    display: flex;
+}
+#navegacionmod .botonesmod{
+    background-color: var(--NegroBotones); 
+    border: 3px solid var(--negro);
+    display:flex;
+    flex-flow: row wrap;
+    flex-basis: auto;
+    border-radius: 5px;
+    align-items: center;
+    text-align: center;
+    gap: 10rem;
+}
+
+#navegacionmod .botonesmod li{
+    width: 10rem;
+    padding: 0.8rem;
+}
+
+#navegacionmod .botonesmod li a:hover{
+    font-size: 1.1rem;
+    color: var(--Morado);
+}
+
+/* Estilo CSS barra lateral ------------------------------------------------------- */
+
+#contenidogeneral{
+    position: fixed;
+    height: 100%;
+}
+
+.barralateral{
+background-color: var(--MoradoLaterales);
+}
+
+#contenidogeneral .barralateral .botoneslateral{
+    display: flex;
+    flex-direction: column;
+    padding: 0.8rem;
+    gap: 4rem;
+    align-items: center;
+    text-align: center;
+}
+
+/* Boton principal css con un grid interior para acomodar los objetos */
+.botoneslateral h1 span{
+    display:grid;
+    grid-template-columns: 20% 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    background-color: var(--blanco);
+    width: 18rem;
+    padding: 0.5rem;
+    border-radius: 1.5rem;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Acomodo de la imagen */
+.botoneslateral h1 span img{
+    width: auto;
+    height: auto;
+    grid-column: 1/2;
+    grid-row: 1/3;
+}
+
+/* Acomodo del texto usuario */
+/* nth-child selecciona la posicion de la etiqueta -1 en este casi si ponemos nth-child(2) seleccionara el p numero 1 y si ponemos nth-child(3) se selecciona el p numero 2 */
+.botoneslateral h1 span p:nth-child(2){
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+    grid-column: 2/4;
+    grid-row:1/2;
+}
+
+/* Acomodo del texto Rol */
+.botoneslateral h1 span p:nth-child(3){
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+    grid-column: 2/4;
+    grid-row: 2/3;
+}
+
+/* Formato botones */
+.botoneslateral a{
+    background-color: var(--blanco);
+    width: 12rem;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-radius: 1.5rem;
+
+}
+
+#contenidogeneral .contenido{
+    background-color: var(--Griscontenido);
+    text-align: center;
+    justify-content: center;
+    border-radius: 1rem;
+    color: var(--negro);
+    padding: 0;
+    margin: auto auto;
+    width: 40%;
+    
+}
+
+@media(min-width:550px){
+    #contenidogeneral article{
+        height: 100%;
+        display: grid;
+        grid-template-rows: 100%;
+        grid-template-columns: 20% 80%;
+        gap:2rem;
+    }
+
+    #contenidogeneral .barralateral{
+        grid-column: 1;
+        width:100%;
+        height:100%;
+        padding: 2rem;
+    }
+    
+    #contenidogeneral .contenido{
+        grid-column: 2;
+        text-align: center;
+        align-items: center;
+    }
+}

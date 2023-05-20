@@ -1,0 +1,92 @@
+<%- include('partials/_header') %>
+
+<nav class="navbar">
+    <div class="logo">
+        <a href="/pantallaMenuPrincipal">
+            <img src="/images/v.svg" alt="Logotipo">
+        </a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="#">Realizar reporte</a></li>
+        <li><a href="#">Revisar reportes</a></li>
+        <li><a href="#">Perfil</a></li>
+        <li><a href="contact.php">Contacto</a></li>
+
+
+    </ul>
+
+</nav>
+
+
+<div class="containermenu">
+
+    <section id="hero" class="barralateral">
+        <div class="center">
+            <button class="button" id="usermod">
+                <div><img src="images/ubicacion.png" width=18px, height="25px" class="logo-button"
+                        alt="Logo-button"></div>
+                <span class="text-button">Usuario:<br>Rol:</span>
+
+            </button>
+            <button class="btn" id="mod" onclick="location.href='/pantallaUsuarios'">Usuarios</button>
+            <button class="btn" id="mod" onclick="location.href='/pantallaReportes'">Reportes</button>
+            <button class="btn" id="mod" onclick="location.href='/pantallaEmpleados'">Empleados</button>
+        </div>
+
+    </section>
+
+    <section id="mapa" class="map">
+        <main>
+            <div class="helpe">
+                REPORTES
+            </div>
+            <div class="helper2">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>fecha</th>
+                            <th>Descripcion</th>
+                            <th>Latitud</th>
+                            <th>Longitud</th>
+                            <th>Apoyos</th>
+                            <th>Estatus</th>
+                            <th>N denuncias</th>
+                            <th>Referencias</th>
+                            <th>ID ciudadano</th>
+                            <th>Tipo reporte</th>
+                            <th>ID dependencia</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%data.forEach(function(data) {%>
+                        <tr>
+                            <td><%= data.id_reporte %></td>
+                            <td><%= formatDate(data.fecha)%></td>
+                            <td><%= data.descripcion %></td>
+                            <td><%= data.latitud%></td>
+                            <td><%= data.longitud %></td>
+                            <td><%= data.n_apoyos %></td>
+                            <td><%= data.estatus %></td>
+                            <td><%= data.n_denuncias %></td>
+                            <td><%= data.referencias%></td>
+                            <td><%= data.nombre_ciudadano%></td>
+                            <td><%= data.tipo_reporte%></td>
+                            <td><%= data.nombre_dependencia%></td>
+                            
+                            <td><a href=/revisionreportes>Revisar</a></td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+
+            </div>
+        </main>
+    </section>
+</div>
+
+
+
+
+<%- include('partials/_footer')%>

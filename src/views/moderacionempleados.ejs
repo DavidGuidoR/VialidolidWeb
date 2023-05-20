@@ -1,0 +1,83 @@
+<%- include('partials/_header') %>
+
+<nav class="navbar">
+    <div class="logo">
+        <a href="/pantallaMenuPrincipal">
+            <img src="/images/v.svg" alt="Logotipo">
+        </a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="#">Realizar reporte</a></li>
+        <li><a href="#">Revisar reportes</a></li>
+        <li><a href="#">Perfil</a></li>
+        <li><a href="contact.php">Contacto</a></li>
+
+
+    </ul>
+
+</nav>
+
+
+<div class="containermenu">
+
+    <section id="hero" class="barralateral">
+        <div class="center">
+            <button class="button" id="usermod">
+                <div><img src="images/ubicacion.png" width=18px, height="25px" class="logo-button"
+                        alt="Logo-button"></div>
+                <span class="text-button">Usuario:<br>Rol:</span>
+
+            </button>
+            <button class="btn" id="mod" onclick="location.href='/pantallaUsuarios'">Usuarios</button>
+            <button class="btn" id="mod" onclick="location.href='/pantallaReportes'">Reportes</button>
+            <button class="btn" id="mod" onclick="location.href='/pantallaEmpleadosg'">Empleados</button>
+        </div>
+
+    </section>
+
+    <section id="mapa" class="map">
+        <main>
+            <div class="helpe">
+                Empleados
+            </div>
+            <div class="helper2">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Cargo</th>
+                            <th>Nombre</th>
+                            <th>Apellido paterno</th>
+                            <th>Apellido materno</th>
+                            <th>Usuario</th>
+                            <th>Contraseña</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%data.forEach(function(data) {%>
+                        <tr>
+                            <td><%= data.id_empleado%></td>
+                            <td><%= data.cargo %></td>
+                            <td><%= data.nombre %></td>
+                            <td><%= data.apellido_paterno%></td>
+                            <td><%= data.apellido_materno %></td>
+                            <td><%= data.usuario %></td>
+                            <td><%= data.contrasena %></td>
+                            
+                            <td><a href=/editar>Editar</a></td>
+                            <td><a href=/eliminar>Eliminar</a></td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+
+            </div>
+        </main>
+    </section>
+</div>
+
+
+
+
+<%- include('partials/_footer')%>

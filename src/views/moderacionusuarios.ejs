@@ -1,0 +1,86 @@
+<%- include('partials/_header') %>
+
+<nav class="navbar">
+    <div class="logo">
+        <a href="/pantallaMenuPrincipal">
+            <img src="/images/v.svg" alt="Logotipo">
+        </a>
+    </div>
+    <ul class="nav-links">
+        <li><a href="#">Realizar reporte</a></li>
+        <li><a href="#">Revisar reportes</a></li>
+        <li><a href="#">Perfil</a></li>
+        <li><a href="">Contacto</a></li>
+
+
+    </ul>
+
+</nav>
+
+
+<div class="containermenu">
+
+    <section id="hero" class="barralateral">
+        <div class="center">
+            <button class="button" id="usermod">
+                <div><img src="images/ubicacion.png" width=18px, height="25px" class="logo-button"
+                        alt="Logo-button"></div>
+                <span class="text-button">Usuario:<br>Rol:</span>
+
+            </button>
+            <button class="btn" id="mod" onclick="location.href='/pantallaUsuarios'">Usuarios</button>
+            <button class="btn" id="mod" onclick="location.href='/pantallaReportes'">Reportes</button>
+            <button class="btn" id="mod" onclick="location.href='/pantallaEmpleados'">Empleados</button>
+        </div>
+
+    </section>
+
+    <section id="mapa" class="map">
+        <main>
+            <div class="helpe">
+                REPORTES
+            </div>
+            <div class="helper2">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido Paterno</th>
+                            <th>Apellido Materno</th>
+                            <th>Correo</th>
+                            <th>Teléfono</th>
+                            <th>Estado</th>
+                            <th>Ciudad</th>
+                            <th>Penalizaciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%data.forEach(function(data) {%>
+                        <tr>
+                            <td><%= data.id_ciudadano %></td>
+                            <td><%= data.nombre %></td>
+                            <td><%= data.apellido_paterno %></td>
+                            <td><%= data.apellido_materno %></td>
+                            <td><%= data.correo %></td>
+                            <td><%= data.telefono %></td>
+                            <td><%= data.estado %></td>
+                            <td><%= data.ciudad %></td>
+                            <td><%= data.n_penalizaciones %></td>
+                            <td><a href=/editar>Editar</a></td>
+                            <td><a href=/eliminar>Eliminar</a></td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+
+            </div>
+        </main>
+    </section>
+</div>
+
+
+
+
+<%- include('partials/_footer')%>
