@@ -5,6 +5,7 @@
     --MoradoBajo: #BF53B4;
     --MoradoLaterales:#7B4CA4;
     --Gris: #666666;
+    --Griscontenido: #D9D9D9;
     --NegroBotones: #22122A;
     --azul: #136CF2;
     --negro: #000000;
@@ -736,8 +737,16 @@ background-color: var(--MoradoLaterales);
 
 }
 
-#navegacionlateral .contenido{
-
+#contenidogeneral .contenido{
+    background-color: var(--Griscontenido);
+    text-align: center;
+    justify-content: center;
+    border-radius: 1rem;
+    color: var(--negro);
+    padding: 0;
+    margin: auto auto;
+    width: 40%;
+    
 }
 
 @media(min-width:550px){
