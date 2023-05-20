@@ -751,9 +751,12 @@ background-color: var(--MoradoLaterales);
     width: 100%;
 }
 
-.contenido p{
+.contenido div{
     background-color: var(--Griscontenido);
     width:auto;
+    padding: 0.8rem;
+    border-radius: 1rem;
+
 }
 
 @media(min-width:550px){
