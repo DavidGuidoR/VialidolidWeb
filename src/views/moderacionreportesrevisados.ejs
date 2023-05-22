@@ -1,0 +1,79 @@
+<%-   include('partials/_header') %> 
+    
+<section id="navegacionmod">
+    <ul>
+        <h1>
+            <li>
+                <a href="/pantallaMenuPrincipal">
+                <img src="/images/v.svg" alt="logo">
+                </a>
+            </li>
+            <li>
+                <a href="/pantallaMenuPrincipal">
+                    Vialidolid<br>denuncias ciudadanas
+                </a>
+            </li>
+        </h1>
+        <div class="botonesmod">
+            <li>
+                <a href="#">Perfil</a>
+            </li>
+            <li>
+                <a href="/pantallaMenuPrincipal">Cerrar Sesion</a>
+            </li>
+        </div>
+
+    </ul>
+</section>
+
+
+<section id="contenidogeneral">
+    <article>
+        <div class="barralateral">
+        <div class="botoneslateral">
+            <h1>
+                <span>
+                    <img src="/images/imagenperfil.svg">
+                    <p>Usuario: <%=session.usuario%></p>
+                    <p>Rol: <%=session.cargo%></p>
+                </span>
+            </h1>
+
+            <a href="/pantallaReportesRevisados">
+                Reportes revisados
+            </a>
+    
+            <a href="/pantallaReportesEntrantes">
+                Reportes entrantes
+            </a>
+    </div>
+    </div>
+    
+
+    <div class="contenido">
+        <container class="contenedorent">
+        <h1>Reportes entrantes</h1>
+        <p>Cantidad:</p>
+        <span>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" name="filtro" placeholder="Buscar reporte">
+            <i class="fa-solid fa-filter"></i>
+        </span>
+        <%data.forEach(function(data) { if(data.estatus=='revisado'){%>
+            <div class="reporteentrante">
+                <img src="/images/v.svg">
+                <p><%= data.tipo_reporte%></p>
+                <p><%= formatDate(data.fecha)%></p>
+                <p><%= data.estatus%></p>
+                <p><%= data.latitud + '' + data.longitud%></p>
+                <a href=/revisionreportes>Revisar</a>
+            </div>
+        <% }}); %>
+    </container>
+    </div>
+    </article>
+</section>
+
+
+
+<%- include('partials/_footer') %> 

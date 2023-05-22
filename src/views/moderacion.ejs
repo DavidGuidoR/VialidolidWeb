@@ -1,29 +1,25 @@
 <%- include('partials/_header')%>
-    
 <section id="navegacionmod">
     <ul>
         <h1>
             <li>
-                <a href="/pantallaMenuPrincipal">
+                <a href="/pantallaModeracion">
                 <img src="/images/v.svg" alt="logo">
                 </a>
             </li>
             <li>
-                <a href="/pantallaMenuPrincipal">
+                <a href="/pantallaModeracion">
                     Vialidolid<br>denuncias ciudadanas
                 </a>
             </li>
         </h1>
         <div class="botonesmod">
-        <li>
-            <a href="#">Empleados</a>
-        </li>
-        <li>
-            <a href="#">Dependencias</a>
-        </li>
-        <li>
-            <a href="#">Perfil</a>
-        </li>
+            <li>
+                <a href="#">Perfil</a>
+            </li>
+            <li>
+                <a href="/pantallaMenuPrincipal">Cerrar Sesion</a>
+            </li>
         </div>
 
     </ul>
@@ -37,16 +33,16 @@
      <h1>
         <span>
             <img src="/images/imagenperfil.svg">
-            <p>Usuario:</p>
-            <p>Rol:</p>
+            <p>Usuario: <%=session.usuario%></p>
+            <p>Rol: <%=session.cargo%></p>
         </span>
     </h1>
 
-        <a href="#">
+        <a href="/pantallaReportesRevisados">
             Reportes revisados
         </a>
 
-        <a href="#">
+        <a href="/pantallaReportesEntrantes">
             Reportes entrantes
         </a>
     </div>
@@ -54,7 +50,14 @@
     
 
     <div class="contenido">
-        <div>Bienvenido</div>
+        <div class="contenidomoderacion">
+            <p>
+                Bienvenido al panel de moderador
+            </p>
+            <p>
+                Esta es la seccion del moderador, desde aquí podrá consultar y revisar los reportes entrantes, agradecemos su cooperación.
+            </p>
+        </div>
     </div>
     </article>
 </section>

@@ -24,6 +24,40 @@ const controller = {};
         res.render('plantillamoderacion');
         }   
 
+    controller.pantallaReportesRevisados = (req,res) => {
+        function formatDate(date) {
+            const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+            const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+            return formattedDate;
+          }
+        req.getConnection((err, conn) => {
+            conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano AS nombre_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia', (err, reportes) => {
+                if (err) {
+                    res.json(err);
+                } else{
+                res.render('moderacionreportesrevisados',{data:reportes, formatDate: formatDate});
+                }  
+            })
+        });
+        }
+    
+    controller.pantallaReportesEntrantes = (req,res) => {
+        function formatDate(date) {
+            const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+            const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+            return formattedDate;
+             }
+        req.getConnection((err, conn) => {
+            conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano AS nombre_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia', (err, reportes) => {
+                if (err) {
+                    res.json(err);
+                } else{
+                res.render('moderacionreportesentrantes',{data:reportes, formatDate: formatDate});
+                }  
+            })
+        });
+        }
+
     controller.pantallaUsuarios = (req, res) => {
         req.getConnection((err, conn) => {
             conn.query('SELECT * FROM ciudadano', (err, usuarios) => {
@@ -71,36 +105,50 @@ const controller = {};
 
         
 
-    controller.inicioSesion = (req, res) =>{
-        // De esta manera accedemos a los datos del req de manera individual
+    controller.inicioSesion = (req, res) => {
+        // Obtenemos el usuario y la contraseña del cuerpo de la solicitud
         const usuario = req.body['usuario'];
         const contrasena = req.body['contrasena'];
-
-            //Establecemos la conexion con la base de datos
-            req.getConnection((err, conn) =>{
-                //consulta a base de datos y nos envia el parametro de la consulta en empleado
-                conn.query('SELECT usuario, contrasena FROM empleado WHERE usuario=?', usuario, (err, empleado) => {
-                    //extraemos los datos de consulta
-                    const usuarioConsulta = empleado[0].usuario; 
-                    const contrasenaConsulta = empleado[0].contrasena;
-                    console.log(empleado);
-                    
-                    if(err){
-                        res.send('Error en la consulta');
-                    } else {
-                        //si usuario y contraseña es igual nos redirige a empleados en este caso seria un inicio de sesion exitoso
-                        if (usuario==usuarioConsulta && contrasena==contrasenaConsulta){
-                            //redirige a la pagina empleados
-                            res.render('moderacion');
-                        }
-                        //si el usuario no es igual marca inicio de sesion fallido
-                        else{
-                            res.send('inicio de sesion fallido');
-                        }
-                    }
-                });
-            });
-    };
+      
+        // Establecemos la conexión con la base de datos
+        req.getConnection((err, conn) => {
+          // Consultamos la base de datos y obtenemos los datos del empleado
+          conn.query('SELECT usuario, contrasena, cargo FROM empleado WHERE usuario=?', usuario, (err, empleado) => {
+            // Verificamos si se produjo un error en la consulta
+            if (err) {
+              res.send('Error en la consulta');
+              console.log(err);
+            } else {
+              // Verificamos si se encontró un empleado con el usuario proporcionado
+              if (empleado.length > 0) {
+                // Extraemos los datos de la consulta
+                const usuarioConsulta = empleado[0].usuario;
+                const contrasenaConsulta = empleado[0].contrasena;
+                const cargo = empleado[0].cargo;
+      
+                // Comparamos el usuario y la contraseña con los datos de la consulta
+                if (usuario === usuarioConsulta && contrasena === contrasenaConsulta) {
+                  // Redirigimos a la página correspondiente según el cargo
+                  req.session.usuario = usuario;
+                  req.session.cargo = cargo;
+                  if (cargo === "moderador") {
+                    res.render('moderacion',{data:empleado});
+                  } else if (cargo === "administrador") {
+                    res.render('administracion',{data:empleado});
+                  } else {
+                    res.send('Cargo no reconocido');
+                  }
+                } else {
+                  res.send('Inicio de sesión fallido');
+                }
+              } else {
+                res.send('Usuario no encontrado');
+              }
+            }
+          });
+        });
+      };
+      
 
 controller.insert = (req, res) =>{
     

@@ -6,6 +6,7 @@ const path = require('path'); //extendemos el modulo path para los directorios
 const morgan = require('morgan');
 const mysql=require('mysql');
 const myConnection = require('express-myconnection');
+const session = require('express-session');
 
 const app = express();
 
@@ -28,9 +29,23 @@ app.use(myConnection(mysql,{
     user: 'root',
     password: '12345678A',
     port: 3306,
-    database: 'vialidolid'
+    database: 'vialidolid',
+    connectTimeout: 3600000,
 }, 'single'));  //Aqui establecemos la conexion a nuestra base de datos y establecemos la configuracion de acceso de la misma.
 
+
+app.use(session({
+    secret: '12345678',
+    resave: true,
+    saveUninitialized: true
+
+}));
+
+app.use((req, res, next) => {
+    res.locals.session = req.session;
+    next();
+  });
+  
 //middleware obtención de datos formulario
 app.use(express.urlencoded({extend: false}));
 
