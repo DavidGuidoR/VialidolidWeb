@@ -23,6 +23,76 @@ const controller = {};
     controller.plantillaModeracion = (req,res) => {
         res.render('plantillamoderacion');
         }   
+    
+    controller.pantallaAdministracion = (req,res) => {
+        res.render('plantillaadministracion');
+        }   
+    
+    controller.administracionEncargados = (req,res) => {
+        req.getConnection((err, conn) => {
+            conn.query('SELECT r.id_encargado, r.nombre, r.apellido_paterno, r.apellido_materno, c.nombre AS nombre_dependencia, r.usuario, r.contrasena FROM encargado_dependencia r JOIN dependencia c ON r.id_dependencia = c.id_dependencia', (err, encargados) => {
+                if (err) {
+                    res.json(err);
+                } else{
+                    console.log(encargados)
+                res.render('administracionencargados',{data:encargados});
+                }
+            })
+        });
+        }
+    
+    controller.administracionModeradores = (req,res) => {
+        req.getConnection((err, conn) => {
+            conn.query('SELECT * FROM empleado', (err, empleados) => {
+                if (err) {
+                    res.json(err);
+                } else{
+                res.render('administracionmoderadores',{data:empleados});
+                }
+            })
+        });
+        }
+    
+    controller.administracionDependencias = (req,res) => {
+        req.getConnection((err, conn) => {
+            conn.query('SELECT * FROM dependencia', (err, dependencias) => {
+                if (err) {
+                    res.json(err);
+                } else{
+                res.render('administraciondependencias',{data:dependencias});
+                }
+            })
+        });
+        }
+    
+    controller.administracionUsuarios = (req,res) => {
+        req.getConnection((err, conn) => {
+            conn.query('SELECT * FROM ciudadano', (err, usuarios) => {
+                if (err) {
+                    res.json(err);
+                } else{
+                res.render('administracionusuarios',{data:usuarios});
+                }
+            })
+        });
+        }
+    
+    controller.administracionReportes = (req,res) => {
+        function formatDate(date) {
+            const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+            const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+            return formattedDate;
+          }
+        req.getConnection((err, conn) => {
+            conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano AS nombre_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia', (err, reportes) => {
+                if (err) {
+                    res.json(err);
+                } else{
+                res.render('administracionreportes',{data:reportes, formatDate: formatDate});
+                }  
+            })
+        });
+    }
 
     controller.pantallaReportesRevisados = (req,res) => {
         function formatDate(date) {
