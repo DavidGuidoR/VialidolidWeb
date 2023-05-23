@@ -1,0 +1,126 @@
+<%- include('partials/_header') %>
+
+    <section id="navegacionmod">
+        <ul>
+            <h1>
+                <li>
+                    <a href="/pantallaMenuPrincipal">
+                        <img src="/images/v.svg" alt="logo">
+                    </a>
+                </li>
+                <li>
+                    <a href="/pantallaMenuPrincipal">
+                        Vialidolid<br>denuncias ciudadanas
+                    </a>
+                </li>
+            </h1>
+            <div class="botonesmod">
+                <li>
+                    <a href="#">Perfil</a>
+                </li>
+                <li>
+                    <a href="/pantallaMenuPrincipal">Cerrar Sesion</a>
+                </li>
+            </div>
+
+        </ul>
+    </section>
+
+
+    <section id="contenidogeneral">
+        <article>
+            <div class="barralateral">
+                <div class="botoneslateral">
+                    <h1>
+                        <span>
+                            <img src="/images/imagenperfil.svg">
+                            <p>Usuario: <%=session.usuario%>
+                            </p>
+                            <p>Rol: <%=session.cargo%>
+                            </p>
+                        </span>
+                    </h1>
+
+                    <a href="/pantallaReportesRevisados">
+                        Reportes revisados
+                    </a>
+
+                    <a href="/pantallaReportesEntrantes">
+                        Reportes entrantes
+                    </a>
+                </div>
+            </div>
+
+
+            <div class="contenido">
+                <container class="contenedorent">
+
+
+
+                    <%data.forEach(function(data) {%>
+
+                        <div id="desc">
+                            <div id="desc-titulo">
+                                <h3>Descripcion</h3>
+                                <h1>
+                                    <%= data.descripcion%>
+                                </h1>
+                            </div>
+                            <div class="wrapper" id="descrip">
+                                <div class="box1">
+                                    <img src="/images/v.svg" height="100px" width="100px">
+                                </div>
+                                <div>
+                                    <h3>Fecha</h3>
+                                    <%= formatDate(data.fecha)%>
+                                </div>
+                                <div>
+                                    <h3>Latitud y Longitud</h3>
+                                    <%= data.latitud + '' + data.longitud%>
+                                </div>
+                                <div>
+                                    <h3>Tipo de Reporte</h3>
+                                    <%= data.tipo_reporte%>
+                                </div>
+                                <div>
+                                    <h3># de Apoyos</h3>
+                                    <%= data.n_apoyos%>
+                                </div>
+                                <div>
+                                    <h3># de Denuncias</h3>
+                                    <%= data.n_denuncias%>
+                                </div>
+
+                                <div>
+                                    <h3>Estatus</h3>
+                                    <%= data.estatus%>
+                                </div>
+                            </div>
+                        </div>
+<div id="semifooter">
+    <center>
+    <form action="/cambiarestatus/<%= data.id_reporte %>" method="post">
+        <select id="estatuscb" name="estatuscb" class="select">
+
+            <option value="revisado" <%=data.estatus=='revisado' ? 'selected' : '' %>>revisado
+            </option>
+            <option value="pendiente" <%=data.estatus=='pendiente' ? 'selected' : '' %>>pendiente
+            </option>
+        </select>
+        <button type="submit" name="submit" class="button" id="sub">Aceptar Cambios</button>
+    </form>
+    <% }); %>
+</center>
+</div>
+                       
+
+
+
+                </container>
+            </div>
+        </article>
+    </section>
+
+
+
+    <%- include('partials/_footer') %>
