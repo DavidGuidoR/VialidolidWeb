@@ -1,3 +1,4 @@
+<!-- De esta manera incluimos el header desde el documento partials -->
 <%- include('partials/_header')%>
 <section id="navegacionmod">
     <ul>
@@ -61,15 +62,34 @@
 
     <div class="contenido">
         <div class="contenidomoderacion">
-            <p>
-                Bienvenido al panel de administración
-            </p>
-            <p>
-                Esta es la seccion del administrador, desde aquí podrá consultar, revisar y modificar los encargados de la dependencia, moderadores, dependencia, usuarios y reportes.
-            </p>
-            <p>
-                Agradecemos mucho su colaboración.
-            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Dependencia</th>
+                        <th>Usuario</th>
+                        <th>Contraseña</th>\
+                    </tr>
+                </thead>
+                <tbody>
+                    <%data.forEach(function(data) {%>
+                    <tr>
+                        <td><%= data.id_encargado %></td>
+                        <td><%= data.nombre %></td>
+                        <td><%= data.apellido_paterno %></td>
+                        <td><%= data.apellido_materno %></td>
+                        <td><%= data.nombre_dependencia %></td>
+                        <td><%= data.usuario%></td>
+                        <td><%= data.contrasena %></td>
+                        <td><a href=/editar>Editar</a></td>
+                        <td><a href=/eliminar>Eliminar</a></td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
         </div>
     </div>
     </article>

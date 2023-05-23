@@ -131,7 +131,6 @@ y posteriormente según necesitemos generar excepciones de ello */
 
 #hero {
     padding: 1rem 1rem 1rem 6rem;
-    height: 100%;
 }
 
 #hero .texto {
@@ -236,7 +235,7 @@ p {
 @media(min-width:550px) {
     #hero article {
         display: grid;
-        grid-template-rows: 800px;
+        grid-template-rows: 80vh;
         grid-template-columns: 600px 1fr;
         gap: 2rem;
     }
@@ -245,8 +244,8 @@ p {
 
     #hero .mapa {
         grid-column: 2/3;
-        width: 100%;
-        height: 100%;
+        width:100%;
+        height:80vh;
         padding: 2rem;
     }
 
@@ -740,8 +739,6 @@ div {
     width: 18rem;
     padding: 0.5rem;
     border-radius: 1.5rem;
-    align-items: center;
-    justify-content: center;
 }
 
 /* Acomodo de la imagen */
@@ -750,25 +747,33 @@ div {
     height: auto;
     grid-column: 1/2;
     grid-row: 1/3;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Acomodo del texto usuario */
 /* nth-child selecciona la posicion de la etiqueta -1 en este casi si ponemos nth-child(2) seleccionara el p numero 1 y si ponemos nth-child(3) se selecciona el p numero 2 */
-.botoneslateral h1 span p:nth-child(2) {
+.botoneslateral h1 span p:nth-child(2){
+    display: flex;
     font-size: 1rem;
     padding: 0;
     margin: 0;
     grid-column: 2/4;
-    grid-row: 1/2;
+    grid-row:1/2;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Acomodo del texto Rol */
-.botoneslateral h1 span p:nth-child(3) {
+.botoneslateral h1 span p:nth-child(3){
+    display: flex;
     font-size: 1rem;
     padding: 0;
     margin: 0;
     grid-column: 2/4;
     grid-row: 2/3;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Formato botones */
@@ -778,6 +783,11 @@ div {
     padding: 1rem;
     font-size: 1.2rem;
     border-radius: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: var(--negro);
 
 }
 
@@ -942,7 +952,7 @@ a {
     font-size: 2rem;
 }
 
-.contenidomoderacion p:nth-child(2) {
+.contenidomoderacion p:nth-child(2), p:nth-child(3){
     font-size: 1.5rem;
     text-align: justify;
 }
