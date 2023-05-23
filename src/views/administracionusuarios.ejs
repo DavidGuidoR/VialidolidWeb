@@ -1,3 +1,4 @@
+<!-- De esta manera incluimos el header desde el documento partials -->
 <%- include('partials/_header')%>
 <section id="navegacionmod">
     <ul>
@@ -61,15 +62,39 @@
 
     <div class="contenido">
         <div class="contenidomoderacion">
-            <p>
-                Bienvenido al panel de administración
-            </p>
-            <p>
-                Esta es la seccion del administrador, desde aquí podrá consultar, revisar y modificar los encargados de la dependencia, moderadores, dependencia, usuarios y reportes.
-            </p>
-            <p>
-                Agradecemos mucho su colaboración.
-            </p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Correo</th>
+                        <th>Teléfono</th>
+                        <th>Estado</th>
+                        <th>Ciudad</th>
+                        <th>Penalizaciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%data.forEach(function(data) {%>
+                    <tr>
+                        <td><%= data.id_ciudadano %></td>
+                        <td><%= data.nombre %></td>
+                        <td><%= data.apellido_paterno %></td>
+                        <td><%= data.apellido_materno %></td>
+                        <td><%= data.correo %></td>
+                        <td><%= data.telefono %></td>
+                        <td><%= data.estado %></td>
+                        <td><%= data.ciudad %></td>
+                        <td><%= data.n_penalizaciones %></td>
+                        <td><a href=/editar>Editar</a></td>
+                        <td><a href=/eliminar>Eliminar</a></td>
+                    </tr>
+                    <% }); %>
+                </tbody>
+            </table>
         </div>
     </div>
     </article>
