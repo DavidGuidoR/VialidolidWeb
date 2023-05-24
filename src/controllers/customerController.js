@@ -131,13 +131,18 @@ const controller = {};
 
     controller.insert = (req,res) => {
         const data = req.body;
+        const tabla = req.params.tabla;
+        console.log(tabla);
+        const tablaCapitalizada = tabla.charAt(0).toUpperCase() + tabla.slice(1)+'s';
+        const ruta ='/administracion'+ tablaCapitalizada;
+        const consulta = 'INSERT INTO ' + tabla + ' set ?';
 
         req.getConnection((err, conn) => {
-        conn.query('INSERT INTO dependencia set ?', [data], (err, data) => {
+        conn.query(consulta, [data], (err, data) => {
             if(err){
                 res.send('Registro fallido')
             } else{
-                res.redirect('/administracionDependencias')
+                res.redirect(ruta);
             }
         });
     }); 
@@ -169,7 +174,7 @@ const controller = {};
         }
 
     // Seccion edición de registros dinámicos
-    controller.edit = (req,res) =>{ 
+    controller.pantallaEdit = (req,res) =>{ 
         const id = req.params.id;
         console.log(id)
         const tabla = req.params.tabla;
@@ -196,20 +201,48 @@ const controller = {};
                 switch (tabla) {
                 
                 case 'dependencia':
-                    inputsHTML += '<input type="text" name="nombre" placeholder="'+data[0].nombre+'">';
-                    inputsHTML += '<input type="text" name="colonia" placeholder="'+data[0].colonia+'">';
-                    inputsHTML += '<input type="text" name="calle" placeholder="'+data[0].calle+'">';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="nombre" value="'+data[0].id_dependencia+'" readonly></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="nombre" value="'+data[0].nombre+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="colonia" value="'+data[0].colonia+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="calle" value="'+data[0].calle+'"></div>';
             // Otros campos para empleados
                     break;
       
-                case 'usuarios':
-                    inputsHTML += '<input type="text" name="username" placeholder="Nombre de usuario">';
-                    inputsHTML += '<input type="password" name="password" placeholder="Contraseña">';
+                case 'ciudadano':
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="id" value="'+data[0].id_ciudadano+'" readonly></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="nombre" value="'+data[0].nombre+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="apellido_paterno" value="'+data[0].apellido_paterno+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="apellido_materno" value="'+data[0].apellido_materno+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="correo" value="'+data[0].correo+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="contrasena" value="'+data[0].contrasena+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="telefono" value="'+data[0].telefono+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="estado" value="'+data[0].estado+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="ciudad" value="'+data[0].ciudad+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="n_penalizaciones" value="'+data[0].n_penalizaciones+'"></div>';
             // Otros campos para usuarios
                     break;
-      
+
+                case 'encargado_dependencia':
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="id" value="'+data[0].id_dependencia+'" readonly></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="nombre" value="'+data[0].nombre+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="apellido_paterno" value="'+data[0].apellido_paterno+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="apellido_materno" value="'+data[0].apellido_materno+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="id_dependencia" value="'+data[0].id_dependencia+'" readonly></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="usuario" value="'+data[0].usuario+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="contrasena" value="'+data[0].contrasena+'"></div>';
+                    break;
           // Otros casos para diferentes tipos de registros
-                    default:
+                case 'moderador':
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="id" value="'+data[0].id_empleado+'" readonly></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="cargo" value="'+data[0].cargo+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="nombre" value="'+data[0].nombre+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="apellido_paterno" value="'+data[0].apellido_paterno+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="apellido_materno" value="'+data[0].apellido_materno+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="usuario" value="'+data[0].usuario+'"></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="contrasena" value="'+data[0].contrasena+'"></div>';
+                break;
+          
+          default:
                     break;
         }
               
@@ -217,13 +250,15 @@ const controller = {};
                 console.error('Error al ejecutar la consulta:', err);
                 return;
                 } else{
-                  res.render('administracionedit', { data: data, inputsHTML });
+                  res.render('administracionedit', { data: data, inputsHTML,tabla });
                   }
         });
     });
     }
 
-        
+    controller.edit = (req,res) => {
+
+    }
 
     controller.inicioSesion = (req, res) => {
         // Obtenemos el usuario y la contraseña del cuerpo de la solicitud
