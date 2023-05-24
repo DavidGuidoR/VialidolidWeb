@@ -1,6 +1,7 @@
 // Aqui podemos exportar un objeto
 
 const { json } = require("body-parser");
+const { route } = require("../routes/customer");
 
 const controller = {};
 
@@ -128,49 +129,98 @@ const controller = {};
         });
         }
 
-    controller.pantallaUsuarios = (req, res) => {
+    controller.insert = (req,res) => {
+        const data = req.body;
+
         req.getConnection((err, conn) => {
-            conn.query('SELECT * FROM ciudadano', (err, usuarios) => {
-                if (err) {
-                    res.json(err);
-                } else{
-                console.log(usuarios);
-                res.render('moderacionusuarios',{data:usuarios});
-                }
-            })
+        conn.query('INSERT INTO dependencia set ?', [data], (err, data) => {
+            if(err){
+                res.send('Registro fallido')
+            } else{
+                res.redirect('/administracionDependencias')
+            }
         });
+    }); 
     }
 
-    controller.pantallaEmpleados = (req, res) => {
-        req.getConnection((err, conn) => {
-            conn.query('SELECT * FROM empleado', (err, empleados) => {
-                if (err) {
-                    res.json(err);
-                } else{
-                console.log(empleados);
-                res.render('moderacionempleados',{data:empleados});
-                }
-            })
-        });
-    }
+    controller.delete = (req, res) => {
+        const id = req.params.id;
+        const tabla = req.params.tabla;
+        const puntero = 'id_'+ tabla;
+        const tablaCapitalizada = tabla.charAt(0).toUpperCase() + tabla.slice(1)+'s';
+        const ruta ='/administracion'+ tablaCapitalizada;
+        const consulta = 'DELETE FROM '+ tabla + ' WHERE '+ puntero+ ' = ?';
 
-    controller.pantallaReportes = (req, res) => {
-        function formatDate(date) {
-            const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
-            const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
-            return formattedDate;
+        req.getConnection((err, conn) => {
+          if (err) {
+            console.error('Error al obtener la conexión:', err);
+            return;
           }
+          
+          conn.query(consulta, [id], (err, data) => {
+            if (err) {
+              console.error('Error al ejecutar la consulta:', err);
+              return;
+            } else{
+                res.redirect(ruta);
+                }
+            });
+          });
+        }
+
+    // Seccion edición de registros dinámicos
+    controller.edit = (req,res) =>{ 
+        const id = req.params.id;
+        console.log(id)
+        const tabla = req.params.tabla;
+        console.log(tabla)
+        const puntero = 'id_'+ tabla;
+        const tablaCapitalizada = tabla.charAt(0).toUpperCase() + tabla.slice(1)+'s';
+        const ruta ='/administracion'+ tablaCapitalizada;
+        const consulta = 'SELECT * FROM '+ tabla + ' WHERE '+ puntero+ ' = ?';
+        console.log(consulta)
+
+
         req.getConnection((err, conn) => {
-            conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano AS nombre_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia', (err, reportes) => {
+            if (err) {
+              console.error('Error al obtener la conexión:', err);
+              return;
+            }
+            conn.query(consulta, [id], (err, data) => {
+                console.log(data);
+                console.log(data[0].nombre);
+                console.log(data[0].colonia);
+                console.log(data[0].calle);
+              
+                let inputsHTML = '';
+                switch (tabla) {
+                
+                case 'dependencia':
+                    inputsHTML += '<input type="text" name="nombre" placeholder="'+data[0].nombre+'">';
+                    inputsHTML += '<input type="text" name="colonia" placeholder="'+data[0].colonia+'">';
+                    inputsHTML += '<input type="text" name="calle" placeholder="'+data[0].calle+'">';
+            // Otros campos para empleados
+                    break;
+      
+                case 'usuarios':
+                    inputsHTML += '<input type="text" name="username" placeholder="Nombre de usuario">';
+                    inputsHTML += '<input type="password" name="password" placeholder="Contraseña">';
+            // Otros campos para usuarios
+                    break;
+      
+          // Otros casos para diferentes tipos de registros
+                    default:
+                    break;
+        }
+              
                 if (err) {
-                    res.json(err);
+                console.error('Error al ejecutar la consulta:', err);
+                return;
                 } else{
-                    console.log('Separacion en console log-------------------------------------------------------------------------');
-                console.log(reportes);
-                res.render('moderacionreportes',{data:reportes, formatDate: formatDate});
-                }  
-            })
+                  res.render('administracionedit', { data: data, inputsHTML });
+                  }
         });
+    });
     }
 
         
@@ -220,24 +270,5 @@ const controller = {};
       };
       
 
-controller.insert = (req, res) =>{
-    
-    const data = req.body;
-
-    req.getConnection((err, conn) => {
-        
-        console.log(req.body);
-        conn.query('INSERT INTO empleado set ?', [data], (err, empleado) => {
-            console.log(empleado);
-            if(err){
-                res.send('Registro fallido')
-            } else{
-                res.render('empleados',{
-                    data:empleado
-                });  
-            }
-        });
-    });  
-};
 
 module.exports=controller;
