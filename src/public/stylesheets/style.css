@@ -819,6 +819,7 @@ div {
         grid-template-columns: 20% 80%;
         gap: 2rem;
         width: 100%;
+        margin: 0;
     }
 
     #contenidogeneral .barralateral {
@@ -832,6 +833,7 @@ div {
         grid-column: 2;
         text-align: center;
         align-items: center;
+        overflow-y: auto;
     }
 }
 
@@ -1085,6 +1087,139 @@ a {
     grid-row: 2/3;
 }
 
+
+/* Seccion CSS de las tablas del CRUD */
+.contenedorderecho {
+    overflow-y: auto;
+    width:100%;
+    height: 80vh;
+}
+
+.contenedorderecho .contenido{
+    width: 95%;
+}
+.contenedorderecho div{
+    margin: 0;
+    padding: 0.5rem;
+    width: 95%;
+}
+/*Permite que los bordes de los registros se junten  */
+.contenedorderecho table{
+    border-collapse: collapse;
+}
+
+.contenedorderecho th{
+    border: 1px solid var(--negro);
+    padding: 0.5rem;
+    background-color: var(--NegroBotones);
+    color: var(--blanco);
+}
+
+.contenedorderecho td{
+    border: 1px solid var(--negro);
+    padding: 0.5rem;
+    background-color: var(--blanco);
+    color: var(--Negro);
+}
+
+/* CSS formulario insert de administracion */
+.insercion{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.insercion form{
+    margin: 0.5rem;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 0.5rem;
+    border-radius: 2rem;
+    background-color: var(--Griscontenido);
+    border: 1px solid var(--negro);
+    width: 50%;
+    margin-bottom: 3rem;
+}
+
+.insercion img, h2, a{
+    padding: 0.5rem;
+}
+
+.insercion form a:first-child i{
+    background-color: var(--NegroBotones);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    color: var(--blanco);
+    
+}
+
+.insercion img{
+    width: 6rem;
+    border-radius: 5rem;
+}
+
+.insercion h2{
+    font-size: 1.5rem;
+}
+.insercion button{
+    margin: 0.5rem;
+    background-color: var(--NegroBotones);
+    color: var(--blanco);
+    border-radius: 1rem;
+    padding: 0.5rem;
+    border: 2px solid var(--negro);
+    font-size: 1rem;
+}
+
+.insercion button:hover{
+    background-color: var(--negro);
+    cursor: pointer;
+}
+
+.insercion .cajastexto{
+    display: grid;
+    width: auto;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    border-radius: 1rem;
+    background-color: var(--blanco);
+    padding: 0.5rem;
+    margin:0.5rem;
+}
+
+.insercion label{
+    font-size: 1rem;
+    padding-top: 0.5rem;
+}
+
+.insercion select{
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 10rem;
+}
+
+.insercion input{
+    background-color: var(--blanco);
+    border: none;
+    font-size: 1.2rem;
+    margin: 0.2rem;
+}
+
+.insercion input::placeholder{
+    background-color: var(--blanco);
+}
+.insercion input:not:placeholder-shown{
+    background-color: transparent;
+}
+.insercion input:focus{
+    outline: none;
+    border: none;
+}
+
 #desc-titulo,
 #desc {
     text-align: left;
@@ -1131,3 +1266,4 @@ h3 {
     margin: 0px;
     width: 90%;
   }
+

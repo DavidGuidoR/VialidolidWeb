@@ -39,29 +39,51 @@
         </span>
     </h1>
 
-        <a href="/administracionEncargados">
+        <a href="/administracionEncargado_dependencias">
             Encargados
         </a>
 
-        <a href="/administracionModeradores">
+        <a href="/administracionEmpleados">
             Moderadores
         </a>
         <a href="/administracionDependencias">
             Dependencias
         </a>
 
-        <a href="/administracionUsuarios">
+        <a href="/administracionCiudadanos">
             Usuarios
         </a>
-        <a href="administracionReportes">
+        <a href="/administracionReportes">
             Reportes
         </a>
     </div>
     </div>
     
-
+<section class="contenedorderecho">
     <div class="contenido">
         <div class="contenidomoderacion">
+
+            <section class="insercion">
+                
+
+                <form action="/insert/dependencia" method="post" onsubmit="return validarFormulario()">
+                    <h2>Registro</h2>
+                    <div class="cajastexto">
+                        <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+                    </div>
+                    
+                    <div class="cajastexto">
+                        <input type="text" id="colonia" name="colonia" placeholder="Colonia">
+                    </div>
+
+                    <div class="cajastexto">
+                        <input type="text" id="calle" name="calle" placeholder="Calle">
+                    </div>
+                    <button type="submit">Ingresar</button>
+                </form>
+
+            </section>
+
             <table>
                 <thead>
                     <tr>
@@ -69,6 +91,8 @@
                         <th>Nombre</th>
                         <th>Colonia</th>
                         <th>Calle</th>
+                        <th>Editar</th>
+                        <!-- <th>Eliminar</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -78,17 +102,33 @@
                         <td><%= data.nombre %></td>
                         <td><%= data.colonia %></td>
                         <td><%= data.calle %></td>
-                        <td><a href=/editar>Editar</a></td>
-                        <td><a href=/eliminar>Eliminar</a></td>
+                        <td><a href="/pantallaEdit/<%=data.id_dependencia%>/dependencia">Editar</a></td>
+                        <!-- <td><a href="/delete/<%=data.id_dependencia%>/dependencia">Eliminar</a></td> -->
                     </tr>
                     <% }); %>
                 </tbody>
             </table>
         </div>
     </div>
+</section>
     </article>
 </section>
 
 
 
 <%- include('partials/_footer')%>
+<script>
+    function validarFormulario() {
+      var nombre= document.getElementById('nombre').value;
+      var colonia = document.getElementById('colonia').value;
+      var calle = document.getElementById('calle').value;
+  
+      if (nombre === '' || colonia === '' || calle === '') {
+        alert('Por favor, rellena todos los campos');
+        return false; // Detiene el envío del formulario
+      }
+  
+      // Continuar con el envío del formulario si los campos están llenos
+      return true;
+    }
+  </script>

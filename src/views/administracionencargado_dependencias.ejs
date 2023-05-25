@@ -50,34 +50,52 @@
             Dependencias
         </a>
 
-        <a href="/administracionUsuarios">
+        <a href="/administracionCiudadanos">
             Usuarios
         </a>
-        <a href="/administracionReportes">
+        <a href="administracionReportes">
             Reportes
         </a>
     </div>
     </div>
     
-<section class="contenedorderecho">
+    <section class="contenedorderecho">
     <div class="contenido">
         <div class="contenidomoderacion">
-
             <section class="insercion">
                 
 
-                <form action="/insert/dependencia" method="post" onsubmit="return validarFormulario()">
+                <form action="/insert/encargado_dependencia" method="post" onsubmit="return validarFormulario()">
                     <h2>Registro</h2>
                     <div class="cajastexto">
                         <input type="text" id="nombre" name="nombre" placeholder="Nombre">
                     </div>
                     
                     <div class="cajastexto">
-                        <input type="text" id="colonia" name="colonia" placeholder="Colonia">
+                        <input type="text" id="apellido_paterno" name="apellido_paterno" placeholder="Apellido Paterno">
                     </div>
 
                     <div class="cajastexto">
-                        <input type="text" id="calle" name="calle" placeholder="Calle">
+                        <input type="text" id="apellido_materno" name="apellido_materno" placeholder="Apellido Materno">
+                    </div> 
+                    <label for="usuario">Dependencia:</label>
+                    
+                    <div class="cajastexto">    
+                        <select id="id_dependencia" name="id_dependencia">
+                            <option value="1">Ooapas</option>
+                            <option value="2">Centro de atención animal</option>
+                            <option value="3">Policía y transito</option>
+                            <option value="4">Secretaria De Servicios Públicos Municipales</option>
+                            <option value="5">Secretaría de Obras Públicas de Morelia</option>
+                        </select>
+                    </div>
+
+                    <div class="cajastexto">
+                        <input type="text" id="usuario" name="usuario" placeholder="Usuario">
+                    </div>
+
+                    <div class="cajastexto">
+                        <input type="text" id="contrasena" name="contrasena" placeholder="Contraseña">
                     </div>
                     <button type="submit">Ingresar</button>
                 </form>
@@ -89,8 +107,11 @@
                     <tr>
                         <th>ID</th>
                         <th>Nombre</th>
-                        <th>Colonia</th>
-                        <th>Calle</th>
+                        <th>Apellido Paterno</th>
+                        <th>Apellido Materno</th>
+                        <th>Dependencia</th>
+                        <th>Usuario</th>
+                        <th>Contraseña</th>
                         <th>Editar</th>
                         <th>Eliminar</th>
                     </tr>
@@ -98,30 +119,38 @@
                 <tbody>
                     <%data.forEach(function(data) {%>
                     <tr>
-                        <td><%= data.id_dependencia %></td>
+                        <td><%= data.id_encargado %></td>
                         <td><%= data.nombre %></td>
-                        <td><%= data.colonia %></td>
-                        <td><%= data.calle %></td>
-                        <td><a href="/pantallaEdit/<%=data.id_dependencia%>/dependencia">Editar</a></td>
-                        <td><a href="/delete/<%=data.id_dependencia%>/dependencia">Eliminar</a></td>
+                        <td><%= data.apellido_paterno %></td>
+                        <td><%= data.apellido_materno %></td>
+                        <td><%= data.nombre_dependencia %></td>
+                        <td><%= data.usuario%></td>
+                        <td><%= data.contrasena %></td>
+                        <td><a href="/pantallaEdit/<%=data.id_encargado%>/encargado_dependencia">Editar</a></td>
+                        <td><a href="/delete/<%=data.id_encargado%>/encargado_dependencia">Eliminar</a></td>
                     </tr>
                     <% }); %>
                 </tbody>
             </table>
         </div>
     </div>
-</section>
+    </section>
     </article>
 </section>
+
+
 
 <%- include('partials/_footer')%>
 <script>
     function validarFormulario() {
-      var nombre= document.getElementById('usuario').value;
-      var colonia = document.getElementById('colonia').value;
-      var calle = document.getElementById('calle').value;
+      var nombre= document.getElementById('nombre').value;
+      var apellidopaterno = document.getElementById('apellido_paterno').value;
+      var apellidmaterno = document.getElementById('apellido_materno').value
+      var dependencia = document.getElementById('id_dependencia').value;
+      var usuario = document.getElementById('usuario').value;
+      var contrasena = document.getElementById('contrasena').value;
   
-      if (nombre === '' || colonia === '' || calle === '') {
+      if (nombre === '' || apellidopaterno === '' || apellidmaterno === '' || dependencia === '' || usuario === '' || contrasena === '') {
         alert('Por favor, rellena todos los campos');
         return false; // Detiene el envío del formulario
       }
