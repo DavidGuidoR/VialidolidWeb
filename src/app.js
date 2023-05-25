@@ -25,9 +25,9 @@ app.set('layout', 'layout');
 //middlewares: Funciones se ejecutan entre la recepcion de una solicitud y el envió de una respuesta basicamente es un intermediario entre el cliente y el servidor
 app.use(morgan('dev'))  //mostrar mensajes por consola con dev
 app.use(myConnection(mysql,{
-    host:'localhost',
+    host:'137.117.123.255',
     user: 'root',
-    password: '',
+    password: '12345678A',
     port: 3306,
     database: 'vialidolid',
     connectTimeout: 3600000,

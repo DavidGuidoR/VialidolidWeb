@@ -1131,6 +1131,17 @@ background-color: var(--MoradoLaterales);
     margin:0.5rem;
 }
 
+.insercion label{
+    font-size: 1rem;
+    padding-top: 0.5rem;
+}
+
+.insercion select{
+    padding: 0.5rem;
+    font-size: 1rem;
+    width: 10rem;
+}
+
 .insercion input{
     background-color: var(--blanco);
     border: none;

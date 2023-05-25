@@ -39,14 +39,14 @@
         </span>
     </h1>
 
-        <a href="/administracionEncargados">
+        <a href="/administracionEncargado_dependencias">
             Encargados
         </a>
 
         <a href="/administracionModeradores">
             Moderadores
         </a>
-        <a href="/administracionDependencias">
+        <a href="/administracionEmpleados">
             Dependencias
         </a>
 
@@ -66,7 +66,7 @@
             <section class="insercion">
                 
 
-                <form action="/edicion" method="post" >
+                <form action="/edit/<%=tabla%>" method="post" >
                     <h2>Registro</h2>
                     <%- inputsHTML %>
                     <button type="submit">Ingresar</button>
@@ -74,6 +74,6 @@
             </section>
         </div>
     </div>
-
+    </section>
     </article>
 </section>

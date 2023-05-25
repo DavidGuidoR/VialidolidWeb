@@ -39,18 +39,18 @@
         </span>
     </h1>
 
-        <a href="/administracionEncargados">
+        <a href="/administracionEncargado_dependencias">
             Encargados
         </a>
 
-        <a href="/administracionModeradores">
+        <a href="/administracionEmpleados">
             Moderadores
         </a>
         <a href="/administracionDependencias">
             Dependencias
         </a>
 
-        <a href="/administracionUsuarios">
+        <a href="/administracionCiudadanos">
             Usuarios
         </a>
         <a href="/administracionReportes">
@@ -92,7 +92,7 @@
                         <th>Colonia</th>
                         <th>Calle</th>
                         <th>Editar</th>
-                        <th>Eliminar</th>
+                        <!-- <th>Eliminar</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -103,7 +103,7 @@
                         <td><%= data.colonia %></td>
                         <td><%= data.calle %></td>
                         <td><a href="/pantallaEdit/<%=data.id_dependencia%>/dependencia">Editar</a></td>
-                        <td><a href="/delete/<%=data.id_dependencia%>/dependencia">Eliminar</a></td>
+                        <!-- <td><a href="/delete/<%=data.id_dependencia%>/dependencia">Eliminar</a></td> -->
                     </tr>
                     <% }); %>
                 </tbody>
@@ -114,10 +114,12 @@
     </article>
 </section>
 
+
+
 <%- include('partials/_footer')%>
 <script>
     function validarFormulario() {
-      var nombre= document.getElementById('usuario').value;
+      var nombre= document.getElementById('nombre').value;
       var colonia = document.getElementById('colonia').value;
       var calle = document.getElementById('calle').value;
   

@@ -39,18 +39,18 @@
         </span>
     </h1>
 
-        <a href="/administracionEncargados">
+        <a href="/administracionEncargado_dependencias">
             Encargados
         </a>
 
-        <a href="/administracionModeradores">
+        <a href="/administracionEmpleados">
             Moderadores
         </a>
         <a href="/administracionDependencias">
             Dependencias
         </a>
 
-        <a href="/administracionUsuarios">
+        <a href="/administracionCiudadanos">
             Usuarios
         </a>
         <a href="administracionReportes">
@@ -59,9 +59,41 @@
     </div>
     </div>
     
-
+    <section class="contenedorderecho">
     <div class="contenido">
         <div class="contenidomoderacion">
+            
+            <section class="insercion">
+                
+
+                <form action="/insert/empleado" method="post" onsubmit="return validarFormulario()">
+                    <h2>Registro</h2>
+                        <input type="hidden" id="cargo" name="cargo" value="moderador">
+                    
+                    <div class="cajastexto">
+                        <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+                    </div>
+
+                    <div class="cajastexto">
+                        <input type="text" id="apellido_paterno" name="apellido_paterno" placeholder="Apellido Paterno">
+                    </div>
+
+                    <div class="cajastexto">
+                        <input type="text" id="apellido_materno" name="apellido_materno" placeholder="Apellido Materno">
+                    </div> 
+
+                    <div class="cajastexto">
+                        <input type="text" id="usuario" name="usuario" placeholder="Usuario">
+                    </div>
+
+                    <div class="cajastexto">
+                        <input type="text" id="contrasena" name="contrasena" placeholder="Contraseña">
+                    </div>
+
+                    <button type="submit">Ingresar</button>
+                </form>
+
+            </section>
             <table>
                 <thead>
                     <tr>
@@ -72,6 +104,8 @@
                         <th>Apellido materno</th>
                         <th>Usuario</th>
                         <th>Contraseña</th>
+                        <th>Editar</th>
+                        <th>Eliminar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -85,17 +119,36 @@
                         <td><%= data.usuario %></td>
                         <td><%= data.contrasena %></td>
                         
-                        <td><a href=/editar>Editar</a></td>
-                        <td><a href=/eliminar>Eliminar</a></td>
+                        <td><a href="/pantallaEdit/<%=data.id_empleado%>/empleado">Editar</a></td>
+                        <td><a href="/delete/<%=data.id_empleado%>/empleado">Eliminar</a></td>
                     </tr>
                     <% }}); %>
                 </tbody>
             </table>
         </div>
     </div>
+</section>
     </article>
 </section>
 
 
 
 <%- include('partials/_footer')%>
+<script>
+    function validarFormulario() {
+      var cargo= document.getElementById('cargo').value;
+      var nombre= document.getElementById('nombre').value;
+      var apellidopaterno = document.getElementById('apellido_paterno').value;
+      var apellidmaterno = document.getElementById('apellido_materno').value;
+      var usuario = document.getElementById('usuario').value;
+      var contrasena = document.getElementById('contrasena').value;
+  
+      if (cargo === '' || nombre === '' || apellidopaterno === '' || apellidmaterno === '' || dependencia === '' || usuario === '' || contrasena === '') {
+        alert('Por favor, rellena todos los campos');
+        return false; // Detiene el envío del formulario
+      }
+  
+      // Continuar con el envío del formulario si los campos están llenos
+      return true;
+    }
+  </script>

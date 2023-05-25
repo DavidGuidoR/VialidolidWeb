@@ -26,23 +26,23 @@ const controller = {};
         }   
     
     controller.pantallaAdministracion = (req,res) => {
-        res.render('plantillaadministracion');
+        res.render('administracion');
         }   
     
-    controller.administracionEncargados = (req,res) => {
+    controller.administracionEncargado_dependencias = (req,res) => {
         req.getConnection((err, conn) => {
             conn.query('SELECT r.id_encargado, r.nombre, r.apellido_paterno, r.apellido_materno, c.nombre AS nombre_dependencia, r.usuario, r.contrasena FROM encargado_dependencia r JOIN dependencia c ON r.id_dependencia = c.id_dependencia', (err, encargados) => {
                 if (err) {
                     res.json(err);
                 } else{
                     console.log(encargados)
-                res.render('administracionencargados',{data:encargados});
+                res.render('administracionencargado_dependencias',{data:encargados});
                 }
             })
         });
         }
     
-    controller.administracionModeradores = (req,res) => {
+    controller.administracionEmpleados = (req,res) => {
         req.getConnection((err, conn) => {
             conn.query('SELECT * FROM empleado', (err, empleados) => {
                 if (err) {
@@ -66,7 +66,7 @@ const controller = {};
         });
         }
     
-    controller.administracionUsuarios = (req,res) => {
+    controller.administracionCiudadanos = (req,res) => {
         req.getConnection((err, conn) => {
             conn.query('SELECT * FROM ciudadano', (err, usuarios) => {
                 if (err) {
@@ -151,7 +151,9 @@ const controller = {};
     controller.delete = (req, res) => {
         const id = req.params.id;
         const tabla = req.params.tabla;
-        const puntero = 'id_'+ tabla;
+        if(tabla=='encargado_dependencia'){
+            puntero = 'id_encargado'
+        } else{ puntero = 'id_'+ tabla;}
         const tablaCapitalizada = tabla.charAt(0).toUpperCase() + tabla.slice(1)+'s';
         const ruta ='/administracion'+ tablaCapitalizada;
         const consulta = 'DELETE FROM '+ tabla + ' WHERE '+ puntero+ ' = ?';
@@ -174,16 +176,17 @@ const controller = {};
         }
 
     // Seccion edición de registros dinámicos
-    controller.pantallaEdit = (req,res) =>{ 
-        const id = req.params.id;
-        console.log(id)
+    controller.pantallaEdit = (req,res) =>{
         const tabla = req.params.tabla;
-        console.log(tabla)
-        const puntero = 'id_'+ tabla;
+        var puntero = '';
+        const id = req.params.id;
+        if(tabla=='encargado_dependencia'){
+            puntero = 'id_encargado'
+        } else{ puntero = 'id_'+ tabla;}
+         
         const tablaCapitalizada = tabla.charAt(0).toUpperCase() + tabla.slice(1)+'s';
         const ruta ='/administracion'+ tablaCapitalizada;
         const consulta = 'SELECT * FROM '+ tabla + ' WHERE '+ puntero+ ' = ?';
-        console.log(consulta)
 
 
         req.getConnection((err, conn) => {
@@ -192,16 +195,12 @@ const controller = {};
               return;
             }
             conn.query(consulta, [id], (err, data) => {
-                console.log(data);
-                console.log(data[0].nombre);
-                console.log(data[0].colonia);
-                console.log(data[0].calle);
               
                 let inputsHTML = '';
                 switch (tabla) {
                 
                 case 'dependencia':
-                    inputsHTML += '<div class="cajastexto"><input type="text" name="nombre" value="'+data[0].id_dependencia+'" readonly></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="id_dependencia" value="'+data[0].id_dependencia+'" readonly></div>';
                     inputsHTML += '<div class="cajastexto"><input type="text" name="nombre" value="'+data[0].nombre+'"></div>';
                     inputsHTML += '<div class="cajastexto"><input type="text" name="colonia" value="'+data[0].colonia+'"></div>';
                     inputsHTML += '<div class="cajastexto"><input type="text" name="calle" value="'+data[0].calle+'"></div>';
@@ -209,7 +208,7 @@ const controller = {};
                     break;
       
                 case 'ciudadano':
-                    inputsHTML += '<div class="cajastexto"><input type="text" name="id" value="'+data[0].id_ciudadano+'" readonly></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="id_ciudadano" value="'+data[0].id_ciudadano+'" readonly></div>';
                     inputsHTML += '<div class="cajastexto"><input type="text" name="nombre" value="'+data[0].nombre+'"></div>';
                     inputsHTML += '<div class="cajastexto"><input type="text" name="apellido_paterno" value="'+data[0].apellido_paterno+'"></div>';
                     inputsHTML += '<div class="cajastexto"><input type="text" name="apellido_materno" value="'+data[0].apellido_materno+'"></div>';
@@ -223,7 +222,7 @@ const controller = {};
                     break;
 
                 case 'encargado_dependencia':
-                    inputsHTML += '<div class="cajastexto"><input type="text" name="id" value="'+data[0].id_dependencia+'" readonly></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="id_encargado" value="'+data[0].id_encargado+'"readonly></div>';
                     inputsHTML += '<div class="cajastexto"><input type="text" name="nombre" value="'+data[0].nombre+'"></div>';
                     inputsHTML += '<div class="cajastexto"><input type="text" name="apellido_paterno" value="'+data[0].apellido_paterno+'"></div>';
                     inputsHTML += '<div class="cajastexto"><input type="text" name="apellido_materno" value="'+data[0].apellido_materno+'"></div>';
@@ -232,9 +231,9 @@ const controller = {};
                     inputsHTML += '<div class="cajastexto"><input type="text" name="contrasena" value="'+data[0].contrasena+'"></div>';
                     break;
           // Otros casos para diferentes tipos de registros
-                case 'moderador':
-                    inputsHTML += '<div class="cajastexto"><input type="text" name="id" value="'+data[0].id_empleado+'" readonly></div>';
-                    inputsHTML += '<div class="cajastexto"><input type="text" name="cargo" value="'+data[0].cargo+'"></div>';
+                case 'empleado':
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="id_empleado" value="'+data[0].id_empleado+'" readonly></div>';
+                    inputsHTML += '<div class="cajastexto"><input type="text" name="cargo" value="'+data[0].cargo+'" readonly></div>';
                     inputsHTML += '<div class="cajastexto"><input type="text" name="nombre" value="'+data[0].nombre+'"></div>';
                     inputsHTML += '<div class="cajastexto"><input type="text" name="apellido_paterno" value="'+data[0].apellido_paterno+'"></div>';
                     inputsHTML += '<div class="cajastexto"><input type="text" name="apellido_materno" value="'+data[0].apellido_materno+'"></div>';
@@ -253,11 +252,44 @@ const controller = {};
                   res.render('administracionedit', { data: data, inputsHTML,tabla });
                   }
         });
+
     });
     }
 
     controller.edit = (req,res) => {
+        const tabla = req.params.tabla;
+        const datos = req.body;
+        const puntero = 'id_'+ tabla;
+        var id='';
+        switch (tabla) {
 
+            case 'dependencia': id = req.body.id_dependencia;
+                break;
+            
+            case 'empleado': id = req.body.id_empleado;
+                break;
+            case 'ciudadano': id = req.body.id_ciudadano;
+                break;
+            case 'encargado_dependencia': id = req.body.id_encargado;
+                break;
+            default: console.log('error en el ID');
+                break;
+        }
+    
+        const tablaCapitalizada = tabla.charAt(0).toUpperCase() + tabla.slice(1)+'s';
+        const ruta ='/administracion'+ tablaCapitalizada;
+        const consulta = 'UPDATE '+tabla+' set ? WHERE '+puntero+ '= ?'
+        req.getConnection((err,conn) =>{
+            conn.query(consulta,[datos,id], (err,data) =>{
+                if(err){
+                    res.send('error en la actualización');
+                    console.log(err);
+                } else{
+                    res.redirect(ruta);
+                }
+
+            })
+        })
     }
 
     controller.inicioSesion = (req, res) => {
