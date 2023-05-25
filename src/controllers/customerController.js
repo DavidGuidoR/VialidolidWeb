@@ -260,7 +260,10 @@ controller.render = (req, res) => {
     controller.edit = (req,res) => {
         const tabla = req.params.tabla;
         const datos = req.body;
-        const puntero = 'id_'+ tabla;
+        var puntero = '';
+        if(tabla=='encargado_dependencia'){
+            puntero = 'id_encargado'
+        } else{ puntero = 'id_'+ tabla;}
         var id='';
         switch (tabla) {
 
