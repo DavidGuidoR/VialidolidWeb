@@ -21,8 +21,8 @@ controller.render = (req, res) => {
         res.render('menuPrincipal');
         }
     
-    controller.plantillaModeracion = (req,res) => {
-        res.render('plantillamoderacion');
+    controller.pantallaModeracion = (req,res) => {
+        res.render('moderacion');
         }   
     
     controller.pantallaAdministracion = (req,res) => {

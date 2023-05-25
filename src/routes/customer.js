@@ -25,7 +25,7 @@ router.get('/administracionEmpleados', customerController.administracionEmpleado
 router.get('/administracionDependencias', customerController.administracionDependencias);
 router.get('/administracionCiudadanos', customerController.administracionCiudadanos);
 router.get('/administracionReportes', customerController.administracionReportes);
-router.get('/plantillaModeracion',customerController.plantillaModeracion);
+router.get('/pantallaModeracion',customerController.pantallaModeracion);
 router.get('/menumoderacion',customerController.menumoderacion);
 router.get('/pantallaReportesEntrantes',customerController.pantallaReportesEntrantes);
 router.get('/pantallaReportesRevisados',customerController.pantallaReportesRevisados);
