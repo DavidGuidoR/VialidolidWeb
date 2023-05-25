@@ -66,7 +66,7 @@
                 <p><%= formatDate(data.fecha)%></p>
                 <p><%= data.estatus%></p>
                 <p><%= data.latitud + '' + data.longitud%></p>
-                <a href=/revisionreportes>Revisar</a>
+                <a href="/pantallaVisualizarReporte/<%= data.id_reporte %>">Revisar</a>
             </div>
         <% }}); %>
     </container>

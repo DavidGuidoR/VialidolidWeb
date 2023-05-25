@@ -60,13 +60,14 @@
             <i class="fa-solid fa-filter"></i>
         </span>
         <%data.forEach(function(data) { if(data.estatus=='revisado'){%>
+            
             <div class="reporteentrante">
                 <img src="/images/v.svg">
                 <p><%= data.tipo_reporte%></p>
                 <p><%= formatDate(data.fecha)%></p>
                 <p><%= data.estatus%></p>
                 <p><%= data.latitud + '' + data.longitud%></p>
-                <a href=/revisionreportes>Revisar</a>
+                <a href="/pantallaVisualizarReporte/<%= data.id_reporte %>">Revisar</a>
             </div>
         <% }}); %>
     </container>

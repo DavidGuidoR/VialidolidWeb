@@ -26,6 +26,9 @@ router.get('/administracionDependencias', customerController.administracionDepen
 router.get('/administracionCiudadanos', customerController.administracionCiudadanos);
 router.get('/administracionReportes', customerController.administracionReportes);
 router.get('/plantillaModeracion',customerController.plantillaModeracion);
+router.get('/menumoderacion',customerController.menumoderacion);
 router.get('/pantallaReportesEntrantes',customerController.pantallaReportesEntrantes);
 router.get('/pantallaReportesRevisados',customerController.pantallaReportesRevisados);
+router.get('/pantallaVisualizarReporte/:id_reporte',customerController.pantallaVisualizarReporte);
+router.post('/cambiarestatus/:id_reporte', customerController.cambiarestatus);
 module.exports=router;

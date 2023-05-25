@@ -5,9 +5,9 @@ const { route } = require("../routes/customer");
 
 const controller = {};
 
-    controller.render = (req, res) => {
-        res.render('menuPrincipal');
-            }
+controller.render = (req, res) => {
+    res.render('menuPrincipal');
+}
 
     controller.pantallaSesion = (req,res) => {
         res.render('inicioSesion');
@@ -147,6 +147,7 @@ const controller = {};
         });
     }); 
     }
+
 
     controller.delete = (req, res) => {
         const id = req.params.id;
@@ -292,50 +293,186 @@ const controller = {};
         })
     }
 
-    controller.inicioSesion = (req, res) => {
-        // Obtenemos el usuario y la contraseña del cuerpo de la solicitud
-        const usuario = req.body['usuario'];
-        const contrasena = req.body['contrasena'];
-      
-        // Establecemos la conexión con la base de datos
-        req.getConnection((err, conn) => {
-          // Consultamos la base de datos y obtenemos los datos del empleado
-          conn.query('SELECT usuario, contrasena, cargo FROM empleado WHERE usuario=?', usuario, (err, empleado) => {
+    controller.pantallaVisualizarReporte = (req, res)=>{
+        const {id_reporte} =req.params;
+        function formatDate(date) {
+            const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+            const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+            return formattedDate;
+        }
+    req.getConnection((err, conn) => {
+   
+        conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano AS nombre_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia WHERE r.id_reporte = ?',[id_reporte], (err, reportes) => {
+            if (err) {
+                res.json(err);
+            } else {
+                console.log('Separacion en console log-------------------------------------------------------------------------');
+                console.log(reportes);
+                res.render('moderacionvisualizarreporte', { data: reportes, formatDate: formatDate });
+            }
+        })
+    });
+
+    }
+
+
+
+controller.pantallaRegistro = (req, res) => {
+    res.render('registro');
+}
+
+controller.menumoderacion = (req, res) => {
+    res.render('moderacion');
+}
+
+
+controller.pantallaMenuPrincipal = (req, res) => {
+    res.render('menuPrincipal');
+}
+
+controller.plantillaModeracion = (req, res) => {
+    res.render('plantillamoderacion');
+}
+
+controller.cambiarestatus = (req, res) => {
+    const {id_reporte} =req.params;
+    const newCustumer =req.body['estatuscb'];
+    req.getConnection((err, conn) =>{
+        conn.query('UPDATE reporte set estatus = ? WHERE id_reporte = ?',[newCustumer, id_reporte], (err, reportes) => {
+            if (err) {
+                res.json(err);
+            } else {
+                res.redirect('/menumoderacion');
+            }
+        })
+    });
+}
+
+controller.pantallaReportesRevisados = (req, res) => {
+    function formatDate(date) {
+        const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+        const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+        return formattedDate;
+    }
+    req.getConnection((err, conn) => {
+        conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano AS nombre_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia', (err, reportes) => {
+            if (err) {
+                res.json(err);
+            } else {
+                res.render('moderacionreportesrevisados', { data: reportes, formatDate: formatDate });
+            }
+        })
+    });
+}
+
+controller.pantallaReportesEntrantes = (req, res) => {
+    function formatDate(date) {
+        const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+        const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+        return formattedDate;
+    }
+    req.getConnection((err, conn) => {
+        conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano AS nombre_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia', (err, reportes) => {
+            if (err) {
+                res.json(err);
+            } else {
+                res.render('moderacionreportesentrantes', { data: reportes, formatDate: formatDate });
+            }
+        })
+    });
+}
+
+controller.pantallaUsuarios = (req, res) => {
+    req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM ciudadano', (err, usuarios) => {
+            if (err) {
+                res.json(err);
+            } else {
+                console.log(usuarios);
+                res.render('moderacionusuarios', { data: usuarios });
+            }
+        })
+    });
+}
+
+controller.pantallaEmpleados = (req, res) => {
+    req.getConnection((err, conn) => {
+        conn.query('SELECT * FROM empleado', (err, empleados) => {
+            if (err) {
+                res.json(err);
+            } else {
+                console.log(empleados);
+                res.render('moderacionempleados', { data: empleados });
+            }
+        })
+    });
+}
+
+controller.pantallaReportes = (req, res) => {
+    function formatDate(date) {
+        const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+        const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+        return formattedDate;
+    }
+    req.getConnection((err, conn) => {
+        conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano AS nombre_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia', (err, reportes) => {
+            if (err) {
+                res.json(err);
+            } else {
+                console.log('Separacion en console log-------------------------------------------------------------------------');
+                console.log(reportes);
+                res.render('moderacionreportes', { data: reportes, formatDate: formatDate });
+            }
+        })
+    });
+}
+
+
+
+controller.inicioSesion = (req, res) => {
+    // Obtenemos el usuario y la contraseña del cuerpo de la solicitud
+    const usuario = req.body['usuario'];
+    const contrasena = req.body['contrasena'];
+
+    // Establecemos la conexión con la base de datos
+    req.getConnection((err, conn) => {
+        // Consultamos la base de datos y obtenemos los datos del empleado
+        conn.query('SELECT usuario, contrasena, cargo FROM empleado WHERE usuario=?', usuario, (err, empleado) => {
             // Verificamos si se produjo un error en la consulta
             if (err) {
-              res.send('Error en la consulta');
-              console.log(err);
+                res.send('Error en la consulta');
+                console.log(err);
             } else {
-              // Verificamos si se encontró un empleado con el usuario proporcionado
-              if (empleado.length > 0) {
-                // Extraemos los datos de la consulta
-                const usuarioConsulta = empleado[0].usuario;
-                const contrasenaConsulta = empleado[0].contrasena;
-                const cargo = empleado[0].cargo;
-      
-                // Comparamos el usuario y la contraseña con los datos de la consulta
-                if (usuario === usuarioConsulta && contrasena === contrasenaConsulta) {
-                  // Redirigimos a la página correspondiente según el cargo
-                  req.session.usuario = usuario;
-                  req.session.cargo = cargo;
-                  if (cargo === "moderador") {
-                    res.render('moderacion',{data:empleado});
-                  } else if (cargo === "administrador") {
-                    res.render('administracion',{data:empleado});
-                  } else {
-                    res.send('Cargo no reconocido');
-                  }
+                // Verificamos si se encontró un empleado con el usuario proporcionado
+                if (empleado.length > 0) {
+                    // Extraemos los datos de la consulta
+                    const usuarioConsulta = empleado[0].usuario;
+                    const contrasenaConsulta = empleado[0].contrasena;
+                    const cargo = empleado[0].cargo;
+
+                    // Comparamos el usuario y la contraseña con los datos de la consulta
+                    if (usuario === usuarioConsulta && contrasena === contrasenaConsulta) {
+                        // Redirigimos a la página correspondiente según el cargo
+                        req.session.usuario = usuario;
+                        req.session.cargo = cargo;
+                        if (cargo === "moderador") {
+                            res.render('moderacion', { data: empleado });
+                        } else if (cargo === "administrador") {
+                            res.render('administracion', { data: empleado });
+                        } else {
+                            res.send('Cargo no reconocido');
+                        }
+                    } else {
+                        res.send('Inicio de sesión fallido');
+                    }
                 } else {
-                  res.send('Inicio de sesión fallido');
+                    res.send('Usuario no encontrado');
                 }
-              } else {
-                res.send('Usuario no encontrado');
-              }
             }
-          });
         });
-      };
-      
+    });
+};
 
 
-module.exports=controller;
+
+module.exports = controller;
