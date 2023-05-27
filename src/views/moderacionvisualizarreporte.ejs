@@ -87,8 +87,7 @@
                                     <%= data.n_apoyos%>
                                 </div>
                                 <div>
-                                    <h3># de Denuncias</h3>
-                                    <%= data.n_denuncias%>
+                                    <a href="/penalizar/<%= data.id_reporte %>"><button class="button">Penalizar</button></a>
                                 </div>
 
                                 <div>
@@ -109,10 +108,11 @@
         </select>
         <button type="submit" name="submit" class="button" id="sub">Aceptar Cambios</button>
     </form>
-    <% }); %>
 </center>
 </div>
-                       
+         
+    <% }); %>
+              
 
 
 

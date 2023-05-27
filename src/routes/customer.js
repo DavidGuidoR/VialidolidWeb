@@ -30,4 +30,7 @@ router.get('/pantallaReportesEntrantes',customerController.pantallaReportesEntra
 router.get('/pantallaReportesRevisados',customerController.pantallaReportesRevisados);
 router.get('/pantallaVisualizarReporte/:id_reporte',customerController.pantallaVisualizarReporte);
 router.post('/cambiarestatus/:id_reporte', customerController.cambiarestatus);
+
+router.post('/penalizarreporte/:id_reporte', customerController.penalizarreporte);
+router.get('/penalizar/:id_reporte',customerController.penalizar);
 module.exports=router;
