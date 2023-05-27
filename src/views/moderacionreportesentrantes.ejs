@@ -51,7 +51,7 @@
     
 
     <div class="contenido">
-        <container class="contenedorent">
+        <container class="contenedorent" id="reportesvis">
         <h1>Reportes entrantes</h1>
         <p>Cantidad:</p>
         <span>
@@ -59,6 +59,7 @@
             <input type="text" name="filtro" placeholder="Buscar reporte">
             <i class="fa-solid fa-filter"></i>
         </span>
+        <div id="allreportes">
         <%data.forEach(function(data) { if(data.estatus=='pendiente'){%>
             <div class="reporteentrante">
                 <img src="/images/v.svg">
@@ -69,6 +70,7 @@
                 <a href="/pantallaVisualizarReporte/<%= data.id_reporte %>">Revisar</a>
             </div>
         <% }}); %>
+    </div>
     </container>
     </div>
     </article>

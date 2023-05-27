@@ -1369,3 +1369,13 @@ h3 {
 #semifooterEnc a:hover {
     background-color: var(--negro);
 }
+
+#reportesvis{
+    width: 90%;
+    display: unset;
+    margin: 0px;
+}
+
+#allreportes{
+    margin: 0px 0px 10vh;
+}
