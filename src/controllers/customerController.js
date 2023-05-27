@@ -58,14 +58,15 @@ controller.render = (req, res) => {
     // Inicio de sesion dinamico-------------------------------------------------------------------------------------------------------------
     controller.inicioSesion = (req, res) => {
         // Obtenemos el usuario y la contraseña del cuerpo de la solicitud
+        console.log(req.body['contrasena']);
         const usuario = req.body['usuario'];
         const contrasena = req.body['contrasena'];
         const tabla = req.params.tabla;
         var consulta = '';
         if(tabla=="empleado"){
-            consulta = 'SELECT usuario, contrasena cargo FROM empleado WHERE usuario=?'
+            consulta = 'SELECT usuario, contrasena, cargo, id_empleado FROM empleado WHERE usuario=?'
         } else{ 
-            consulta = 'SELECT ed.usuario, ed.contrasena, d.id_dependencia, d.nombre FROM encargado_dependencia ed JOIN dependencia d ON ed.id_dependencia = d.id_dependencia WHERE ed.usuario = ?';
+            consulta = 'SELECT ed.usuario, ed.contrasena, d.id_dependencia, d.nombre, ed.id_encargado FROM encargado_dependencia ed JOIN dependencia d ON ed.id_dependencia = d.id_dependencia WHERE ed.usuario = ?';
         }
         // Establecemos la conexión con la base de datos
         req.getConnection((err, conn) => {
@@ -80,16 +81,18 @@ controller.render = (req, res) => {
                     // Verificamos si se encontró un empleado con el usuario proporcionado
                     if (empleado.length > 0) {
                         // Extraemos los datos de la consulta
+                        console.log(empleado);
                         const usuarioConsulta = empleado[0].usuario;
                         const contrasenaConsulta = empleado[0].contrasena;
                         const cargo = empleado[0].cargo;
-        
+                        const id_empleado = empleado[0].id_empleado;
                         // Comparamos el usuario y la contraseña con los datos de la consulta
                         if (usuario === usuarioConsulta && contrasena === contrasenaConsulta) {
                             // Redirigimos a la página correspondiente según el cargo
                             req.session.usuario = usuario;
                             req.session.cargo = cargo;
-                            req.session.id_empleado;
+                            req.session.id_empleado= id_empleado;
+                            
                             if (cargo === "moderador") {
                                 res.render('moderacion');
                             } else if (cargo === "administrador") {
@@ -121,6 +124,12 @@ controller.render = (req, res) => {
                         const contrasenaConsulta = empleado[0].contrasena;
                         const idDependenciaConsulta = empleado[0].id_dependencia;
                         const nombreDependenciaConsulta = empleado[0].nombre;
+                        const id_encargado = empleado[0].id_encargado;
+                        console.log(usuarioConsulta);
+                        console.log(contrasenaConsulta);
+                        console.log(idDependenciaConsulta);
+                        console.log(nombreDependenciaConsulta);
+                        console.log(id_encargado);
         
                         // Comparamos el usuario y la contraseña con los datos de la consulta
                         if (usuario === usuarioConsulta && contrasena === contrasenaConsulta) {
@@ -129,6 +138,7 @@ controller.render = (req, res) => {
                             req.session.cargo = 'encargado';
                             req.session.dependencia = idDependenciaConsulta;
                             req.session.nombreDependencia = nombreDependenciaConsulta;
+                            req.session.id_encargado =id_encargado ;
                             res.render('encargado');
                             
                         } else {
@@ -207,6 +217,7 @@ controller.render = (req, res) => {
                 }  
             })
         });
+    }
 
 
             //Funciones del CRUD ------------------------------------------------------------------------------------------- 
@@ -600,21 +611,13 @@ controller.render = (req, res) => {
           }
         req.getConnection((err, conn) => {
             conn.query(query, (err, reportes) => {if (err) {
-    
-        const tablaCapitalizada = tabla.charAt(0).toUpperCase() + tabla.slice(1)+'s';
-        const ruta ='/administracion'+ tablaCapitalizada;
-        const consulta = 'UPDATE '+tabla+' set ? WHERE '+puntero+ '= ?'
-        req.getConnection((err,conn) =>{
-            conn.query(consulta,[datos,id], (err,data) =>{
-                if(err){
-                    res.send('error en la actualización');
-                    console.log(err);
-                } else{
-                    res.redirect(ruta);
-                }
-
-        })
-    })
+                res.json(err);
+            } else{
+                console.log(reportes);
+            res.render('encargadoreportesrevisados',{data:reportes, formatDate: formatDate, treporte});
+            }  
+            })
+        });
 }
 
     controller.pantallaVisualizarReportesEncargado = (req,res) => {
@@ -712,7 +715,7 @@ controller.render = (req, res) => {
             })
         });
 
-
+    }
 
 
    
