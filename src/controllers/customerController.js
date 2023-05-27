@@ -257,37 +257,40 @@ controller.pantallaEdit = (req, res) => {
     });
 }
 
-controller.edit = (req, res) => {
-    const tabla = req.params.tabla;
-    const datos = req.body;
-    const puntero = 'id_' + tabla;
-    var id = '';
-    switch (tabla) {
+    controller.edit = (req,res) => {
+        const tabla = req.params.tabla;
+        const datos = req.body;
+        var puntero = '';
+        if(tabla=='encargado_dependencia'){
+            puntero = 'id_encargado'
+        } else{ puntero = 'id_'+ tabla;}
+        var id='';
+        switch (tabla) {
 
-        case 'dependencia': id = req.body.id_dependencia;
-            break;
-
-        case 'empleado': id = req.body.id_empleado;
-            break;
-        case 'ciudadano': id = req.body.id_ciudadano;
-            break;
-        case 'encargado_dependencia': id = req.body.id_encargado;
-            break;
-        default: console.log('error en el ID');
-            break;
-    }
-
-    const tablaCapitalizada = tabla.charAt(0).toUpperCase() + tabla.slice(1) + 's';
-    const ruta = '/administracion' + tablaCapitalizada;
-    const consulta = 'UPDATE ' + tabla + ' set ? WHERE ' + puntero + '= ?'
-    req.getConnection((err, conn) => {
-        conn.query(consulta, [datos, id], (err, data) => {
-            if (err) {
-                res.send('error en la actualización');
-                console.log(err);
-            } else {
-                res.redirect(ruta);
-            }
+            case 'dependencia': id = req.body.id_dependencia;
+                break;
+            
+            case 'empleado': id = req.body.id_empleado;
+                break;
+            case 'ciudadano': id = req.body.id_ciudadano;
+                break;
+            case 'encargado_dependencia': id = req.body.id_encargado;
+                break;
+            default: console.log('error en el ID');
+                break;
+        }
+    
+        const tablaCapitalizada = tabla.charAt(0).toUpperCase() + tabla.slice(1)+'s';
+        const ruta ='/administracion'+ tablaCapitalizada;
+        const consulta = 'UPDATE '+tabla+' set ? WHERE '+puntero+ '= ?'
+        req.getConnection((err,conn) =>{
+            conn.query(consulta,[datos,id], (err,data) =>{
+                if(err){
+                    res.send('error en la actualización');
+                    console.log(err);
+                } else{
+                    res.redirect(ruta);
+                }
 
         })
     })
