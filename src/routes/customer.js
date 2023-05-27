@@ -13,7 +13,6 @@ const customerController = require('../controllers/customerController');
 router.get('/', customerController.render);
 router.get('/pantallaSesion',customerController.pantallaSesion);
 router.post('/inicioSesion', customerController.inicioSesion);
-router.post('/registro', customerController.insert);
 router.post('/insert/:tabla', customerController.insert);
 router.get('/delete/:id/:tabla', customerController.delete);
 router.get('/pantallaEdit/:id/:tabla', customerController.pantallaEdit);
