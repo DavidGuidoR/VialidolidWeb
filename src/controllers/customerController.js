@@ -89,6 +89,7 @@ controller.render = (req, res) => {
                             // Redirigimos a la página correspondiente según el cargo
                             req.session.usuario = usuario;
                             req.session.cargo = cargo;
+                            req.session.id_empleado;
                             if (cargo === "moderador") {
                                 res.render('moderacion');
                             } else if (cargo === "administrador") {
@@ -141,7 +142,7 @@ controller.render = (req, res) => {
     }});
     };
     
-
+//Funciones de la administracion-------------------------------------------------
     controller.administracionEncargado_dependencias = (req,res) => {
         req.getConnection((err, conn) => {
             conn.query('SELECT r.id_encargado, r.nombre, r.apellido_paterno, r.apellido_materno, c.nombre AS nombre_dependencia, r.usuario, r.contrasena FROM encargado_dependencia r JOIN dependencia c ON r.id_dependencia = c.id_dependencia', (err, encargados) => {
@@ -206,7 +207,7 @@ controller.render = (req, res) => {
                 }  
             })
         });
-    }
+
 
             //Funciones del CRUD ------------------------------------------------------------------------------------------- 
             controller.insert = (req,res) => {
@@ -435,6 +436,7 @@ controller.render = (req, res) => {
         });
     
         }
+        
     
         controller.cambiarestatus = (req, res) => {
             const {id_reporte} =req.params;
@@ -450,6 +452,60 @@ controller.render = (req, res) => {
             });
         }
 
+        controller.penalizarreporte = (req, res) => {
+    const { id_reporte } = req.params;
+    const usermod = req.body['usermod'];
+
+    const newCustumer = 'penalizado';
+    const userrep = req.body['userrep'];
+
+    const motivo = req.body['motivo'];
+    req.getConnection((err, conn) => {
+        conn.query('UPDATE reporte set estatus = ? WHERE id_reporte = ?', [newCustumer, id_reporte], (err, reportes) => {
+            if (err) {
+                res.json(err);
+            } else {
+                conn.query('INSERT INTO baja_reporte (id_reporte, id_empleado, motivo) VALUES ( ?,?,?)', [id_reporte, usermod, motivo], (err, baja_report) => {
+                    if (err) {
+                        res.json(err);
+                    } else {
+                        conn.query('UPDATE ciudadano set n_penalizaciones = 1 WHERE id_ciudadano = ?', [userrep], (err, ban) => {
+                            if (err) {
+                                res.json(err);
+                            } else {
+                                res.redirect('/menumoderacion');
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
+}
+        
+        controller.penalizar = (req, res) => {
+    const { id_reporte } = req.params;
+    function formatDate(date) {
+        const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+        const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+        return formattedDate;
+
+    }
+    req.getConnection((err, conn) => {
+
+        conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano AS nombre_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia WHERE r.id_reporte = ?', [id_reporte], (err, reportes) => {
+            if (err) {
+                res.json(err);
+            } else {
+                console.log('Separacion en console log-------------------------------------------------------------------------');
+                console.log(reportes);
+                res.render('penalizar', { data: reportes, formatDate: formatDate });
+            }
+        })
+    });
+
+}
+        
     // Funciones del encargado de dependencia-----------------------------------------------------------------------------------------------------------------
     controller.pantallaEncargado = (req,res) => {
         res.render('encargado');
@@ -544,15 +600,22 @@ controller.render = (req, res) => {
           }
         req.getConnection((err, conn) => {
             conn.query(query, (err, reportes) => {if (err) {
-                res.json(err);
-            } else{
-                console.log(reportes);
-            res.render('encargadoreportesrevisados',{data:reportes, formatDate: formatDate, treporte});
-            }  
-            })
-        });
-        
-    }
+    
+        const tablaCapitalizada = tabla.charAt(0).toUpperCase() + tabla.slice(1)+'s';
+        const ruta ='/administracion'+ tablaCapitalizada;
+        const consulta = 'UPDATE '+tabla+' set ? WHERE '+puntero+ '= ?'
+        req.getConnection((err,conn) =>{
+            conn.query(consulta,[datos,id], (err,data) =>{
+                if(err){
+                    res.send('error en la actualización');
+                    console.log(err);
+                } else{
+                    res.redirect(ruta);
+                }
+
+        })
+    })
+}
 
     controller.pantallaVisualizarReportesEncargado = (req,res) => {
         
@@ -630,6 +693,7 @@ controller.render = (req, res) => {
                     inputsHTML += '<div><h3>Calle</h3><p>'+data[0].calle+'</p></div>';
                     break;
 
+
                 case '5':
                     inputsHTML += '<div><img src='+data[0].id_ciudadano+'></div>';
                     inputsHTML += '<div><h3>Colonia</h3><p>'+data[0].colonia+'</p></div>';
@@ -647,8 +711,11 @@ controller.render = (req, res) => {
             }  
             })
         });
-    }
-            
+
+
+
+
+   
     controller.pantallaDescargarReportesEncargado = (req,res) =>{
         const id_tabla = req.params.id_tabla;
         console.log(id_tabla);
@@ -663,6 +730,7 @@ controller.render = (req, res) => {
         console.log(usuario);
         
     }
+
 
     controller.solucionarReportesEncargado = (req,res) => {
         const id_tabla = req.params.id_tabla;

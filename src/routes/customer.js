@@ -47,6 +47,7 @@ router.get('/pantallaReportesRevisados',customerController.pantallaReportesRevis
 router.get('/pantallaVisualizarReporte/:id_reporte',customerController.pantallaVisualizarReporte);
 router.post('/cambiarestatus/:id_reporte', customerController.cambiarestatus);
 
+
 // Rutas del Encargado
 router.get('/plantillaEncargado',customerController.plantillaEncargado);
 router.get('/pantallaEncargado',customerController.pantallaEncargado);
@@ -57,4 +58,9 @@ router.get('/pantallaDescargarReportesEncargado',customerController.pantallaDesc
 router.get('/rechazarReportesEncargado/:id_tabla/:id_reporte/:usuario',customerController.rechazarReportesEncargado);
 router.get('/solucionarReportesEncargado/:id_tabla',customerController.solucionarReportesEncargado);
 router.get('/descargarReportesEncargado/:id_tabla',customerController.descargarReportesEncargado);
+
+// Rutas de penalizacion
+router.post('/penalizarreporte/:id_reporte', customerController.penalizarreporte);
+router.get('/penalizar/:id_reporte',customerController.penalizar);
+
 module.exports=router;
