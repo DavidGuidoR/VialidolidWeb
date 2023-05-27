@@ -61,54 +61,26 @@
     
 <section class="contenedorderecho">
     <div class="contenido">
-        <div class="contenidomoderacion">
-
-            <section class="insercion">
-                
-
-                <form action="/insert/dependencia" method="post" onsubmit="return validarFormulario()">
-                    <h2>Registro</h2>
-                    <div class="cajastexto">
-                        <input type="text" id="nombre" name="nombre" placeholder="Nombre">
-                    </div>
-                    
-                    <div class="cajastexto">
-                        <input type="text" id="colonia" name="colonia" placeholder="Colonia">
-                    </div>
-
-                    <div class="cajastexto">
-                        <input type="text" id="calle" name="calle" placeholder="Calle">
-                    </div>
-                    <button type="submit">Ingresar</button>
-                </form>
-
-            </section>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Colonia</th>
-                        <th>Calle</th>
-                        <th>Editar</th>
-                        <th>Eliminar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%data.forEach(function(data) {%>
-                    <tr>
-                        <td><%= data.id_dependencia %></td>
-                        <td><%= data.nombre %></td>
-                        <td><%= data.colonia %></td>
-                        <td><%= data.calle %></td>
-                        <td><a href="/pantallaEdit/<%=data.id_dependencia%>/dependencia">Editar</a></td>
-                        <td><a href="/delete/<%=data.id_dependencia%>/dependencia">Eliminar</a></td>
-                    </tr>
-                    <% }); %>
-                </tbody>
-            </table>
-        </div>
+        <container class="contenedorent">
+        <h1>Reportes entrantes</h1>
+        <p>Cantidad:</p>
+        <span>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" name="filtro" placeholder="Buscar reporte">
+            <i class="fa-solid fa-filter"></i>
+        </span>
+        <%data.forEach(function(data) { if(data.estatus=='revisado'){%>
+            
+            <div class="reporteentrante">
+                <img src="/images/v.svg">
+                <p><%= data.tipo_reporte%></p>
+                <p><%= formatDate(data.fecha)%></p>
+                <p><%= data.estatus%></p>
+                <p><%= data.latitud + '' + data.longitud%></p>
+                <a href="/pantallaVisualizarReporte/<%= data.id_reporte %>">Revisar</a>
+            </div>
+        <% }}); %>
+    </container>
     </div>
 </section>
     </article>
