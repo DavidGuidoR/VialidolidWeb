@@ -37,8 +37,7 @@
             <p>Rol: <%=session.cargo%></p>
         </span>
     </h1>
-
-    <a href="/pantallaReportesRevisadosEncargado?/<%=session.dependencia%>">
+    <a href="/pantallaReportesRevisadosEncargado?dependencia=<%=session.dependencia%>">
         Reportes revisados
     </a>
 
@@ -54,24 +53,23 @@
     <section class="contenedorderecho">
         <div class="contenido">
             <container class="contenedorent">
-            <h1>Reportes entrantes</h1>
-            <p>Cantidad:</p>
-            <span>
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" name="filtro" placeholder="Buscar reporte">
-                <i class="fa-solid fa-filter"></i>
-            </span>
-            <%data.forEach(function(data) { if(data.estatus=='pendiente'){ %>
+                <%data.forEach(function(data) {%>
+                    
+                    <div id="desc"> 
+                        <p><%=session.id_encargado%></p>
+                        <p><%=data.id_reporte%></p>
+                        <p><%=data.id_ciudadano%></p>
+                        <form action="/cambiarEstatusReportesEncargado" method="post">
+                            <input type="hidden" name="id_reporte" value="<%=id_reporte%>"/>
+                            <input type="hidden" name="id_encargado" value="<%=id_encargado%>" />
+                            <input type="hidden" name="id_tabla" value="<%=data.id_tabla%>" />
+                            <textarea name="motivo" cols="50" rows="5" wrap="soft" required placeholder="Introduzca el motivo" maxlength="100"></textarea>
+                            <button type="submit" name="submit" class="button" id="sub">Aceptar</button>
+                        </form>
+                    </div>
                 
-                <div class="reporteentrante">
-                    <img src="/images/v.svg">
-                    <p><%=treporte%></p>
-                    <p><%= formatDate(data.fecha)%></p>
-                    <p><%= data.estatus%></p>
-                    <p><%= data.latitud + '' + data.longitud%></p>
-                    <a href="/pantallaVisualizarReportesEncargado/<%= data.id_reporte%>/<%=session.dependencia%>">Revisar</a>
-                </div>
-            <% }}); %>
+                
+                    <% }); %>
         </container>
         </div>
     </section>

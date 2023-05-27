@@ -119,17 +119,11 @@ controller.render = (req, res) => {
                     // Verificamos si se encontró un empleado con el usuario proporcionado
                     if (empleado.length > 0) {
                         // Extraemos los datos de la consulta
-                        console.log(empleado);
                         const usuarioConsulta = empleado[0].usuario;
                         const contrasenaConsulta = empleado[0].contrasena;
                         const idDependenciaConsulta = empleado[0].id_dependencia;
                         const nombreDependenciaConsulta = empleado[0].nombre;
                         const id_encargado = empleado[0].id_encargado;
-                        console.log(usuarioConsulta);
-                        console.log(contrasenaConsulta);
-                        console.log(idDependenciaConsulta);
-                        console.log(nombreDependenciaConsulta);
-                        console.log(id_encargado);
         
                         // Comparamos el usuario y la contraseña con los datos de la consulta
                         if (usuario === usuarioConsulta && contrasena === contrasenaConsulta) {
@@ -523,7 +517,7 @@ controller.render = (req, res) => {
     }
     
     controller.pantallaReportesEntrantesEncargado = (req,res) =>{
-        const dependencia=req.query.dependencia;
+        const dependencia=req.params.dependencia;
         console.log(dependencia);
         var tabla = '';
         var id='';
@@ -628,7 +622,6 @@ controller.render = (req, res) => {
         var id_tabla = '';
         var treporte='';
         var query='';
-        let inputsHTML = '';
         switch(dependencia){
             case '1': tabla='reporte_ooapas';
                       treporte= 'Reporte Ooapas';
@@ -709,12 +702,10 @@ controller.render = (req, res) => {
             if (err) {
                 res.json(err);
             } else{
-                console.log(data);
             res.render('encargadovisualizarreporte', {data:data, formatDate: formatDate, tiporeporte: treporte, inputsHTML, id_tabla});
             }  
             })
         });
-
     }
 
 
@@ -727,13 +718,55 @@ controller.render = (req, res) => {
     controller.rechazarReportesEncargado = (req,res) => {
         const id_tabla = req.params.id_tabla;
         const id_reporte = req.params.id_reporte;
-        const usuario = req.params.usuario;
+        const id_encargado = req.params.id_encargado;
         console.log(id_tabla);
         console.log(id_reporte);
-        console.log(usuario);
-        
+        console.log(id_encargado);
+
+        function formatDate(date) {
+            const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+            const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+            return formattedDate;
+    
+        }
+        req.getConnection((err, conn) => {
+    
+            conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia WHERE r.id_reporte = ?', [id_reporte], (err, reportes) => {
+                if (err) {
+                    res.json(err);
+                } else {
+                    console.log('Separacion en console log-------------------------------------------------------------------------');
+                    console.log(reportes);
+                    res.render('encargadoJustificacion', { data: reportes, formatDate: formatDate, id_tabla, id_encargado, id_reporte });
+                }
+            })
+        });
     }
 
+    controller.cambiarEstatusReportesEncargado = (req, res) => {
+            const id_reporte = req.body['id_reporte'];
+            const estatus = 'cancelado';
+            const id_encargado = req.body['id_encargado'];
+            const id_tabla = req.body ['id_tabla']
+            const motivo = req.body['motivo'];
+            const consultaEstatus = 'UPDATE reporte set estatus = ? WHERE id_reporte = ?';
+            const insercionBajaReportes = 'INSERT INTO baja_reporte (id_reporte, motivo) VALUES ( ?,?)'
+            console.log(consultaEstatus)
+            req.getConnection((err, conn) => {
+                conn.query(consultaEstatus, [estatus, id_reporte], (err, reportes) => {
+                    if (err) {
+                        res.json(err);
+                    } else {
+                        conn.query(insercionBajaReportes, [id_reporte, motivo], (err, baja_report) => {
+                            if (err) {
+                                res.json(err);
+                            } else {
+                                res.redirect('/pantallaEncargado');
+                                    }
+                            })
+                        }});
+                    });
+                }
 
     controller.solucionarReportesEncargado = (req,res) => {
         const id_tabla = req.params.id_tabla;
