@@ -87,10 +87,6 @@
                                         <h3># de Apoyos</h3>
                                         <%= data.n_apoyos%>
                                     </div>
-                                    <div>
-                                        <a href="/penalizar/<%= data.id_reporte %>"><button
-                                                class="button">Penalizar</button></a>
-                                    </div>
 
                                     <div>
                                         <h3>Estatus</h3>
@@ -98,17 +94,33 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="semifooter">
-                                <center>
-                                    <form action="/cambiarestatus/<%= data.id_reporte %>" method="post">
-                                        <input type="hidden" name="estatuscb" value="revisado" />
-                                        <button type="submit" name="submit" class="button" id="sub">Revisar</button>
-                                    </form>
-                                    <a href="/penalizar/<%= data.id_reporte %>"><button
-                                            class="button">Penalizar</button></a>
-                                </center>
-                            </div>
 
+
+                            <section id="navegacionmod1">
+                                <ul>
+
+                                    <div class="botonesmod">
+                                        <li>
+                                            <form action="/cambiarestatus/<%= data.id_reporte %>" method="post">
+                                                <input type="hidden" name="estatuscb" value="revisado" />
+                                                <button type="submit" name="submit" class="button"
+                                                    id="sub">Revisar Reporte</button>
+                                            </form>
+                                        </li>
+                                        <li>
+
+                                            <a href="/penalizar/<%= data.id_reporte %>"><button
+                                                    class="button" id="sub">Penalizar Reporte</button></a>
+                                        </li>
+                                        <li>
+                                            
+                                            <a href="/eliminar/<%= data.id_reporte %>"><button
+                                                class="button" id="sub">eliminar Reporte</button></a>
+                                        </li>
+                                    </div>
+
+                                </ul>
+                            </section>
                             <% }); %>
 
                     </div>

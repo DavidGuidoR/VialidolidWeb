@@ -53,34 +53,30 @@
 
 
             <div class="contenido">
-                <container class="contenedorent" id="reportesvis">
-                    <h1>Reportes entrantes</h1>
-                    <p>Cantidad:</p>
-                    <span>
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" name="filtro" placeholder="Buscar reporte">
-                        <i class="fa-solid fa-filter"></i>
-                    </span>
-                    <div id="allreportes">
-                        <%data.forEach(function(data) { if(data.estatus=='pendiente' ){%>
-                            <div class="reporteentrante">
-                                <img src="/images/v.svg">
-                                <p>
-                                    <%= data.descripcion%>
-                                </p>
-                                <p>
-                                    <%= formatDate(data.fecha)%>
-                                </p>
-                                <p>
-                                    <%= data.estatus%>
-                                </p>
-                                <p>
-                                    <%= data.latitud + '' + data.longitud%>
-                                </p>
-                                <a href="/pantallaVisualizarReporte/<%= data.id_reporte %>">Revisar</a>
-                            </div>
-                            <% }}); %>
-                    </div>
+                <container class="contenedorent">
+
+
+
+                    <%data.forEach(function(data) {%>
+
+                        <div id="desc">
+
+                            <form action="/eliminarreporte/<%= data.id_reporte %>" method="post">
+                                <input type="hidden" name="usermod" value="<%=session.id_empleado%>" />
+                                <input type="hidden" name="userrep" value="<%=data.nombre_ciudadano%>" />
+                                <textarea name="motivo" cols="50" rows="5" wrap="soft" required
+                                    placeholder="Introduzca el motivo"></textarea>
+
+                                <button type="submit" name="submit" class="button" id="sub">Aceptar</button>
+                            </form>
+                        </div>
+
+
+                        <% }); %>
+
+
+
+
                 </container>
             </div>
         </article>

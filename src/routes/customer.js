@@ -63,4 +63,9 @@ router.get('/descargarReportesEncargado/:id_tabla',customerController.descargarR
 router.post('/penalizarreporte/:id_reporte', customerController.penalizarreporte);
 router.get('/penalizar/:id_reporte',customerController.penalizar);
 
+
+// Rutas de penalizacion
+router.post('/eliminarreporte/:id_reporte', customerController.eliminarreporte);
+router.get('/eliminar/:id_reporte',customerController.eliminar);
+
 module.exports=router;

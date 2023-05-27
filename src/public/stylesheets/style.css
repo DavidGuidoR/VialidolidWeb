@@ -491,7 +491,6 @@ div {
     transition: all 0.3s ease-in-out;
     display: inline-flex;
     align-items: center;
-    height: 60px;
 
 }
 #sub{
@@ -1386,4 +1385,71 @@ h3 {
     margin: 0;
     display: flex;
     width: 130px;
+}
+
+#navegacionmod1 {
+    font-family: var(--verdana);
+    font-size: 80%;
+}
+
+#navegacionmod1 a {
+    color: var(--blanco);
+    padding: 0;
+}
+#navegacionmod1 div{
+    margin: 0;
+}
+
+#navegacionmod1 ul {
+    /* Quitarle a la lista de la barra de navegacion los puntos que enumeran cada atributo */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    /* despliegue de los elementos de manera horizontal, justificados mediante un flexbox */
+    display: flex;
+    flex-flow: row wrap;
+    /* alineación  horizontal*/
+    justify-content: center;
+    /* alineación vertical */
+    align-items: center;
+    /* La instrucción gap nos permite seleccionar el espacio entre los componentes */
+    gap: 2rem;
+    font-size: 1rem;
+}
+
+#navegacionmod1 ul h1 {
+    display: flex;
+    padding: 0;
+    flex-basis: 50%;
+    align-content: flex-start;
+}
+
+#navegacionmod1 h1 li a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#navegacionmod1 img {
+    width: 70px;
+    height: 70px;
+    padding: 0 0.4rem 0 0.4rem;
+    margin: 0 auto;
+    display: flex;
+}
+
+#navegacionmod1 .botonesmod li {
+
+    border-radius: 5px;
+    align-items: center;
+    text-align: center;
+    width: 10rem;
+    font-size: 1.2rem;
+    padding: 10px;
+}
+
+
+#navegacionmod1 .botonesmod li a:hover {
+    font-size: 1.1rem;
+    color: var(--Morado);
 }
