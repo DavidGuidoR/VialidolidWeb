@@ -1379,3 +1379,11 @@ h3 {
 #allreportes{
     margin: 0px 0px 10vh;
 }
+.reporteentrante p {
+    align-content: center;
+    justify-content: flex-start;
+    padding: 0.5rem;
+    margin: 0;
+    display: flex;
+    width: 130px;
+}
