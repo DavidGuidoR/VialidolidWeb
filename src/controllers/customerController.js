@@ -2,6 +2,9 @@
 
 const { json } = require("body-parser");
 const { route } = require("../routes/customer");
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
+
 
 const controller = {};
 
@@ -119,18 +122,11 @@ controller.inicioSesion = (req, res) => {
                     // Verificamos si se encontró un empleado con el usuario proporcionado
                     if (empleado.length > 0) {
                         // Extraemos los datos de la consulta
-                        console.log(empleado);
                         const usuarioConsulta = empleado[0].usuario;
                         const contrasenaConsulta = empleado[0].contrasena;
                         const idDependenciaConsulta = empleado[0].id_dependencia;
                         const nombreDependenciaConsulta = empleado[0].nombre;
                         const id_encargado = empleado[0].id_encargado;
-                        console.log(usuarioConsulta);
-                        console.log(contrasenaConsulta);
-                        console.log(idDependenciaConsulta);
-                        console.log(nombreDependenciaConsulta);
-                        console.log(id_encargado);
-
                         // Comparamos el usuario y la contraseña con los datos de la consulta
                         if (usuario === usuarioConsulta && contrasena === contrasenaConsulta) {
                             // Redirigimos a la página correspondiente según el cargo
@@ -627,106 +623,124 @@ controller.pantallaReportesEntrantesEncargado = (req, res) => {
     });
 }
 
-controller.pantallaReportesRevisadosEncargado = (req, res) => {
-    const dependencia = req.query.dependencia;
-    console.log(dependencia);
-    var tabla = '';
-    var treporte = '';
-    var query = '';
-    switch (dependencia) {
-        case '1': tabla = 'reporte_ooapas';
+
+    controller.pantallaReportesRevisadosEncargado = (req, res) => {
+        const dependencia = req.query.dependencia;
+        console.log(dependencia);
+        var tabla = '';
+        var treporte = '';
+        var query = '';
+        switch (dependencia) {
+          case '1':
+            tabla = 'reporte_ooapas';
             treporte = 'Reporte Ooapas';
-            query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, oo.cve_predio, oo.colonia, oo.calle FROM reporte_ooapas oo JOIN reporte r ON oo.id_reporte = r.id_reporte';
+            query =
+              'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, oo.cve_predio, oo.colonia, oo.calle, rs.evidencias FROM reporte_ooapas oo JOIN reporte r ON oo.id_reporte = r.id_reporte JOIN reporte_solucionado rs ON r.id_reporte = rs.id_reporte WHERE r.estatus = ?';
             break;
-        case '2': tabla = 'reporte_m_animal';
+          case '2':
+            tabla = 'reporte_m_animal';
             treporte = 'Maltrato animal';
-            query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ma.tipo_mascota, ma.colonia, ma.calle FROM reporte_m_animal ma JOIN reporte r ON ma.id_reporte = r.id_reporte';
+            query =
+              'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ma.tipo_mascota, ma.colonia, ma.calle, rs.evidencias FROM reporte_m_animal ma JOIN reporte r ON ma.id_reporte = r.id_reporte JOIN reporte_solucionado rs ON r.id_reporte = rs.id_reporte WHERE r.estatus = ?';
             break;
-        case '3': tabla = 'reporte_vial';
+          case '3':
+            tabla = 'reporte_vial';
             treporte = 'Problema en carretera';
-            query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, v.imagen, v.colonia, v.calle FROM reporte_vial v JOIN reporte r ON v.id_reporte = r.id_reporte';
+            query =
+              'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, v.imagen, v.colonia, v.calle, rs.evidencias FROM reporte_vial v JOIN reporte r ON v.id_reporte = r.id_reporte JOIN reporte_solucionado rs ON r.id_reporte = rs.id_reporte WHERE r.estatus = ?';
             break;
-        case '4': tabla = 'reporte_alumbrado_publico'
+          case '4':
+            tabla = 'reporte_alumbrado_publico';
             treporte = 'Falla en alumbrado';
-            query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ap.colonia, ap.calle FROM reporte_alumbrado_publico ap JOIN reporte r ON ap.id_reporte = r.id_reporte';
+            query =
+              'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ap.colonia, ap.calle, rs.evidencias FROM reporte_alumbrado_publico ap JOIN reporte r ON ap.id_reporte = r.id_reporte JOIN reporte_solucionado rs ON r.id_reporte = rs.id_reporte WHERE r.estatus = ?';
             break;
-        case '5': tabla = 'reporte_bacheo'
-            treporte = 'Bache'
-            query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, b.colonia, b.calle, b.imagen FROM reporte_bacheo b JOIN reporte r ON b.id_reporte = r.id_reporte';
+          case '5':
+            tabla = 'reporte_bacheo';
+            treporte = 'Bache';
+            query =
+              'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, b.colonia, b.calle, b.imagen, rs.evidencias FROM reporte_bacheo b JOIN reporte r ON b.id_reporte = r.id_reporte JOIN reporte_solucionado rs ON r.id_reporte = rs.id_reporte WHERE r.estatus = ?';
             break;
-        default: console.log('error en dependencia');
+          default:
+            console.log('error en dependencia');
             break;
-    }
-    console.log(query);
-    const consulta = 'SELECT tr.'
-    function formatDate(date) {
-        const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
-        const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
-        return formattedDate;
-        var tipo = '';
-    }
-    req.getConnection((err, conn) => {
-        conn.query(query, (err, reportes) => {
+        }
+        console.log(query);
+        function formatDate(date) {
+          const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+          const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+          return formattedDate;
+        }
+        req.getConnection((err, conn) => {
+          conn.query(query, ['solucionado'], (err, reportes) => {
             if (err) {
-                res.json(err);
+              res.json(err);
             } else {
-                console.log(reportes);
-                res.render('encargadoreportesrevisados', { data: reportes, formatDate: formatDate, treporte });
+              console.log(reportes);
+const blobData = reportes[0].evidencias;
+const imageBuffer = Buffer.from(blobData, 'binary');
+const imageBase64 = imageBuffer.toString('base64');
+const imageDataURL = `data:image/webp;base64,${imageBase64}`;
+
+res.render('encargadoreportesrevisados', { data: reportes, formatDate: formatDate, treporte, imagenURL: imageDataURL });
             }
-        })
-    });
-}
+          });
+        });
+      };
+      
 
-controller.pantallaVisualizarReportesEncargado = (req, res) => {
-
-    const dependencia = req.params.dependencia;
-    console.log(dependencia);
-    var tabla = '';
-    var id_tabla = '';
-    var treporte = '';
-    var query = '';
-    let inputsHTML = '';
-    switch (dependencia) {
-        case '1': tabla = 'reporte_ooapas';
-            treporte = 'Reporte Ooapas';
-            id_tabla = 'id_reporte_oo';
-            query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, oo.cve_predio, oo.colonia, oo.calle FROM reporte_ooapas oo JOIN reporte r ON oo.id_reporte = r.id_reporte';
-            break;
-        case '2': tabla = 'reporte_m_animal';
-            treporte = 'Maltrato animal';
-            id_tabla = 'id_reporte_me';
-            query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ma.tipo_mascota, ma.colonia, ma.calle FROM reporte_m_animal ma JOIN reporte r ON ma.id_reporte = r.id_reporte';
-            break;
-        case '3': tabla = 'reporte_vial';
-            treporte = 'Problema en carretera';
-            id_tabla = 'id_reporte_v';
-            query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, v.imagen, v.colonia, v.calle FROM reporte_vial v JOIN reporte r ON v.id_reporte = r.id_reporte';
-            break;
-        case '4': tabla = 'reporte_alumbrado_publico'
-            treporte = 'Falla en alumbrado';
-            id_tabla = 'id_reporte_ap';
-            query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ap.colonia, ap.calle FROM reporte_alumbrado_publico ap JOIN reporte r ON ap.id_reporte = r.id_reporte';
-            break;
-        case '5': tabla = 'reporte_bacheo'
-            treporte = 'Bache'
-            id_tabla = 'id_reporte_b';
-            query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, b.colonia, b.calle, b.imagen FROM reporte_bacheo b JOIN reporte r ON b.id_reporte = r.id_reporte';
-            break;
-        default: console.log('error en dependencia');
-            break;
-    }
-    const consulta = 'SELECT tr.'
-    function formatDate(date) {
-        const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
-        const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
-        return formattedDate;
-        var tipo = '';
-    }
-    req.getConnection((err, conn) => {
-
-        conn.query(query, (err, data) => {
-            let inputsHTML = '';
-            switch (dependencia) {
+    controller.pantallaVisualizarReportesEncargado = (req,res) => {
+        
+        
+        const dependencia=req.params.dependencia;
+        console.log(dependencia);
+        var tabla = '';
+        var id_tabla = '';
+        var treporte='';
+        var query='';
+        let inputsHTML = '';
+        switch(dependencia){
+            case '1': tabla='reporte_ooapas';
+                      treporte= 'Reporte Ooapas';
+                    id_tabla='id_reporte_oo';
+                    query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, oo.cve_predio, oo.colonia, oo.calle FROM reporte_ooapas oo JOIN reporte r ON oo.id_reporte = r.id_reporte';
+                break;
+            case '2': tabla= 'reporte_m_animal';
+                    treporte= 'Maltrato animal';
+                    id_tabla='id_reporte_me';
+                    query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ma.tipo_mascota, ma.colonia, ma.calle FROM reporte_m_animal ma JOIN reporte r ON ma.id_reporte = r.id_reporte';
+                break;
+            case '3': tabla= 'reporte_vial';
+                    treporte= 'Problema en carretera';
+                    id_tabla='id_reporte_v';
+                    query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, v.imagen, v.colonia, v.calle FROM reporte_vial v JOIN reporte r ON v.id_reporte = r.id_reporte';
+                break;
+            case '4': tabla= 'reporte_alumbrado_publico'
+                    treporte= 'Falla en alumbrado';
+                    id_tabla='id_reporte_ap';
+                    query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ap.colonia, ap.calle FROM reporte_alumbrado_publico ap JOIN reporte r ON ap.id_reporte = r.id_reporte';
+                break;
+            case '5': tabla= 'reporte_bacheo'
+                    treporte= 'Bache'
+                    id_tabla='id_reporte_b';
+                    query= 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, b.colonia, b.calle, b.imagen FROM reporte_bacheo b JOIN reporte r ON b.id_reporte = r.id_reporte';
+                break;
+            default: console.log('error en dependencia');
+                break;
+        }
+        const consulta='SELECT tr.'
+        function formatDate(date) {
+            const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+            const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+            return formattedDate;
+            var tipo = '';
+          }
+        req.getConnection((err, conn) => {
+            
+            conn.query(query, (err, data) => {
+                let inputsHTML = '';
+                switch (dependencia) {
+                
 
                 case '1':
                     inputsHTML += '<div><h3>Clave de predio:</h3><p>' + data[0].cve_predio + '</p></div>';
@@ -767,39 +781,223 @@ controller.pantallaVisualizarReportesEncargado = (req, res) => {
                 res.json(err);
             } else {
                 console.log(data);
-                res.render('encargadovisualizarreporte', { data: data, formatDate: formatDate, tiporeporte: treporte, inputsHTML, id_tabla });
-            }
-        })
+
+            res.render('encargadovisualizarreporte', {data:data, formatDate: formatDate, tiporeporte: treporte, inputsHTML, id_tabla});
+            }  
+            })
+        });
+};
+
+
+
+    controller.rechazarReportesEncargado = (req,res) => {
+        const id_tabla = req.params.id_tabla;
+        const id_reporte = req.params.id_reporte;
+        const id_encargado = req.params.id_encargado;
+        console.log(id_tabla);
+        console.log(id_reporte);
+        console.log(id_encargado);
+
+        function formatDate(date) {
+            const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+            const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+            return formattedDate;
+    
+        }
+        req.getConnection((err, conn) => {
+    
+            conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia WHERE r.id_reporte = ?', [id_reporte], (err, reportes) => {
+                if (err) {
+                    res.json(err);
+                } else {
+                    console.log('Separacion en console log-------------------------------------------------------------------------');
+                    console.log(reportes);
+                    res.render('encargadoJustificacion', { data: reportes, formatDate: formatDate, id_tabla, id_encargado, id_reporte });
+                }
+            })
+        });
+    }
+
+    controller.cambiarEstatusReportesEncargado = (req,res) =>{
+        const id_reporte = req.body['id_reporte'];
+        const estatus = 'cancelado';
+        const id_encargado = req.body['id_encargado'];
+        const motivo = req.body['motivo'];
+        console.log(id_reporte);
+        console.log(estatus);
+        console.log(id_encargado);
+      
+        const consultaEstatus = 'UPDATE reporte SET estatus = ? WHERE id_reporte = ?';
+        const insercionBajaReporte = 'INSERT INTO baja_reporte (id_reporte, id_encargado, motivo) VALUES (?, ?, ?)';
+      
+        req.getConnection((err, conn) => {
+          if (err) {
+            res.json(err);
+          } else {
+            conn.query(consultaEstatus, [estatus, id_reporte], (err, reportes) => {
+              if (err) {
+                res.json(err);
+              } else {
+                  conn.query(insercionBajaReporte, [id_reporte, id_encargado, motivo], (err, baja_report) => {
+                    if (err) {
+                      res.json(err);
+                    } else {
+                      res.redirect('/pantallaEncargado');
+                    }
+                  });
+                
+                }
+              }
+    )}});
+          }
+
+
+        controller.solucionarReportesEncargado = (req,res) => {
+                const id_reporte = req.params.id_reporte;
+                const estatus = 'solucionado';  
+                const id_encargado = req.params.id_encargado;
+                console.log('datos del solucionarReportesEncaargado')
+                console.log(id_reporte);
+                console.log(estatus);
+                console.log(id_encargado);
+                    res.render('encargadoevidencias', {id_reporte, estatus, id_encargado});
+        }
+
+    controller.cambiarEstatusReportesSolucionado = (req, res) => {
+        const id_reporte = req.body['id_reporte'];
+        const estatus = req.body['estatus'];
+        const id_encargado = req.body['id_encargado'];
+        const imagenAdjunta = req.file; // Obtener la imagen adjunta desde req.file
+        console.log(id_reporte);
+        console.log(estatus);
+        console.log(id_encargado);
+        console.log(imagenAdjunta);
+      
+        const consultaEstatus = 'UPDATE reporte SET estatus = ? WHERE id_reporte = ?';
+        const insercionSolucionadoReportes = 'INSERT INTO reporte_solucionado (id_reporte, id_encargado, evidencias) VALUES (?, ?, ?)';
+      
+        req.getConnection((err, conn) => {
+          if (err) {
+            res.json(err);
+          } else {
+            conn.query(consultaEstatus, [estatus, id_reporte], (err, reportes) => {
+              if (err) {
+                res.json(err);
+              } else {
+                // Guardar la imagen como tipo BLOB en la base de datos
+                if (imagenAdjunta) {
+                  const imagenBLOB = imagenAdjunta.buffer;
+                  conn.query(insercionSolucionadoReportes, [id_reporte, id_encargado, imagenBLOB], (err, baja_report) => {
+                    if (err) {
+                      res.json(err);
+                    } else {
+                      res.redirect('/pantallaEncargado');
+                    }
+                  });
+                } else {
+                  console.log('Error en la insercion de la imagen, algo salio mal');
+                  res.redirect('/pantallaEncargado');
+                }
+              }
+            });
+          }
+        });
+      };
+            
+
+    controller.descargarReportesEncargado = (req,res) => {
+        
+  const dependencia = req.params.dependencia;
+  const id_reporte = req.params.id_reporte;
+  let query = '';
+
+  switch (dependencia) {
+    case '1':
+      query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, oo.cve_predio, oo.colonia, oo.calle FROM reporte_ooapas oo JOIN reporte r ON oo.id_reporte = r.id_reporte WHERE r.id_reporte=?';
+      break;
+    case '2':
+      query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ma.tipo_mascota, ma.colonia, ma.calle FROM reporte_m_animal ma JOIN reporte r ON ma.id_reporte = r.id_reporte WHERE r.id_reporte=?';
+      break;
+    case '3':
+      query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, v.imagen, v.colonia, v.calle FROM reporte_vial v JOIN reporte r ON v.id_reporte = r.id_reporte WHERE r.id_reporte=?';
+      break;
+    case '4':
+      query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ap.colonia, ap.calle FROM reporte_alumbrado_publico ap JOIN reporte r ON ap.id_reporte = r.id_reporte WHERE r.id_reporte=?';
+      break;
+    case '5':
+      query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, b.colonia, b.calle, b.imagen FROM reporte_bacheo b JOIN reporte r ON b.id_reporte = r.id_reporte WHERE r.id_reporte=?';
+      break;
+    default:
+      console.log('Error en dependencia');
+      break;
+  }
+  function formatDate(date) {
+    const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+    const formattedDate = new Date(date).toLocaleDateString('es-ES', options);
+    return formattedDate;
+
+}
+  req.getConnection((err, conn) => {
+    conn.query(query, [id_reporte], (err, data) => {
+      if (err) {
+        res.json(err);
+      } else {
+        const doc = new PDFDocument();
+
+        // Set the response headers for PDF download
+        res.setHeader('Content-Disposition', 'attachment; filename=reporte.pdf');
+        res.setHeader('Content-Type', 'application/pdf');
+
+        // Pipe the PDF document to the response
+        doc.pipe(res);
+
+        // Create the PDF content based on the data retrieved from the query
+        // Modify this part according to your data structure and formatting needs
+        data.forEach((row) => {
+          doc.text(`ID: ${row.id_reporte}`);
+          doc.text(`Fecha: ${formatDate(row.fecha)}`);
+          doc.text(`Descripción: ${row.descripcion}`);
+          doc.text(`Latitud: ${row.latitud}`);
+          doc.text(`Longitud: ${row.longitud}`);
+          doc.text(`Número de apoyos: ${row.n_apoyos}`);
+          doc.text(`Estatus: ${row.estatus}`);
+          doc.text(`Número de denuncias: ${row.n_denuncias}`);
+          doc.text(`Referencias: ${row.referencias}`);
+          doc.text(`ID Ciudadano: ${row.id_ciudadano}`);
+          doc.text(`Tipo de reporte: ${row.tipo_reporte}`);
+          doc.text(`ID Dependencia: ${row.id_dependencia}`);
+
+          // Additional fields specific to each table
+          if (dependencia === '1') {
+            doc.text(`Clave predio: ${row.cve_predio}`);
+            doc.text(`Colonia: ${row.colonia}`);
+            doc.text(`Calle: ${row.calle}`);
+          } else if (dependencia === '2') {
+            doc.text(`Tipo de mascota: ${row.tipo_mascota}`);
+            doc.text(`Colonia: ${row.colonia}`);
+            doc.text(`Calle: ${row.calle}`);
+          } else if (dependencia === '3') {
+            doc.text(`Imagen: ${row.imagen}`);
+            doc.text(`Colonia: ${row.colonia}`);
+            doc.text(`Calle: ${row.calle}`);
+          } else if (dependencia === '4') {
+            doc.text(`Colonia: ${row.colonia}`);
+            doc.text(`Calle: ${row.calle}`);
+          } else if (dependencia === '5') {
+            doc.text(`Colonia: ${row.colonia}`);
+            doc.text(`Calle: ${row.calle}`);
+            doc.text(`Imagen: ${row.imagen}`);
+          }
+
+          doc.moveDown();
+        });
+
+        // Finalize the PDF document
+        doc.end();
+      }
     });
+  });
 
-}
-
-
-
-controller.pantallaDescargarReportesEncargado = (req, res) => {
-    const id_tabla = req.params.id_tabla;
-    console.log(id_tabla);
-}
-
-controller.rechazarReportesEncargado = (req, res) => {
-    const id_tabla = req.params.id_tabla;
-    const id_reporte = req.params.id_reporte;
-    const usuario = req.params.usuario;
-    console.log(id_tabla);
-    console.log(id_reporte);
-    console.log(usuario);
-
-}
-
-
-controller.solucionarReportesEncargado = (req, res) => {
-    const id_tabla = req.params.id_tabla;
-    console.log(id_tabla);
-}
-
-controller.descargarReportesEncargado = (req, res) => {
-    const id_tabla = req.params.id_tabla;
-    console.log(id_tabla);
 }
 
 module.exports = controller;

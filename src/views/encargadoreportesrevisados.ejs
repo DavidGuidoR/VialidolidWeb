@@ -60,14 +60,16 @@
                 <input type="text" name="filtro" placeholder="Buscar reporte">
                 <i class="fa-solid fa-filter"></i>
             </span>
-            <%data.forEach(function(data) { if(data.estatus=='En_Atencion'){%>
+
+            <%data.forEach(function(data) { if(data.estatus=='solucionado'){%>
+
                 <div class="reporteentrante">
-                    <img src="/images/v.svg">
+                    <!-- encargadoreportesrevisados.ejs -->
+                    <img src="<%= imagenURL %>" alt="Imagen" />
                     <p><%= data.tipo_reporte%></p>
                     <p><%= formatDate(data.fecha)%></p>
                     <p  class="status"><%= data.estatus%></p>
                     <p><%= data.latitud + '' + data.longitud%></p>
-                    <a href="/pantallaVisualizarReportesEncargado/<%= data.id_reporte/session.dependencia%>">Revisar</a>
                 </div>
             <% }}); %>
         </container>

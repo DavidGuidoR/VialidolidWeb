@@ -107,18 +107,17 @@
                                     <h3>Tabla</h3>
                                     <p><%= id_tabla %></p>
                                 </div>
-
+                                
                                 <%- inputsHTML %>
 
-                                <% }); %>
                             </div>
                             <div id="semifooterEnc">
-                                <a href="/rechazarReportesEncargado/<%=id_tabla%>/<%=data.id_reporte%>/<%=session.usuario%>">Rechazar</a>
-                                <a href="/solucionarReportesEncargado/<%=id_tabla%>">Solucionado</a>
-                                <a href="/descargarReportesEncargado/<%=id_tabla%>">Descargar reporte</a>  
+                                <a href="/rechazarReportesEncargado/<%=id_tabla%>/<%=data.id_reporte%>/<%=session.id_encargado%>">Rechazar</a>
+                                <a href="/solucionarReportesEncargado/<%=id_tabla%>/<%=data.id_reporte%>/<%=session.id_encargado%>">Solucionado</a>
+                                <a href="/descargarReportesEncargado/<%=id_tabla%>/<%=data.id_reporte%>/<%=session.dependencia%>">Descargar reporte</a>  
                             </div>
                         </div>
-                        
+                        <% }); %>
                 </container>
             </div>
         </section>
