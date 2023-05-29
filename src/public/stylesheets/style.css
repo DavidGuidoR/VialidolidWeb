@@ -491,7 +491,6 @@ div {
     transition: all 0.3s ease-in-out;
     display: inline-flex;
     align-items: center;
-    height: 60px;
 
 }
 #sub{
@@ -767,7 +766,6 @@ div {
 /* Acomodo del texto Rol */
 .botoneslateral h1 span p:nth-child(3){
     display: flex;
-    font-size: 1rem;
     padding: 0;
     margin: 0;
     grid-column: 2/4;
@@ -955,7 +953,7 @@ a {
 }
 
 .contenidomoderacion p:nth-child(2), p:nth-child(3){
-    font-size: 1.5rem;
+
     text-align: justify;
 }
 
@@ -977,6 +975,8 @@ a {
     display: flex;
     align-items: flex-start;
     margin: 0;
+    font-size: 2vh;
+    font-weight: bold;
 }
 
 .contenedorent span {
@@ -1368,4 +1368,91 @@ h3 {
 
 #semifooterEnc a:hover {
     background-color: var(--negro);
+}
+
+#reportesvis{
+    width: 90%;
+    display: unset;
+    margin: 0px;
+}
+
+#allreportes{
+    margin: 0px 0px 10vh;
+}
+.reporteentrante p {
+    align-content: center;
+    justify-content: flex-start;
+    padding: 0.5rem;
+    margin: 0;
+    display: flex;
+    width: 330px;
+    height: 50px;
+    text-align: left;
+}
+
+#navegacionmod1 {
+    font-family: var(--verdana);
+    font-size: 80%;
+}
+
+#navegacionmod1 a {
+    color: var(--blanco);
+    padding: 0;
+}
+#navegacionmod1 div{
+    margin: 0;
+}
+
+#navegacionmod1 ul {
+    /* Quitarle a la lista de la barra de navegacion los puntos que enumeran cada atributo */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    /* despliegue de los elementos de manera horizontal, justificados mediante un flexbox */
+    display: flex;
+    flex-flow: row wrap;
+    /* alineación  horizontal*/
+    justify-content: center;
+    /* alineación vertical */
+    align-items: center;
+    /* La instrucción gap nos permite seleccionar el espacio entre los componentes */
+    gap: 2rem;
+    font-size: 1rem;
+}
+
+#navegacionmod1 ul h1 {
+    display: flex;
+    padding: 0;
+    flex-basis: 50%;
+    align-content: flex-start;
+}
+
+#navegacionmod1 h1 li a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#navegacionmod1 img {
+    width: 70px;
+    height: 70px;
+    padding: 0 0.4rem 0 0.4rem;
+    margin: 0 auto;
+    display: flex;
+}
+
+#navegacionmod1 .botonesmod li {
+
+    border-radius: 5px;
+    align-items: center;
+    text-align: center;
+    width: 10rem;
+    font-size: 1.2rem;
+    padding: 10px;
+}
+
+
+#navegacionmod1 .botonesmod li a:hover {
+    font-size: 1.1rem;
+    color: var(--Morado);
 }

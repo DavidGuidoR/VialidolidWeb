@@ -40,7 +40,7 @@
             </h1>
 
             <a href="/pantallaReportesRevisados">
-                Reportes revisados
+                Reportes En Atencion
             </a>
     
             <a href="/pantallaReportesEntrantes">
@@ -51,25 +51,29 @@
     
 
     <div class="contenido">
-        <container class="contenedorent">
-        <h1>Reportes entrantes</h1>
-        <p>Cantidad:</p>
-        <span>
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" name="filtro" placeholder="Buscar reporte">
-            <i class="fa-solid fa-filter"></i>
-        </span>
-        <%data.forEach(function(data) { if(data.estatus=='revisado'){%>
-            
-            <div class="reporteentrante">
-                <img src="/images/v.svg">
-                <p><%= data.tipo_reporte%></p>
-                <p><%= formatDate(data.fecha)%></p>
-                <p><%= data.estatus%></p>
-                <p><%= data.latitud + '' + data.longitud%></p>
-                <a href="/pantallaVisualizarReporte/<%= data.id_reporte %>">Revisar</a>
-            </div>
-        <% }}); %>
+        <container class="contenedorent" id="reportesvis">
+        <h1>Reportes En Atencion</h1>
+    
+        <div id="allreportes">
+            <%data.forEach(function(data) { if(data.estatus=='En_Atencion' ){%>
+                <div class="reporteentrante">
+                    <img src="/images/v.svg">
+                    <p>
+                        <%= data.descripcion%>
+                    </p>
+                    <p>
+                        <%= formatDate(data.fecha)%>
+                    </p>
+                    <p>
+                        Estatus: <%= data.estatus%>
+                    </p>
+                    <p>
+                        <%= data.latitud + '' + data.longitud%>
+                    </p>
+                    <a href="/pantallaVisualizarReporte/<%= data.id_reporte %>">Revisar</a>
+                </div>
+                <% }}); %>
+        </div>
     </container>
     </div>
     </article>
