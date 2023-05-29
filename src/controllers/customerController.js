@@ -577,33 +577,25 @@ controller.eliminarreporte = (req, res) => {
     }
     console.log(query);
     req.getConnection((err, conn) => {
-        conn.query('INSERT INTO baja_reporte (id_reporte, id_empleado, motivo) VALUES ( ?,?,?)', [id_reporte, usermod, motivo], (err, baja_report) => {
-
+        conn.query(query, (err, empleados) => {
             if (err) {
                 res.json(err);
             } else {
-
-                conn.query(query, (err, empleados) => {
+                conn.query('DELETE FROM reporte WHERE id_reporte = ?', [id_reporte], (err, reportes) => {
                     if (err) {
                         res.json(err);
                     } else {
-                        conn.query('DELETE FROM reporte WHERE id_reporte = ?', [id_reporte], (err, reportes) => {
+                        conn.query('UPDATE ciudadano set n_penalizaciones = 1 WHERE id_ciudadano = ?', [userrep], (err, ban) => {
                             if (err) {
                                 res.json(err);
                             } else {
-                                conn.query('UPDATE ciudadano set n_penalizaciones = 1 WHERE id_ciudadano = ?', [userrep], (err, ban) => {
-                                    if (err) {
-                                        res.json(err);
-                                    } else {
-                                        res.redirect('/menumoderacion');
-                                    }
-                                });
+                                res.redirect('/menumoderacion');
                             }
                         });
                     }
                 });
             }
-        })
+        });
     });
 }
 
