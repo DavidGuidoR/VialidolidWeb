@@ -42,7 +42,7 @@
                     </h1>
 
                     <a href="/pantallaReportesRevisados">
-                        Reportes revisados
+                        Reportes En Atencion
                     </a>
 
                     <a href="/pantallaReportesEntrantes">
@@ -55,12 +55,6 @@
             <div class="contenido">
                 <container class="contenedorent" id="reportesvis">
                     <h1>Reportes entrantes</h1>
-                    <p>Cantidad:</p>
-                    <span>
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                        <input type="text" name="filtro" placeholder="Buscar reporte">
-                        <i class="fa-solid fa-filter"></i>
-                    </span>
                     <div id="allreportes">
                         <%data.forEach(function(data) { if(data.estatus=='pendiente' ){%>
                             <div class="reporteentrante">
@@ -72,7 +66,7 @@
                                     <%= formatDate(data.fecha)%>
                                 </p>
                                 <p>
-                                    <%= data.estatus%>
+                                    Estatus: <%= data.estatus%>
                                 </p>
                                 <p>
                                     <%= data.latitud + '' + data.longitud%>

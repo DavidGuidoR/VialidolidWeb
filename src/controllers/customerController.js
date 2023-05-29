@@ -544,13 +544,11 @@ controller.eliminar = (req, res) => {
 controller.eliminarreporte = (req, res) => {
     const { id_reporte } = req.params;
     const usermod = req.body['usermod'];
-
-    const newCustumer = 'eliminado';
     const userrep = req.body['userrep'];
 
     const motivo = req.body['motivo'];
     req.getConnection((err, conn) => {
-        conn.query('DELETE FROM reporte WHERE id_reporte = ?', [newCustumer, id_reporte], (err, reportes) => {
+        conn.query('DELETE FROM reporte WHERE id_reporte = ?', [id_reporte], (err, reportes) => {
             if (err) {
                 res.json(err);
             } else {

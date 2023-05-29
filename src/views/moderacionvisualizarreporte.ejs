@@ -42,7 +42,7 @@
                     </h1>
 
                     <a href="/pantallaReportesRevisados">
-                        Reportes revisados
+                        Reportes En Atencion
                     </a>
 
                     <a href="/pantallaReportesEntrantes">
@@ -100,13 +100,7 @@
                                 <ul>
 
                                     <div class="botonesmod">
-                                        <li>
-                                            <form action="/cambiarestatus/<%= data.id_reporte %>" method="post">
-                                                <input type="hidden" name="estatuscb" value="revisado" />
-                                                <button type="submit" name="submit" class="button"
-                                                    id="sub">Revisar Reporte</button>
-                                            </form>
-                                        </li>
+
                                         <li>
 
                                             <a href="/penalizar/<%= data.id_reporte %>"><button
@@ -115,7 +109,16 @@
                                         <li>
                                             
                                             <a href="/eliminar/<%= data.id_reporte %>"><button
-                                                class="button" id="sub">eliminar Reporte</button></a>
+                                                class="button" id="sub">Eliminar Reporte</button></a>
+                                        </li>
+                                        <li>
+                                            <% if(data.estatus=='pendiente' ){%>
+                                            <form action="/cambiarestatus/<%= data.id_reporte %>" method="post">
+                                                <input type="hidden" name="estatuscb" value="En_Atencion" />
+                                                <button type="submit" name="submit" class="button"
+                                                    id="sub">Atender Reporte</button>
+                                            </form>
+                                            <% } %>
                                         </li>
                                     </div>
 

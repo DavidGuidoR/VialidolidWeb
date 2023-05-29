@@ -766,7 +766,6 @@ div {
 /* Acomodo del texto Rol */
 .botoneslateral h1 span p:nth-child(3){
     display: flex;
-    font-size: 1rem;
     padding: 0;
     margin: 0;
     grid-column: 2/4;
@@ -954,7 +953,7 @@ a {
 }
 
 .contenidomoderacion p:nth-child(2), p:nth-child(3){
-    font-size: 1.5rem;
+
     text-align: justify;
 }
 
@@ -976,6 +975,8 @@ a {
     display: flex;
     align-items: flex-start;
     margin: 0;
+    font-size: 2vh;
+    font-weight: bold;
 }
 
 .contenedorent span {
@@ -1384,7 +1385,9 @@ h3 {
     padding: 0.5rem;
     margin: 0;
     display: flex;
-    width: 130px;
+    width: 330px;
+    height: 50px;
+    text-align: left;
 }
 
 #navegacionmod1 {
