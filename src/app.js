@@ -5,8 +5,11 @@ const express = require('express');
 const path = require('path'); //extendemos el modulo path para los directorios
 const morgan = require('morgan');
 const mysql=require('mysql');
+const multer = require('multer');
 const myConnection = require('express-myconnection');
 const session = require('express-session');
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
 
 const app = express();
 
@@ -22,6 +25,21 @@ app.set('view engine', 'ejs');  //configuración de uso de las plantillas
 app.set('views', path.join(__dirname, 'views'));    //Aqui establecemos la ruta de nuestra carpeta view mediante el modulo path, concatenando la ruta de app.js(_dirname) con view  
 app.set('layout', 'layout');
 
+const imageFormat = 'webp';
+
+// ... otras configuraciones de Express ...
+
+// Ruta para mostrar imágenes
+app.get('/imagen/:formato/:base64', (req, res) => {
+  const { formato, base64 } = req.params;
+  const imageDataURL = `data:image/${formato};base64,${base64}`;
+  res.set('Content-Type', `image/${formato}`);
+  res.send(Buffer.from(base64, 'base64'));
+});
+
+// ... otras rutas y configuraciones de la aplicación ...
+
+
 //middlewares: Funciones se ejecutan entre la recepcion de una solicitud y el envió de una respuesta basicamente es un intermediario entre el cliente y el servidor
 app.use(morgan('dev'))  //mostrar mensajes por consola con dev
 app.use(myConnection(mysql,{
@@ -33,11 +51,19 @@ app.use(myConnection(mysql,{
     connectTimeout: 3600000,
 }, 'single'));  //Aqui establecemos la conexion a nuestra base de datos y establecemos la configuracion de acceso de la misma.
 
+//Establecemos para manejo de imagenes
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+app.use(upload.single('evidencia'));
 
 app.use(session({
     secret: '12345678',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        maxAge: 4 * 60 * 60 * 1000 // Establece el tiempo de vida de la cookie de sesión (en milisegundos)
+      }
 
 }));
 

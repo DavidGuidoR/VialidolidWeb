@@ -51,14 +51,16 @@ router.post('/cambiarestatus/:id_reporte', customerController.cambiarestatus);
 // Rutas del Encargado
 router.get('/plantillaEncargado',customerController.plantillaEncargado);
 router.get('/pantallaEncargado',customerController.pantallaEncargado);
-router.get('/pantallaReportesEntrantesEncargado/:dependencia',customerController.pantallaReportesEntrantesEncargado);
+router.get('/pantallaReportesEntrantesEncargado',customerController.pantallaReportesEntrantesEncargado);
 router.get('/pantallaReportesRevisadosEncargado',customerController.pantallaReportesRevisadosEncargado);
 router.get('/pantallaVisualizarReportesEncargado/:id_reporte/:dependencia',customerController.pantallaVisualizarReportesEncargado);
 router.get('/pantallaDescargarReportesEncargado',customerController.pantallaDescargarReportesEncargado);
 router.get('/rechazarReportesEncargado/:id_tabla/:id_reporte/:id_encargado',customerController.rechazarReportesEncargado);
 router.post('/cambiarEstatusReportesEncargado',customerController.cambiarEstatusReportesEncargado);
-router.get('/solucionarReportesEncargado/:id_tabla',customerController.solucionarReportesEncargado);
-router.get('/descargarReportesEncargado/:id_tabla',customerController.descargarReportesEncargado);
+router.get('/descargarReportesEncargado/:id_tabla/:id_reporte/:dependencia',customerController.descargarReportesEncargado);
+router.get('/reportesSolucionadoEncargado',customerController.descargarReportesEncargado);
+router.get('/solucionarReportesEncargado/:id_tabla/:id_reporte/:id_encargado',customerController.solucionarReportesEncargado);
+router.post('/cambiarEstatusReportesSolucionado',customerController.cambiarEstatusReportesSolucionado);
 
 // Rutas de penalizacion
 router.post('/penalizarreporte/:id_reporte', customerController.penalizarreporte);

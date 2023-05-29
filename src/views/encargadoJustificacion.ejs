@@ -55,10 +55,7 @@
             <container class="contenedorent">
                 <%data.forEach(function(data) {%>
                     
-                    <div id="desc"> 
-                        <p><%=session.id_encargado%></p>
-                        <p><%=data.id_reporte%></p>
-                        <p><%=data.id_ciudadano%></p>
+                    <div id="desc">
                         <form action="/cambiarEstatusReportesEncargado" method="post">
                             <input type="hidden" name="id_reporte" value="<%=id_reporte%>"/>
                             <input type="hidden" name="id_encargado" value="<%=id_encargado%>" />
