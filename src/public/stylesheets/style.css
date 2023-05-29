@@ -724,7 +724,7 @@ div {
     display: flex;
     flex-direction: column;
     padding: 0.8rem;
-    gap: 4rem;
+    gap: 1.5rem;
     align-items: center;
     text-align: center;
 }
