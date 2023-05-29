@@ -1456,3 +1456,28 @@ h3 {
     font-size: 1.1rem;
     color: var(--Morado);
 }
+
+.botonesadvertencia {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.botonesadvertencia a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--NegroBotones);
+    border: 2px solid var(--negro);
+    padding: 0.5rem;
+    margin: 5rem;
+    text-decoration: none;
+    color: var(--blanco);
+    border-radius: 2rem;
+    width: 10rem;
+    font-size: 1.2rem;
+}
+
+.botonesadvertencia a:hover{
+    background-color: var(--negro);
+}

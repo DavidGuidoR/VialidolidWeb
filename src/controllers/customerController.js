@@ -575,7 +575,6 @@ controller.pantallaEncargado = (req, res) => {
 
 controller.pantallaReportesEntrantesEncargado = (req, res) => {
     const dependencia = req.query.dependencia;
-    console.log(dependencia);
     var tabla = '';
     var id = '';
     var query = '';
@@ -630,6 +629,7 @@ controller.pantallaReportesEntrantesEncargado = (req, res) => {
         var tabla = '';
         var treporte = '';
         var query = '';
+        var arregloVacio = [''];
         switch (dependencia) {
           case '1':
             tabla = 'reporte_ooapas';
@@ -672,19 +672,25 @@ controller.pantallaReportesEntrantesEncargado = (req, res) => {
           return formattedDate;
         }
         req.getConnection((err, conn) => {
-          conn.query(query, ['solucionado'], (err, reportes) => {
-            if (err) {
-              res.json(err);
-            } else {
-              console.log(reportes);
-const blobData = reportes[0].evidencias;
-const imageBuffer = Buffer.from(blobData, 'binary');
-const imageBase64 = imageBuffer.toString('base64');
-const imageDataURL = `data:image/webp;base64,${imageBase64}`;
-
-res.render('encargadoreportesrevisados', { data: reportes, formatDate: formatDate, treporte, imagenURL: imageDataURL });
-            }
-          });
+            conn.query(query, ['solucionado'], (err, reportes) => {
+                //try {
+                  if (err) {
+                    throw err; // Lanza una excepción en caso de error en la consulta
+                  }
+                    console.log(reportes);
+                    if (reportes.length !== 0) {
+                    const blobData = reportes[0].evidencias;
+                    const imageBuffer = Buffer.from(blobData, 'binary');
+                    const imageBase64 = imageBuffer.toString('base64');
+                    const imageDataURL = `data:image/webp;base64,${imageBase64}`;
+                    res.render('encargadoreportesrevisados', {data: reportes, formatDate: formatDate, treporte, imagenURL: imageDataURL});
+              } else{
+                    res.render('encargadoreportesrevisados', {data: reportes, formatDate: formatDate, treporte, imagenURL: null});
+              }
+                // } catch (error) {
+                //   res.json(error); // Devuelve el error como respuesta JSON
+                // }
+              });
         });
       };
       
@@ -694,6 +700,7 @@ res.render('encargadoreportesrevisados', { data: reportes, formatDate: formatDat
         
         const dependencia=req.params.dependencia;
         console.log(dependencia);
+        const id_reporte = req.params.id_reporte;
         var tabla = '';
         var id_tabla = '';
         var treporte='';
@@ -703,27 +710,27 @@ res.render('encargadoreportesrevisados', { data: reportes, formatDate: formatDat
             case '1': tabla='reporte_ooapas';
                       treporte= 'Reporte Ooapas';
                     id_tabla='id_reporte_oo';
-                    query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, oo.cve_predio, oo.colonia, oo.calle FROM reporte_ooapas oo JOIN reporte r ON oo.id_reporte = r.id_reporte';
+                    query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, oo.cve_predio, oo.colonia, oo.calle FROM reporte_ooapas oo JOIN reporte r ON oo.id_reporte = r.id_reporte WHERE r.id_reporte=?';
                 break;
             case '2': tabla= 'reporte_m_animal';
                     treporte= 'Maltrato animal';
                     id_tabla='id_reporte_me';
-                    query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ma.tipo_mascota, ma.colonia, ma.calle FROM reporte_m_animal ma JOIN reporte r ON ma.id_reporte = r.id_reporte';
+                    query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ma.tipo_mascota, ma.colonia, ma.calle FROM reporte_m_animal ma JOIN reporte r ON ma.id_reporte = r.id_reporte WHERE r.id_reporte=?';
                 break;
             case '3': tabla= 'reporte_vial';
                     treporte= 'Problema en carretera';
                     id_tabla='id_reporte_v';
-                    query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, v.imagen, v.colonia, v.calle FROM reporte_vial v JOIN reporte r ON v.id_reporte = r.id_reporte';
+                    query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, v.imagen, v.colonia, v.calle FROM reporte_vial v JOIN reporte r ON v.id_reporte = r.id_reporte WHERE r.id_reporte=?';
                 break;
             case '4': tabla= 'reporte_alumbrado_publico'
                     treporte= 'Falla en alumbrado';
                     id_tabla='id_reporte_ap';
-                    query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ap.colonia, ap.calle FROM reporte_alumbrado_publico ap JOIN reporte r ON ap.id_reporte = r.id_reporte';
+                    query = 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, ap.colonia, ap.calle FROM reporte_alumbrado_publico ap JOIN reporte r ON ap.id_reporte = r.id_reporte WHERE r.id_reporte=?';
                 break;
             case '5': tabla= 'reporte_bacheo'
                     treporte= 'Bache'
                     id_tabla='id_reporte_b';
-                    query= 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, b.colonia, b.calle, b.imagen FROM reporte_bacheo b JOIN reporte r ON b.id_reporte = r.id_reporte';
+                    query= 'SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, r.id_ciudadano, r.tipo_reporte, r.id_dependencia, b.colonia, b.calle, b.imagen FROM reporte_bacheo b JOIN reporte r ON b.id_reporte = r.id_reporte WHERE r.id_reporte=?';
                 break;
             default: console.log('error en dependencia');
                 break;
@@ -737,7 +744,7 @@ res.render('encargadoreportesrevisados', { data: reportes, formatDate: formatDat
           }
         req.getConnection((err, conn) => {
             
-            conn.query(query, (err, data) => {
+            conn.query(query, [id_reporte],(err, data) => {
                 let inputsHTML = '';
                 switch (dependencia) {
                 
@@ -905,11 +912,18 @@ res.render('encargadoreportesrevisados', { data: reportes, formatDate: formatDat
       };
             
 
+    controller.advertenciaDescargarReportesEncargado = (req,res) => {
+        const id_reporte = req.params.id_reporte;
+        res.render('encargadodescargarreportes', {id_reporte});
+        }
+
     controller.descargarReportesEncargado = (req,res) => {
         
   const dependencia = req.params.dependencia;
   const id_reporte = req.params.id_reporte;
   let query = '';
+  let estatus = 'En_Atencion'
+  const queryact = 'UPDATE reporte SET estatus = ? WHERE id_reporte =?';
 
   switch (dependencia) {
     case '1':
@@ -938,6 +952,7 @@ res.render('encargadoreportesrevisados', { data: reportes, formatDate: formatDat
 
 }
   req.getConnection((err, conn) => {
+    conn.query(queryact,[estatus,id_reporte], (err,rows) => {
     conn.query(query, [id_reporte], (err, data) => {
       if (err) {
         res.json(err);
@@ -995,7 +1010,7 @@ res.render('encargadoreportesrevisados', { data: reportes, formatDate: formatDat
         // Finalize the PDF document
         doc.end();
       }
-    });
+    });})
   });
 
 }

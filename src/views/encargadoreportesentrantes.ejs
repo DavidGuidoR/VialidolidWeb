@@ -39,15 +39,15 @@
     </h1>
 
     <a href="/pantallaReportesRevisadosEncargado?dependencia=<%=session.dependencia%>">
-        Reportes En Atencion
+        Reportes Solucionados
     </a>
 
     <a href="/pantallaReportesEntrantesEncargado?dependencia=<%=session.dependencia%>">
         Reportes entrantes
     </a>
-    <a href="/pantallaDescargarReportesEncargado?dependencia=<%=session.dependencia%>">
+    <!-- <a href="/pantallaDescargarReportesEncargado?dependencia=<%=session.dependencia%>">
         Descargar reportes
-    </a>
+    </a> -->
     </div>
     </div>
     
@@ -55,12 +55,12 @@
         <div class="contenido">
             <container class="contenedorent">
             <h1>Reportes entrantes</h1>
-            <p>Cantidad:</p>
-            <span>
+            <!-- <p>Cantidad:</p> -->
+            <!-- <span>
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <input type="text" name="filtro" placeholder="Buscar reporte">
                 <i class="fa-solid fa-filter"></i>
-            </span>
+            </span> -->
             <%data.forEach(function(data) { if(data.estatus=='pendiente'){ %>
                 
                 <div class="reporteentrante">

@@ -39,22 +39,26 @@
     </h1>
 
     <a href="/pantallaReportesRevisadosEncargado?dependencia=<%=session.dependencia%>">
-        Reportes En Atencion
+        Reportes Solucionados
     </a>
 
     <a href="/pantallaReportesEntrantesEncargado?dependencia=<%=session.dependencia%>">
         Reportes entrantes
     </a>
-    <a href="/pantallaDescargarReportesEncargado?dependencia=<%=session.dependencia%>">
+    <!-- <a href="/pantallaDescargarReportesEncargado?dependencia=<%=session.dependencia%>">
         Descargar reportes
-    </a>
+    </a> -->
     </div>
     </div>
     
     <section class="contenedorderecho">
     <div class="contenido">
         <div class="contenidomoderacion">
-            
+            <h2> En caso de que descargue el reporte el sistema considerara que el reporte esta siendo atendido, ¿desea continuar?</h2>
+            <div class="botonesadvertencia">
+                <a href="/pantallaEncargado">Cancelar</a>
+                <a href="/descargarReportesEncargado/<%=id_reporte%>/<%=session.dependencia%>">Aceptar</a>
+            </div>  
         </div>
     </div>
     </section>

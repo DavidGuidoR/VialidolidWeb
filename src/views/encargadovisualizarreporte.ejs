@@ -42,15 +42,15 @@
                     </h1>
 
                     <a href="/pantallaReportesRevisadosEncargado?dependencia=<%=session.dependencia%>">
-                        Reportes En Atencion
+                        Reportes Solucionados
                     </a>
                 
                     <a href="/pantallaReportesEntrantesEncargado?dependencia=<%=session.dependencia%>">
                         Reportes entrantes
                     </a>
-                    <a href="/pantallaDescargarReportesEncargado?dependencia=<%=session.dependencia%>">
+                    <!-- <a href="/pantallaDescargarReportesEncargado?dependencia=<%=session.dependencia%>">
                         Descargar reportes
-                    </a>
+                    </a> -->
                 </div>
             </div>
 
@@ -75,10 +75,10 @@
                                     <h3>Fecha:</h3>
                                     <p><%=formatDate(data.fecha)%></p>
                                 </div>
-                                <div>
+                                <!-- <div>
                                     <h3>Latitud y Longitud</h3>
                                     <p><%=data.latitud%></p>
-                                </div>
+                                </div> -->
                                 <div>
                                     <h3>Apoyos</h3>
                                     </p><%=data.n_apoyos%></p>
@@ -114,7 +114,7 @@
                             <div id="semifooterEnc">
                                 <a href="/rechazarReportesEncargado/<%=id_tabla%>/<%=data.id_reporte%>/<%=session.id_encargado%>">Rechazar</a>
                                 <a href="/solucionarReportesEncargado/<%=id_tabla%>/<%=data.id_reporte%>/<%=session.id_encargado%>">Solucionado</a>
-                                <a href="/descargarReportesEncargado/<%=id_tabla%>/<%=data.id_reporte%>/<%=session.dependencia%>">Descargar reporte</a>  
+                                <a href="/advertenciaDescargarReportesEncargado/<%=data.id_reporte%>">Descargar reporte</a>  
                             </div>
                         </div>
                         <% }); %>
