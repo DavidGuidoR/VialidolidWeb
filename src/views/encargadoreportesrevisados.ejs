@@ -58,11 +58,11 @@
             <span>
             </span>
 
-            <%data.forEach(function(data) { if(data.estatus=='solucionado'){%>
+            <%data.forEach(function(data) { if(data.estatus==='solucionado' || data.estatus==='En_Atencion') {%>
 
                 <div class="reporteentrante">
                     <!-- encargadoreportesrevisados.ejs -->
-                    <img src="<%= imagenURL %>" alt="Imagen" />
+                    <img src="<%= imagen %>" alt="Imagen" />
                     <p><%= data.tipo_reporte%></p>
                     <p><%= formatDate(data.fecha)%></p>
                     <p  class="status"><%= data.estatus%></p>

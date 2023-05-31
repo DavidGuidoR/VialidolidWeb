@@ -3,7 +3,6 @@ de javascript en el cual podemos ir agregando rutas  y reutilizarlas*/
 
 const express = require('express');
 const router = express.Router();
-
 //Mandamos llamar nuestro archivo de funciones customerController
 const customerController = require('../controllers/customerController');
 
@@ -71,5 +70,8 @@ router.get('/penalizar/:id_reporte',customerController.penalizar);
 // Rutas de penalizacion
 router.post('/eliminarreporte/:id_reporte', customerController.eliminarreporte);
 router.get('/eliminar/:id_reporte',customerController.eliminar);
+router.get('/pruebapantsubirimagen',customerController.pruebapantsubirimagen);
+// Ruta de prueba para subir imagen
+router.post('/pruebasubirimagen', customerController.pruebasubirimagen);
 
 module.exports=router;

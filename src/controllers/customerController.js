@@ -4,7 +4,7 @@ const { json } = require("body-parser");
 const { route } = require("../routes/customer");
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
-
+const SftpClient = require('ssh2-sftp-client');
 
 const controller = {};
 
@@ -55,6 +55,10 @@ controller.plantillaEncargado = (req, res) => {
 
 controller.plantillaInicioSesion = (req, res) => {
     res.render('plantillainiciosesion');
+}
+
+controller.pruebapantsubirimagen = (req,res) => {
+    res.render('pruebasubidaimagen');
 }
 
 
@@ -675,18 +679,11 @@ controller.pantallaReportesEntrantesEncargado = (req, res) => {
             conn.query(query, ['solucionado'], (err, reportes) => {
                 //try {
                   if (err) {
-                    throw err; // Lanza una excepción en caso de error en la consulta
+                    console.log (err) // Lanza una excepción en caso de error en la consulta
                   }
                     console.log(reportes);
-                    if (reportes.length !== 0) {
-                    const blobData = reportes[0].evidencias;
-                    const imageBuffer = Buffer.from(blobData, 'binary');
-                    const imageBase64 = imageBuffer.toString('base64');
-                    const imageDataURL = `data:image/webp;base64,${imageBase64}`;
-                    res.render('encargadoreportesrevisados', {data: reportes, formatDate: formatDate, treporte, imagenURL: imageDataURL});
-              } else{
-                    res.render('encargadoreportesrevisados', {data: reportes, formatDate: formatDate, treporte, imagenURL: null});
-              }
+                    const imagen = 'http://137.117.123.255/reportes_img/'+reportes[0].evidencias;
+                    res.render('encargadoreportesrevisados', {data: reportes, formatDate: formatDate, treporte, imagen});
                 // } catch (error) {
                 //   res.json(error); // Devuelve el error como respuesta JSON
                 // }
@@ -874,12 +871,11 @@ controller.pantallaReportesEntrantesEncargado = (req, res) => {
         const id_reporte = req.body['id_reporte'];
         const estatus = req.body['estatus'];
         const id_encargado = req.body['id_encargado'];
-        const imagenAdjunta = req.file; // Obtener la imagen adjunta desde req.file
-        console.log(id_reporte);
-        console.log(estatus);
-        console.log(id_encargado);
-        console.log(imagenAdjunta);
-      
+        const archivo = req.file;
+        const currentDate = new Date();
+        const dateString = currentDate.toISOString().replace(/[:.]/g, '');
+    
+        // Llamar a la función para subir la imagen
         const consultaEstatus = 'UPDATE reporte SET estatus = ? WHERE id_reporte = ?';
         const insercionSolucionadoReportes = 'INSERT INTO reporte_solucionado (id_reporte, id_encargado, evidencias) VALUES (?, ?, ?)';
       
@@ -892,12 +888,14 @@ controller.pantallaReportesEntrantesEncargado = (req, res) => {
                 res.json(err);
               } else {
                 // Guardar la imagen como tipo BLOB en la base de datos
-                if (imagenAdjunta) {
-                  const imagenBLOB = imagenAdjunta.buffer;
-                  conn.query(insercionSolucionadoReportes, [id_reporte, id_encargado, imagenBLOB], (err, baja_report) => {
+                if (archivo) {
+                    const nombreArchivo = dateString+archivo.originalname;
+                    const rutaLocal = archivo.path;
+                  conn.query(insercionSolucionadoReportes, [id_reporte, id_encargado, nombreArchivo], (err, baja_report) => {
                     if (err) {
                       res.json(err);
                     } else {
+                      subirImagen(nombreArchivo, rutaLocal);
                       res.redirect('/pantallaEncargado');
                     }
                   });
@@ -1013,6 +1011,52 @@ controller.pantallaReportesEntrantesEncargado = (req, res) => {
     });})
   });
 
+}
+
+async function subirImagen(nombreArchivo, rutaLocal) {
+    const sftp = new SftpClient();
+  
+    try {
+      // Configuración de la conexión SFTP
+      const config = {
+        host: '137.117.123.255',
+        port: 22,
+        username: 'BD',
+        password: 'Bd1111111111'
+      };
+  
+      // Conexión al servidor SFTP
+      await sftp.connect(config);
+  
+      // Ruta remota donde se almacenará la imagen
+      const rutaRemota ='/opt/lampp/htdocs/reportes_img/' + nombreArchivo;
+  
+      // Subir el archivo a la máquina virtual
+      await sftp.put(rutaLocal, rutaRemota);
+      console.log('Imagen subida correctamente.');
+    } catch (error) {
+      console.error('Error al subir la imagen:', error);
+    } finally {
+      // Cerrar la conexión SFTP
+      await sftp.end();
+    }
+  }
+
+controller.pruebasubirimagen = (req,res) =>{
+    const archivo = req.file;
+    const currentDate = new Date();
+    const dateString = currentDate.toISOString().replace(/[:.]/g, '');
+
+  if (archivo) {
+    const nombreArchivo = dateString+archivo.originalname;
+    const rutaLocal = archivo.path;
+
+    // Llamar a la función para subir la imagen
+    subirImagen(nombreArchivo, rutaLocal);
+
+  } else {
+    res.status(400).send('No se recibió ninguna imagen');
+  }
 }
 
 module.exports = controller;

@@ -10,9 +10,16 @@ const myConnection = require('express-myconnection');
 const session = require('express-session');
 const PDFDocument = require('pdfkit');
 const fs = require('fs');
+const SftpClient = require('ssh2-sftp-client');
+
+const storage = multer.diskStorage({
+  destination: '137.117.123.255/reportes_img/',
+  filename: (req, file, cb) =>  {
+    cb(null, file.originalname)
+  }
+});
 
 const app = express();
-
 //importando rutas
 const customerRoutes = require('./routes/customer'); //direccion del archivo customer
 
@@ -22,10 +29,10 @@ const customerRoutes = require('./routes/customer'); //direccion del archivo cus
 app.set('port',process.env.PORT || 4000);
 //Utilizamos un motor de plantillas de ejs el cual nos permite renderizar nuestros html en node
 app.set('view engine', 'ejs');  //configuración de uso de las plantillas
-app.set('views', path.join(__dirname, 'views'));    //Aqui establecemos la ruta de nuestra carpeta view mediante el modulo path, concatenando la ruta de app.js(_dirname) con view  
+app.set('views', path.join(__dirname, 'views'));//Aqui establecemos la ruta de nuestra carpeta view mediante el modulo path, concatenando la ruta de app.js(_dirname) con view  
 app.set('layout', 'layout');
 
-const imageFormat = 'webp';
+
 
 // ... otras configuraciones de Express ...
 
@@ -49,13 +56,9 @@ app.use(myConnection(mysql,{
     port: 3306,
     database: 'vialidolid',
     connectTimeout: 3600000,
+    wait_timeout: 3600000
 }, 'single'));  //Aqui establecemos la conexion a nuestra base de datos y establecemos la configuracion de acceso de la misma.
 
-//Establecemos para manejo de imagenes
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
-
-app.use(upload.single('evidencia'));
 
 app.use(session({
     secret: '12345678',
@@ -74,6 +77,14 @@ app.use((req, res, next) => {
   
 //middleware obtención de datos formulario
 app.use(express.urlencoded({extend: false}));
+
+//middleware manejo de imágenes en servidor
+//Establecemos para manejo de imagenes
+
+app.use (multer({
+  storage: storage,
+  dest: '137.117.123.255/reportes_img/'
+}).single('imagen'))
 
 //routes: rutas que el cliente puede solicitar a los archivos
 app.use('/', customerRoutes);
