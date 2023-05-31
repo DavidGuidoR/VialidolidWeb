@@ -524,7 +524,7 @@ controller.eliminar = (req, res) => {
     }
     req.getConnection((err, conn) => {
 
-        conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano AS nombre_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia WHERE r.id_reporte = ?', [id_reporte], (err, reportes) => {
+        conn.query('SELECT r.id_reporte, r.fecha, r.descripcion, r.latitud, r.longitud, r.n_apoyos, r.estatus, r.n_denuncias, r.referencias, c.id_ciudadano AS nombre_ciudadano, d.nombre AS nombre_dependencia, r.tipo_reporte, r.id_dependencia FROM reporte r JOIN ciudadano c ON r.id_ciudadano = c.id_ciudadano JOIN dependencia d ON r.id_dependencia = d.id_dependencia WHERE r.id_reporte = ?', [id_reporte], (err, reportes) => {
             if (err) {
                 res.json(err);
             } else {
@@ -541,14 +541,44 @@ controller.eliminarreporte = (req, res) => {
     const { id_reporte } = req.params;
     const usermod = req.body['usermod'];
     const userrep = req.body['userrep'];
-
+    const dependencia = req.body['dependencia']
     const motivo = req.body['motivo'];
+    const estado ='eliminado';
+    console.log(dependencia);
+    var tabla = '';
+    var id = '';
+    var query = '';
+    switch (dependencia) {
+        case '1': tabla = 'reporte_ooapas';
+            treporte = 'Reporte Ooapas';
+            query = 'DELETE FROM reporte_ooapas WHERE id_reporte=' + id_reporte + '';
+            break;
+        case '2': tabla = 'reporte_m_animal';
+            treporte = 'Maltrato animal';
+            query = 'DELETE FROM reporte_m_animal WHERE id_reporte=' + id_reporte + '';
+            break;
+        case '3': tabla = 'reporte_vial';
+            treporte = 'Problema en carretera';
+            query = 'DELETE FROM reporte_vial WHERE id_reporte=' + id_reporte + '';
+            break;
+        case '4': tabla = 'reporte_alumbrado_publico'
+            treporte = 'Falla en alumbrado';
+            query = 'DELETE FROM reporte_alumbrado_publico WHERE id_reporte=' + id_reporte + '';
+            break;
+        case '5': tabla = 'reporte_bacheo'
+            treporte = 'Bache'
+            query = 'DELETE FROM reporte_bacheo WHERE id_reporte=' + id_reporte + '';
+            break;
+        default: console.log('error en dependencia');
+            break;
+    }
+    console.log(query);
     req.getConnection((err, conn) => {
-        conn.query('DELETE FROM reporte WHERE id_reporte = ?', [id_reporte], (err, reportes) => {
+        conn.query(query, (err, empleados) => {
             if (err) {
                 res.json(err);
             } else {
-                conn.query('INSERT INTO baja_reporte (id_reporte, id_empleado, motivo) VALUES ( ?,?,?)', [id_reporte, usermod, motivo], (err, baja_report) => {
+                conn.query('UPDATE reporte set estatus = ?  WHERE id_reporte = ?', [estado,id_reporte], (err, reportes) => {
                     if (err) {
                         res.json(err);
                     } else {

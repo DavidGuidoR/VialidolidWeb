@@ -72,12 +72,16 @@
                                         <img src="/images/v.svg" height="100px" width="100px">
                                     </div>
                                     <div>
+                                        <h3>ID del Reporte</h3>
+                                        <%= data.id_reporte%>
+                                    </div>
+                                    <div>
                                         <h3>Fecha</h3>
                                         <%= formatDate(data.fecha)%>
                                     </div>
                                     <div>
                                         <h3>Latitud y Longitud</h3>
-                                        <%= data.latitud + '' + data.longitud%>
+                                        <%= data.latitud + ', ' + data.longitud%>
                                     </div>
                                     <div>
                                         <h3>Tipo de Reporte</h3>
@@ -92,6 +96,18 @@
                                         <h3>Estatus</h3>
                                         <%= data.estatus%>
                                     </div>
+                                    <div>
+                                        <h3># de Denuncias</h3>
+                                        <%= data.n_denuncias%>
+                                    </div>
+                                    <div>
+                                        <h3>Referencias</h3>
+                                        <%= data.referencias%>
+                                    </div>
+                                    <div>
+                                        <h3>ID del ciudadano</h3>
+                                        <%= data.nombre_ciudadano%>
+                                    </div>
                                 </div>
                             </div>
 
@@ -103,22 +119,22 @@
 
                                         <li>
 
-                                            <a href="/penalizar/<%= data.id_reporte %>"><button
-                                                    class="button" id="sub">Penalizar Reporte</button></a>
+                                            <a href="/penalizar/<%= data.id_reporte %>"><button id="sub">Penalizar
+                                                    Reporte</button></a>
                                         </li>
                                         <li>
-                                            
-                                            <a href="/eliminar/<%= data.id_reporte %>"><button
-                                                class="button" id="sub">Eliminar Reporte</button></a>
+
+                                            <a href="/eliminar/<%= data.id_reporte %>"><button id="sub">Eliminar
+                                                    Reporte</button></a>
                                         </li>
                                         <li>
                                             <% if(data.estatus=='pendiente' ){%>
-                                            <form action="/cambiarestatus/<%= data.id_reporte %>" method="post">
-                                                <input type="hidden" name="estatuscb" value="En_Atencion" />
-                                                <button type="submit" name="submit" class="button"
-                                                    id="sub">Atender Reporte</button>
-                                            </form>
-                                            <% } %>
+                                                <form action="/cambiarestatus/<%= data.id_reporte %>" method="post">
+                                                    <input type="hidden" name="estatuscb" value="En_Atencion" />
+                                                    <button type="submit" name="submit" id="sub">Atender
+                                                        Reporte</button>
+                                                </form>
+                                                <% } %>
                                         </li>
                                     </div>
 

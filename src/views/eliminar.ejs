@@ -64,6 +64,7 @@
                             <form action="/eliminarreporte/<%= data.id_reporte %>" method="post">
                                 <input type="hidden" name="usermod" value="<%=session.id_empleado%>" />
                                 <input type="hidden" name="userrep" value="<%=data.nombre_ciudadano%>" />
+                                <input type="hidden" name="dependencia" value="<%=data.id_dependencia%>" />
                                 <textarea name="motivo" cols="50" rows="5" wrap="soft" required
                                     placeholder="Introduzca el motivo"></textarea>
 
