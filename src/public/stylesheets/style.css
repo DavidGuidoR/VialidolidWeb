@@ -660,7 +660,12 @@ div {
 }
 
 #navegacionmod a {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    text-decoration: none;
     color: var(--blanco);
+    
 }
 
 #navegacionmod ul {
@@ -702,21 +707,18 @@ div {
 }
 
 #navegacionmod .botonesmod li {
+    display: flexbox;
     background-color: var(--NegroBotones);
     border: 3px solid var(--negro);
-    padding: 0.5rem;
     margin: 1rem;
-    border-radius: 5px;
-    align-items: center;
-    text-align: center;
+    border-radius: 0.5rem;
     width: 10rem;
     font-size: 1.2rem;
 }
 
 
 #navegacionmod .botonesmod li a:hover {
-    font-size: 1.1rem;
-    color: var(--Morado);
+    background-color: var(--negro);
 }
 
 /* Estilo CSS barra lateral ------------------------------------------------------- */
@@ -959,7 +961,8 @@ a {
 /* Estilo CSS de la pantalla moderación. */
 
 .contenidomoderacion {
-    display: grid;
+    display: flexbox;
+    overflow-y: auto;
 }
 
 .contenidomoderacion p:nth-child(1) {
@@ -972,12 +975,33 @@ a {
     text-align: justify;
 }
 
+.contenidomoderacion table, thead{
+    display: flexbox;
+    flex: auto;
+}
+
+.contenidomoderacion table a{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    font-size: 1.2rem;
+    text-decoration: none;
+    background-color: var(--NegroBotones);
+    color: var(--blanco);
+    border-radius: 1rem;
+}
+
+.contenidomoderacion table a:hover{
+    background-color: var(--negro);
+}
+
 /* Estilo CSS reportes entrantes contenido derecho */
 .contenedorent {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
+    display: flexbox;
     overflow-y: auto;
+    margin: 1rem;
+    height: 80vh;
+    width: 100%;
 }
 
 .contenedorent h1 {
@@ -1038,8 +1062,7 @@ a {
     grid-template-rows: 1fr 1fr;
     grid-auto-rows: minmax(auto, auto);
     grid-auto-columns: minmax(auto, auto);
-    margin: 0.2rem;
-    height: 100px;
+    margin: 0.5rem;
 
 }
 
@@ -1105,7 +1128,6 @@ a {
 
 /* Seccion CSS de las tablas del CRUD */
 .contenedorderecho {
-    overflow-y: auto;
     width:100%;
     height: 80vh;
 }
@@ -1142,6 +1164,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
 }
 
 .insercion form{
