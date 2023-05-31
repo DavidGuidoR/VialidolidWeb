@@ -547,6 +547,7 @@ controller.eliminarreporte = (req, res) => {
     const userrep = req.body['userrep'];
     const dependencia = req.body['dependencia']
     const motivo = req.body['motivo'];
+    const estado ='eliminado';
     console.log(dependencia);
     var tabla = '';
     var id = '';
@@ -581,7 +582,7 @@ controller.eliminarreporte = (req, res) => {
             if (err) {
                 res.json(err);
             } else {
-                conn.query('DELETE FROM reporte WHERE id_reporte = ?', [id_reporte], (err, reportes) => {
+                conn.query('UPDATE reporte set estatus = ?  WHERE id_reporte = ?', [estado,id_reporte], (err, reportes) => {
                     if (err) {
                         res.json(err);
                     } else {
