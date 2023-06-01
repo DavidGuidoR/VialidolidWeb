@@ -1556,4 +1556,47 @@ h3 {
     background-color: var(--negro);
 }
 
+#desc{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+}
+
+#desc i{
+    background-color: var(--NegroBotones);
+    padding: 0.2rem;
+    border-radius: 0.5rem;
+    align-items: flex-start;
+}
+
+#desc a, h2, form{
+    display: flex;
+    margin: 0.5rem;
+}
+
+#desc form {
+    display: flex;
+    flex-direction: column;
+}
+
+#desc form input{
+    margin: 1.5rem;
+}
+
+#desc form button{
+    background-color: var(--NegroBotones);
+    border: 3px solid var(--negro);
+    border-radius: 0.5rem;
+    color: var(--blanco);
+    padding: 0.5rem;
+    width: 20%;
+    height: 50%;
+}
+
+#desc form button:hover{
+    background-color: var(--negro);
+}
+
 }
