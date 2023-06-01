@@ -129,7 +129,7 @@
                                         </li>
                                         <li>
                                             <% if(data.estatus=='pendiente' ){%>
-                                                <form action="/cambiarestatus/<%= data.id_reporte %>" method="post">
+                                                <form action="/cambiarestatus/<%= data.id_reporte %>" method="post" id="atender">
                                                     <input type="hidden" name="estatuscb" value="En_Atencion" />
                                                     <button type="submit" name="submit" id="sub">Atender
                                                         Reporte</button>
