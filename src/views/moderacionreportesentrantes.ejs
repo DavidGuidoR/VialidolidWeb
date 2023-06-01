@@ -52,31 +52,42 @@
             </div>
 
 
-            <div class="contenido">
-                <container class="contenedorent" id="reportesvis">
-                    <h1>Reportes entrantes</h1>
-                    <div id="allreportes">
+            <section class="contenedorderecho">
+                <div class="contenido">
+
+                    <container class="contenedorent">
+                        <h1>Reportes En Atencion</h1>
+
                         <%data.forEach(function(data) { if(data.estatus=='pendiente' ){%>
+
                             <div class="reporteentrante">
                                 <img src="/images/v.svg">
-                                <p>
+                                <p id="titulodesc">
                                     <%= data.descripcion%>
                                 </p>
                                 <p>
                                     <%= formatDate(data.fecha)%>
                                 </p>
-                                <p>
+                                <p id="pendiente">
                                     Estatus: <%= data.estatus%>
                                 </p>
                                 <p>
                                     <%= data.latitud + '' + data.longitud%>
                                 </p>
+
                                 <a href="/pantallaVisualizarReporte/<%= data.id_reporte %>">Revisar</a>
                             </div>
+
+
+
+
+
                             <% }}); %>
-                    </div>
-                </container>
-            </div>
+
+                    </container>
+
+                </div>
+            </section>
         </article>
     </section>
 
