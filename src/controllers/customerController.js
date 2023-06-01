@@ -666,6 +666,20 @@ controller.pantallaEncargado = (req, res) => {
     res.render('encargado');
 }
 
+controller.pantallaPerfilEncargado = (req,res) => {
+    const id_encargado=req.params.id_encargado;
+    const consulta = 'SELECT * FROM encargado_dependencia WHERE id_encargado = ?';
+    req.getConnection((err,conn) =>{
+        conn.query(consulta,[id_encargado],(err,data) =>{
+            if(err){
+                res.json(err);
+            } else {
+                res.render('encargadoperfil', {data:data})
+            }
+        })
+    });
+}
+
 controller.pantallaReportesEntrantesEncargado = (req, res) => {
     const dependencia = req.query.dependencia;
     var tabla = '';
@@ -771,9 +785,8 @@ controller.pantallaReportesEntrantesEncargado = (req, res) => {
                     console.log (err) // Lanza una excepción en caso de error en la consulta
                   }
                     console.log(reportes);
-                    const imagen = 'http://137.117.123.255/reportes_img/'+reportes[0].evidencias;
-                    console.log(imagen);
-                    res.render('encargadoreportesrevisados', {data: reportes, formatDate: formatDate, treporte, imagen});
+                    const carpeta = 'http://137.117.123.255/reportes_img/'
+                    res.render('encargadoreportesrevisados', {data: reportes, formatDate: formatDate, treporte, carpeta});
                 // } catch (error) {
                 //   res.json(error); // Devuelve el error como respuesta JSON
                 // }
@@ -851,7 +864,7 @@ controller.pantallaReportesEntrantesEncargado = (req, res) => {
                     break;
 
                 case '3':
-                    inputsHTML += '<div><img src=' + data[0].id_ciudadano + '></div>';
+                    inputsHTML += '<div><h3>Imagen</h3><img src=' + 'http://137.117.123.255/reportes_img/2023-05-31T060613786ZOrcaPrueba.jpg height=150px width=150px' + '></div>';
                     inputsHTML += '<div><h3>Colonia</h3><p>' + data[0].colonia + '</p></div>';
                     inputsHTML += '<div><h3>Calle</h3><p>' + data[0].calle + '</p></div>';
                     break;
@@ -863,7 +876,7 @@ controller.pantallaReportesEntrantesEncargado = (req, res) => {
 
 
                 case '5':
-                    inputsHTML += '<div><img src=' + data[0].id_ciudadano + '></div>';
+                    inputsHTML += '<div><h3>Imagen</h3><img src=' + 'http://137.117.123.255/reportes_img/2023-05-31T060613786ZOrcaPrueba.jpg height=150px width=150px' + '></div>';
                     inputsHTML += '<div><h3>Colonia</h3><p>' + data[0].colonia + '</p></div>';
                     inputsHTML += '<div><h3>Calle</h3><p>' + data[0].calle + '</p></div>';
                     break;

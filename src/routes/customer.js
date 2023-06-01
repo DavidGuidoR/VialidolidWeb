@@ -55,6 +55,7 @@ router.get('/pantallaEncargado',customerController.pantallaEncargado);
 router.get('/pantallaReportesEntrantesEncargado',customerController.pantallaReportesEntrantesEncargado);
 router.get('/pantallaReportesRevisadosEncargado',customerController.pantallaReportesRevisadosEncargado);
 router.get('/pantallaVisualizarReportesEncargado/:id_reporte/:dependencia',customerController.pantallaVisualizarReportesEncargado);
+router.get('/pantallaPerfilEncargado/:id_encargado',customerController.pantallaPerfilEncargado);
 // router.get('/pantallaDescargarReportesEncargado',customerController.pantallaDescargarReportesEncargado);
 router.get('/rechazarReportesEncargado/:id_tabla/:id_reporte/:id_encargado',customerController.rechazarReportesEncargado);
 router.post('/cambiarEstatusReportesEncargado',customerController.cambiarEstatusReportesEncargado);

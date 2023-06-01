@@ -50,20 +50,47 @@
         </a> -->
     </div>
     </div>
-    
     <section class="contenedorderecho">
-    <div class="contenido">
-        <div class="contenidomoderacion">
-            <p>
-                Bienvenido al panel de encargado
-            </p>
-            <p>
-                Esta es la seccion del encargado, aquí podrá consultar los reportes entrantes, darles una revision y descargarlos en un formato de descarga para su consulta, 
-                ademas podrá marcar estos reportes como revisados para que los usuarios puedan saberlo.
-            </p>
+        <div class="contenido">
+            <container class="contenedorentEnc">
+
+                    <div id="descEnc">
+                        <%data.forEach(function(data) {%>
+                        <div class="wrapperEnc">
+                            <div>
+                                <img src="/images/v.svg" height="100px" width="100px">
+                            </div>
+                            <div>
+                                <h3>ID empleado</h3>
+                                <p><%=data.id_encargado%></p>
+                            </div>
+                            <div>
+                                <h3>Cargo</h3>
+                                <p>Encargado</p>
+                            </div>
+                            <div>
+                                <h3>Nombre</h3>
+                                <p><%=data.nombre%></p>
+                            </div>
+                            <div>
+                                <h3>Apellidos</h3>
+                                <p><%=data.apellido_paterno+' '+data.apellido_materno%></p>
+                            </div>
+                            <div>
+                                <h3>Usuario</h3>
+                                <p><%=data.usuario%></p>
+                            </div>
+                            <div>
+                                <h3>Contraseña</h3>
+                                <p><%=data.contrasena%></p>
+                            </div>
+                        </div>
+                    </div>
+                    <% }); %>
+            </container>
         </div>
-    </div>
     </section>
+    
     </article>
 </section>
 

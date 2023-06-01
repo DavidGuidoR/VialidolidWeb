@@ -15,7 +15,7 @@
         </h1>
         <div class="botonesmod">
             <li>
-                <a href="#">Perfil</a>
+                <a href="/pantallaPerfilEncargado/<%=session.id_encargado%>">Perfil</a>
             </li>
             <li>
                 <a href="/pantallaMenuPrincipal">Cerrar Sesion</a>
@@ -60,7 +60,7 @@
 
                 <div class="reporteentrante">
                     <!-- encargadoreportesrevisados.ejs -->
-                    <img src="<%= imagen %>" alt="Imagen" />
+                    <img src="<%=carpeta%><%=data.evidencias%>" width="100px" height="100px" alt="Imagen" />
                     <p><%= data.tipo_reporte%></p>
                     <p><%= formatDate(data.fecha)%></p>
                     <p  class="status"><%= data.estatus%></p>
