@@ -1399,7 +1399,10 @@ h3 {
 
 .wrapperEnc div:nth-child(1){
     grid-column: 1/3;
-    height: 200px;
+    display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    padding: 1rem;
 }
 
 .wrapperEnc div {
