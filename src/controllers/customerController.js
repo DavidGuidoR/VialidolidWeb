@@ -69,6 +69,7 @@ controller.inicioSesion = (req, res) => {
     const usuario = req.body['usuario'];
     const contrasena = req.body['contrasena'];
     const tabla = req.params.tabla;
+    const rol= req.params.rol;
     var consulta = '';
     if (tabla == "empleado") {
         consulta = 'SELECT usuario, contrasena, cargo, id_empleado FROM empleado WHERE usuario=?'
@@ -108,10 +109,25 @@ controller.inicioSesion = (req, res) => {
                                 res.send('Cargo no reconocido');
                             }
                         } else {
-                            res.send('Inicio de sesión fallido');
+                            const mensajeError = 'Inicio de sesión fallido. Por favor, verifique sus credenciales.';
+                            const script = `
+                            <script>
+                                alert('${mensajeError}');
+                                window.location.href = "/pantallaSesion${rol}"; // Redirigir a la página de inicio de sesión
+                            </script>
+                                `;
+                            res.send(script);
                         }
                     } else {
-                        res.send('Usuario no encontrado');
+                        const mensajeError = 'No se encuentra una cuenta relacionada con el usuario. Por favor, verifique sus credenciales.';
+                        const script = `
+                        <script>
+                          alert('${mensajeError}');
+                          window.location.href = "/pantallaSesion${rol}"; // Redirigir a la página de inicio de sesión
+                        </script>
+                      `;
+                        res.send(script);
+
                     }
                 }
             });
@@ -142,10 +158,24 @@ controller.inicioSesion = (req, res) => {
                             res.render('encargado');
 
                         } else {
-                            res.send('Inicio de sesión fallido');
+                            const mensajeError = 'Inicio de sesión fallido. Por favor, verifique sus credenciales.';
+                            const script = `
+                            <script>
+                                alert('${mensajeError}');
+                                window.location.href = "/pantallaSesion${rol}"; // Redirigir a la página de inicio de sesión
+                            </script>
+                                `;
+                            res.send(script);
                         }
                     } else {
-                        res.send('Usuario no encontrado');
+                        const mensajeError = 'No se encuentra una cuenta relacionada con el usuario. Por favor, verifique sus credenciales.';
+                        const script = `
+                        <script>
+                          alert('${mensajeError}');
+                          window.location.href = "/pantallaSesion${rol}"; // Redirigir a la página de inicio de sesión
+                        </script>
+                      `;
+                        res.send(script);
                     }
                 }
             });
@@ -154,6 +184,21 @@ controller.inicioSesion = (req, res) => {
 };
 
 //Funciones de la administracion-------------------------------------------------
+
+controller.pantallaPerfilAdministrador = (req,res) => {
+    const id_empleado=req.params.id_empleado;
+    const consulta = 'SELECT * FROM empleado WHERE id_empleado = ?';
+    req.getConnection((err,conn) =>{
+        conn.query(consulta,[id_empleado],(err,data) =>{
+            if(err){
+                res.json(err);
+            } else {
+                res.render('administracionperfil', {data:data})
+            }
+        })
+    });
+}
+
 controller.administracionEncargado_dependencias = (req, res) => {
     req.getConnection((err, conn) => {
         conn.query('SELECT r.id_encargado, r.nombre, r.apellido_paterno, r.apellido_materno, c.nombre AS nombre_dependencia, r.usuario, r.contrasena FROM encargado_dependencia r JOIN dependencia c ON r.id_dependencia = c.id_dependencia', (err, encargados) => {
@@ -391,6 +436,20 @@ controller.edit = (req, res) => {
 // Funciones del moderador--------------------------------------------------------------------------------------------------------------------
 controller.menumoderacion = (req, res) => {
     res.render('moderacion');
+}
+
+controller.pantallaPerfilModerador = (req,res) => {
+    const id_empleado=req.params.id_empleado;
+    const consulta = 'SELECT * FROM empleado WHERE id_empleado = ?';
+    req.getConnection((err,conn) =>{
+        conn.query(consulta,[id_empleado],(err,data) =>{
+            if(err){
+                res.json(err);
+            } else {
+                res.render('moderacionperfil', {data:data})
+            }
+        })
+    });
 }
 
 controller.pantallaReportesRevisados = (req, res) => {
@@ -713,6 +772,7 @@ controller.pantallaReportesEntrantesEncargado = (req, res) => {
                   }
                     console.log(reportes);
                     const imagen = 'http://137.117.123.255/reportes_img/'+reportes[0].evidencias;
+                    console.log(imagen);
                     res.render('encargadoreportesrevisados', {data: reportes, formatDate: formatDate, treporte, imagen});
                 // } catch (error) {
                 //   res.json(error); // Devuelve el error como respuesta JSON

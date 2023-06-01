@@ -66,9 +66,10 @@
                 <div class="reporteentrante">
                     <img src="/images/v.svg">
                     <p><%=treporte%></p>
+                    <p><%=data.descripcion%></p>
                     <p><%= formatDate(data.fecha)%></p>
                     <p><%= data.estatus%></p>
-                    <p><%= data.latitud + '' + data.longitud%></p>
+                    <p><%= data.colonia + ', ' + data.calle%></p>
                     <a href="/pantallaVisualizarReportesEncargado/<%= data.id_reporte%>/<%=session.dependencia%>">Revisar</a>
                 </div>
             <% }}); %>

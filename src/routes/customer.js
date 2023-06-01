@@ -20,7 +20,7 @@ router.get('/pantallaSesion',customerController.pantallaSesion);
 router.get('/pantallaSesionModerador',customerController.pantallaSesionModerador);
 router.get('/pantallaSesionAdministrador',customerController.pantallaSesionAdministrador);
 router.get('/pantallaSesionEncargado',customerController.pantallaSesionEncargado);
-router.post('/inicioSesion/:tabla', customerController.inicioSesion);
+router.post('/inicioSesion/:tabla/:rol', customerController.inicioSesion);
 
 
 // Rutas del Administrador
@@ -31,6 +31,7 @@ router.get('/administracionEmpleados', customerController.administracionEmpleado
 router.get('/administracionDependencias', customerController.administracionDependencias);
 router.get('/administracionCiudadanos', customerController.administracionCiudadanos);
 router.get('/administracionReportes', customerController.administracionReportes);
+router.get('/pantallaPerfilAdministrador/:id_empleado',customerController.pantallaPerfilAdministrador);
 // Administrador CRUD
 router.post('/insert/:tabla', customerController.insert);
 router.get('/delete/:id/:tabla', customerController.delete);
@@ -45,6 +46,7 @@ router.get('/pantallaReportesEntrantes',customerController.pantallaReportesEntra
 router.get('/pantallaReportesRevisados',customerController.pantallaReportesRevisados);
 router.get('/pantallaVisualizarReporte/:id_reporte',customerController.pantallaVisualizarReporte);
 router.post('/cambiarestatus/:id_reporte', customerController.cambiarestatus);
+router.get('/pantallaPerfilModerador/:id_empleado',customerController.pantallaPerfilModerador);
 
 
 // Rutas del Encargado
