@@ -746,7 +746,7 @@ controller.pantallaReportesEntrantesEncargado = (req, res) => {
                 res.json(err);
             } else {
                 console.log(reportes);
-                res.render('encargadoreportesentrantes', { data: reportes, formatDate: formatDate, treporte });
+                res.render('encargadoreportesentrantes', { data: reportes, formatDate: formatDate, treporte, tabla });
             }
         })
     });
@@ -794,6 +794,7 @@ controller.pantallaReportesRevisadosEncargado = (req, res) => {
         default:
             console.log('error en dependencia');
             break;
+
     }
     console.log(query);
     function formatDate(date) {
@@ -887,7 +888,7 @@ controller.pantallaVisualizarReportesEncargado = (req, res) => {
                     break;
 
                 case '3':
-                    inputsHTML += '<div><h3>Imagen</h3><img src=' + 'http://137.117.123.255/reportes_img/2023-05-31T060613786ZOrcaPrueba.jpg height=150px width=150px' + '></div>';
+                    inputsHTML += '<div><img src=' + data[0].imagen+ ' width=300px height=300px></div>';
                     inputsHTML += '<div><h3>Colonia</h3><p>' + data[0].colonia + '</p></div>';
                     inputsHTML += '<div><h3>Calle</h3><p>' + data[0].calle + '</p></div>';
                     break;
@@ -899,7 +900,7 @@ controller.pantallaVisualizarReportesEncargado = (req, res) => {
 
 
                 case '5':
-                    inputsHTML += '<div><h3>Imagen</h3><img src=' + 'http://137.117.123.255/reportes_img/2023-05-31T060613786ZOrcaPrueba.jpg height=150px width=150px' + '></div>';
+                    inputsHTML += '<div><img src=' + data[0].imagen +'height=300px width=300px' + '></div>';
                     inputsHTML += '<div><h3>Colonia</h3><p>' + data[0].colonia + '</p></div>';
                     inputsHTML += '<div><h3>Calle</h3><p>' + data[0].calle + '</p></div>';
                     break;
@@ -1176,9 +1177,11 @@ controller.pruebasubirimagen = (req, res) => {
     const currentDate = new Date();
     const dateString = currentDate.toISOString().replace(/[:.]/g, '');
 
+
     if (archivo) {
         const nombreArchivo = dateString + archivo.originalname;
         const rutaLocal = archivo.path;
+
 
         // Llamar a la función para subir la imagen
         subirImagen(nombreArchivo, rutaLocal);
